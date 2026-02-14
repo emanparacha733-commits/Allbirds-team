@@ -1,0 +1,609 @@
+@import "tailwindcss";
+
+@layer components {
+    /* Main Navigation Sticky Wrapper */
+    .sticky-nav-wrapper {
+        /* In v4, combine standard CSS with apply for reliability */
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        @apply w-full bg-white shadow-sm;
+    }
+
+    /* Hero Buttons Base Style */
+    .btn-hero {
+        @apply bg-white text-black px-10 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-widest 
+               border border-transparent transition-all duration-300 ease-in-out shadow-md outline-none cursor-pointer;
+    }
+
+    /* Hover effect (before clicking) */
+    .btn-hero:hover {
+        @apply bg-gray-100 shadow-lg;
+        transform: translateY(-2px);
+    }
+
+    /* Clicked/Active State */
+    .btn-hero.active {
+        background-color: #000 !important;
+        color: #fff !important;
+        transform: scale(0.95);
+        box-shadow: none !important;
+    }
+
+    /* Nav Link Animated Underline */
+    .nav-link-ltr {
+        @apply relative pb-1 transition-colors duration-300;
+    }
+    
+    .nav-link-ltr::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-full h-[2px] bg-current transition-transform duration-300;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+    }
+    
+    .nav-link-ltr:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+    }
+
+    /* Icon hover logic */
+    .icon-action {
+        @apply w-5 h-5 cursor-pointer transition-all duration-200;
+    }
+    
+    .icon-action:hover {
+        @apply opacity-70;
+        transform: scale(1.1);
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+@import "tailwindcss";
+
+@layer components {
+    .btn-hero {
+        @apply bg-white text-black px-10 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-widest 
+               border border-transparent transition-all duration-300 ease-in-out shadow-md outline-none cursor-pointer;
+    }
+
+    /* Change to Black Background + White Text on Hover */
+    .btn-hero:hover {
+        background-color: #000 !important;
+        color: #fff !important;
+        @apply shadow-lg;
+        transform: translateY(-2px);
+    }
+
+    /* Keep it Black + White when clicked (Active State) */
+    .btn-hero.active {
+        background-color: #000 !important;
+        color: #fff !important;
+        transform: scale(0.95);
+        box-shadow: none !important;
+    }
+}
+
+@import "tailwindcss";
+
+@layer components {
+    /* Menu Background Color from your images */
+    .mega-menu-bg {
+        background-color: #f1ede4 !important;
+    }
+
+    /* Fix the button error */
+    .btn-hero.active {
+        background-color: #000 !important;
+        color: #fff !important;
+    }
+
+    /* Hover effect for Nav Links */
+    .nav-link-ltr {
+        @apply relative pb-1 transition-colors duration-300;
+    }
+    .nav-link-ltr::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-full h-[2px] bg-black transition-transform duration-300 scale-x-0;
+    }
+    .group:hover .nav-link-ltr::after {
+        @apply scale-x-100;
+    }
+}/**
+ * Allbirds Clone Stylesheet
+ * Copyright (c) 2026. All rights reserved.
+ * Proprietary and Confidential.
+ */
+@import "tailwindcss";
+
+@layer components {
+    /* Exact beige background from your images */
+    .mega-menu-container {
+        background-color: #f1ede4 !important;
+        @apply absolute left-0 top-full w-full border-t border-gray-200 z-50 py-10 shadow-2xl transition-all duration-300;
+    }
+
+    /* Hover State: Show menu when parent 'group' is hovered */
+    .group:hover .mega-menu-content {
+        @apply opacity-100 visible translate-y-0;
+    }
+
+    .mega-menu-content {
+        @apply opacity-0 invisible -translate-y-2;
+    }
+
+    /* Fixing the Vite !important error for your buttons */
+    .btn-hero.active {
+        background-color: #000 !important;
+        color: #fff !important;
+    }
+}@layer components {
+    /* Main Mega Menu Box */
+    .mega-menu-container {
+        background-color: #f1ede4;
+        @apply absolute left-0 top-full w-full border-t border-gray-200 z-50 pb-16 shadow-2xl transition-all duration-300;
+    }
+
+    /* The Beige Sub-Nav Bar with the tab buttons */
+    .sub-nav-bar {
+        background-color: #e3dec9; /* Slightly darker beige for the bar */
+        @apply py-3 border-b border-gray-200 text-[11px] font-bold uppercase tracking-widest;
+    }
+
+    .sub-nav-bar button {
+        @apply transition-all duration-200 px-2;
+    }
+
+    /* Animation */
+    .mega-menu-content {
+        @apply opacity-0 invisible translate-y-2;
+    }
+    .group:hover .mega-menu-content {
+        @apply opacity-100 visible translate-y-0;
+    }
+  
+}
+
+.section-4 {
+    font-family: 'Serif', Georgia, serif;
+    background-color: #f5f2ed; /* Light cream background */
+    padding: 60px 20px;
+    text-align: center;
+}
+
+/* Header Styles */
+.header-content h1 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.header-content p {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 50px;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: 1px solid #333;
+    border-radius: 25px;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #333;
+    color: white;
+}
+
+/* Grid Styles */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.grid-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden; /* Clips image to rounded corners */
+    aspect-ratio: 4 / 5;
+}
+
+.grid-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.overlay-text {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    right: 20px;
+    color: white;
+    font-size: 2rem;
+    text-align: left;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
+
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
+}/* General Layout */
+.section-4 {
+    font-family: 'Georgia', serif;
+    background-color: #f5f2ed;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.header-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+/* Header Button Zoom */
+.btn-primary {
+    display: inline-block;
+    padding: 10px 25px;
+    margin: 5px;
+    border: 1px solid #333;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: transform 0.3s ease; /* Smooth zoom transition */
+}
+
+.btn-primary:hover {
+    transform: scale(1.1); /* Zooms button in */
+    background-color: #333;
+    color: #fff;
+}
+
+/* Grid Logic */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    max-width: 1300px;
+    margin: 40px auto 0;
+}
+
+/* Image Zoom Logic */
+.grid-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden; /* Clips the zooming image */
+    cursor: pointer;
+}
+
+.img-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.grid-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease; /* Smooth image zoom */
+}
+
+.grid-card:hover img {
+    transform: scale(1.1); /* Zooms image inside the frame */
+}
+
+/* Overlay & Inner Buttons */
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    text-align: left;
+    color: white;
+}
+
+.overlay-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-outline {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    border: 1px solid white;
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.btn-outline:hover {
+    transform: scale(1.05); /* Subtle zoom for inner buttons */
+    background: white;
+    color: black;
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+    .image-grid { grid-template-columns: 1fr; }
+}
+@layer components {
+    #carouselTrack {
+        /* This offset ensures the first image is centered on page load */
+        transform: translateX(20%); 
+    }
+
+    .bg-dots {
+        /* Creating the subtle dot grid seen in the background */
+        background-image: radial-gradient(#212121 1px, transparent 1px);
+        background-size: 20px 20px;
+    }
+
+    .carousel-slide img {
+        user-select: none;
+        -webkit-user-drag: none;
+    }
+}.dotted-wrapper {
+  position: relative;
+  background-image: radial-gradient(#ccc 1.5px, transparent 1.5px);
+  background-size: 30px 30px; /* Adjust for the dot density in image */
+  padding: 100px 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Hide side slides and button by default */
+.side-slide, .next-btn {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+}
+
+/* Show them ONLY when the dotted-wrapper is hovered */
+.dotted-wrapper:hover .side-slide {
+  opacity: 0.5; /* Keeps focus on the main shoe */
+  visibility: visible;
+}
+
+.dotted-wrapper:hover .next-btn {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* The active (middle) shoe is always visible */
+.slide.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(1.1); /* Slight pop effect */
+}/* Slider Specific Styles */
+.slider-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.dotted-wrapper {
+    position: relative;
+    background-image: radial-gradient(#212121 1px, transparent 1px);
+    background-size: 30px 30px;
+    padding: 120px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    gap: 100px;
+    will-change: transform;
+}
+
+.slide {
+    flex-shrink: 0;
+    width: 400px; /* Adjust based on your shoe image size */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.slide img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* THE HOVER LOGIC */
+/* 1. Side slides are invisible by default */
+.side-slide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* 2. Next button is invisible by default */
+.next-btn {
+    position: absolute;
+    right: 10%;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    background: transparent;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+/* 3. Reveal on Hover */
+.dotted-wrapper:hover .side-slide {
+    opacity: 0.4; /* Dimmed side shoes */
+    visibility: visible;
+}
+
+.dotted-wrapper:hover .next-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+.slide.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: scale(1.1);
+}.dotted-wrapper {
+    position: relative;
+    background-image: radial-gradient(#212121 1.2px, transparent 1.2px);
+    background-size: 30px 30px;
+    padding: 100px 0;
+    overflow: hidden;
+    /* Hide the standard mouse pointer */
+    cursor: none; 
+}
+
+/* The Arrow that follows the mouse */
+.floating-arrow {
+    position: fixed; /* Fixed to follow mouse coordinates */
+    pointer-events: none; /* Allows clicking through to the slider */
+    width: 60px;
+    height: 60px;
+    background: white;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 1000;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease, transform 0.1s linear;
+    transform: translate(-50%, -50%); /* Centers the circle on the mouse point */
+}
+
+/* Side slides visibility logic */
+.side-slide {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.dotted-wrapper:hover .side-slide {
+    opacity: 0.4;
+}
+
+/* Show the arrow only when inside the dotted area */
+.dotted-wrapper:hover .floating-arrow {
+    opacity: 1;
+}
+
+.slide.active { opacity: 1 !important; }
+.btn-hero {
+    @apply bg-white text-black rounded-full font-bold uppercase tracking-widest border border-transparent transition-all duration-300 ease-in-out shadow-md outline-none cursor-pointer;
+    padding: 0.875rem 1.5rem; /* समान पेडिंग */
+    min-width: 150px; /* समान मिनिमम विथ */
+}
+/* Hero Section Text Adjustments */
+@media (min-width: 700px) {
+    h1 {
+        font-size: 2rem; 
+    }
+    p {
+        font-size: 0.rem; 
+    }
+}
+
+@media (max-width: 767px) {
+    h1 {
+        font-size: 3rem; 
+    }
+    p {
+        font-size: 0.7rem;
+    }
+}
+.floating-arrow {
+    position: absolute;
+    font-size: 60px;           /* adjust size */
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    transform: translate(-50%, -50%);   /* center the arrow on cursor */
+    transition: all 0.12s ease-out;
+    z-index: 10;
+    user-select: none;
+}
+
+/* Optional: make it bigger/fade when near edges */
+.dotted-wrapper:hover .floating-arrow {
+    color: rgba(0, 0, 0, 0.7);
+}.floating-arrow {
+    position: absolute;
+    font-size: 60px;           /* adjust size */
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    transform: translate(-50%, -50%);   /* center the arrow on cursor */
+    transition: all 0.12s ease-out;
+    z-index: 10;
+    user-select: none;
+}
+
+/* Optional: make it bigger/fade when near edges */
+.dotted-wrapper:hover .floating-arrow {
+    color: rgba(0, 0, 0, 0.7);
+}.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+#cursorArrow {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: white;
+    border: 2px solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 300;
+    color: #333;
+    z-index: 100;
+    transition: transform 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
