@@ -577,7 +577,7 @@ style="background-color:#7C8C52">
 <!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
-<section class="w-full bg-[#e9e6df] py-16">
+<section class="w-full  py-16">
 
   <!-- Header + Arrows -->
   <div class="flex justify-between items-center mb-8 px-10">
@@ -600,7 +600,7 @@ style="background-color:#7C8C52">
     <div class="swiper-wrapper">
 
       <!-- Slide 1 -->
-     <div class="swiper-slide">
+     <div class="swiper-slide shadow-2xl z-30">
   <a href="#"
      class="relative group block bg-white p-6 pt-10 h-[420px] 
             rounded-2xl shadow-xl overflow-hidden
@@ -614,9 +614,9 @@ style="background-color:#7C8C52">
     <img src="/images/sho2.png"
          class="w-full h-48 object-cover rounded-xl"/>
 
-    <h1 class="mt-20 text-sm font-semibold text-black">
+     <h4 class="mt-20 text-sm lg:font-semibold text-black">
       MEN'S VARSITY
-    </h1>
+</h4>
 
     <p class="text-gray-500 text-sm">
       Classic Everyday Sneaker
@@ -654,7 +654,7 @@ style="background-color:#7C8C52">
 </div>
 
       <!-- Slide 2 -->
- <div class="swiper-slide">
+ <div class="swiper-slide shadow-2xl z-30">
   <a href="#"
      class="relative group block bg-white p-6 pt-10 h-[420px] 
             rounded-2xl shadow-xl overflow-hidden
@@ -668,9 +668,9 @@ style="background-color:#7C8C52">
     <img src="/images/sho2.png"
          class="w-full h-48 object-cover rounded-xl"/>
 
-    <h1 class="mt-20 text-sm font-semibold text-black">
+    <h4 class="mt-20 text-sm lg:font-semibold text-black">
       MEN'S VARSITY
-    </h1>
+</h4>
 
     <p class="text-gray-500 text-sm">
       Classic Everyday Sneaker
@@ -709,7 +709,7 @@ style="background-color:#7C8C52">
 
 
       <!-- Slide 3 -->
-   <div class="swiper-slide">
+   <div class="swiper-slide shadow-2xl z-30">
   <a href="#"
      class="relative group block bg-white p-6 pt-10 h-[420px] 
             rounded-2xl shadow-xl overflow-hidden
@@ -723,9 +723,10 @@ style="background-color:#7C8C52">
     <img src="/images/sho2.png"
          class="w-full h-48 object-cover rounded-xl"/>
 
-    <h1 class="mt-20 text-sm font-semibold text-black">
+    <h4 class="mt-20 text-sm lg:font-semibold text-black">
       MEN'S VARSITY
-    </h1>
+</h4>
+
 
     <p class="text-gray-500 text-sm">
       Classic Everyday Sneaker
@@ -764,7 +765,7 @@ style="background-color:#7C8C52">
 
 
       <!-- Slide 4 -->
-    <div class="swiper-slide">
+    <div class="swiper-slide shadow-2xl z-30">
   <a href="#"
      class="relative group block bg-white p-6 pt-10 h-[420px] 
             rounded-2xl shadow-xl overflow-hidden
@@ -778,9 +779,9 @@ style="background-color:#7C8C52">
     <img src="/images/sho2.png"
          class="w-full h-48 object-cover rounded-xl"/>
 
-    <h1 class="mt-20 text-sm font-semibold text-black">
+   <h4 class="mt-20 text-sm lg:font-semibold text-black">
       MEN'S VARSITY
-    </h1>
+</h4>
 
     <p class="text-gray-500 text-sm">
       Classic Everyday Sneaker
@@ -819,7 +820,7 @@ style="background-color:#7C8C52">
 
 
       <!-- Slide 5 -->
- <div class="swiper-slide">
+ <div class="swiper-slide shadow-2xl z-30">
   <a href="#"
      class="relative group block bg-white p-6 pt-10 h-[420px] 
             rounded-2xl shadow-xl overflow-hidden
@@ -832,10 +833,10 @@ style="background-color:#7C8C52">
 
     <img src="/images/sho2.png"
          class="w-full h-48 object-cover rounded-xl"/>
-
-    <h1 class="mt-20 text-sm font-semibold text-black">
+<h4 class="mt-20 text-sm lg:font-semibold text-black">
       MEN'S VARSITY
-    </h1>
+</h4>
+
 
     <p class="text-gray-500 text-sm">
       Classic Everyday Sneaker
@@ -874,7 +875,7 @@ style="background-color:#7C8C52">
 
 
       <!-- Slide 6 -->
-     <div class="swiper-slide">
+     <div class="swiper-slide shadow-2xl z-30">
   <a href="#"
      class="relative group block bg-white p-6 pt-10 h-[420px] 
             rounded-2xl shadow-xl overflow-hidden
@@ -887,10 +888,10 @@ style="background-color:#7C8C52">
 
     <img src="/images/sho2.png"
          class="w-full h-48 object-cover rounded-xl"/>
-
-    <h1 class="mt-20 text-sm font-semibold text-black">
+<h4 class="mt-20 text-sm lg:font-semibold text-black">
       MEN'S VARSITY
-    </h1>
+</h4>
+
 
     <p class="text-gray-500 text-sm">
       Classic Everyday Sneaker
@@ -929,7 +930,7 @@ style="background-color:#7C8C52">
 
 
       <!-- Slide 7 -->
-   <div class="swiper-slide">
+   <div class="swiper-slide shadow-2xl z-30">
   <a href="#"
      class="relative group block bg-white p-6 pt-10 h-[420px] 
             rounded-2xl shadow-xl overflow-hidden
@@ -943,9 +944,10 @@ style="background-color:#7C8C52">
     <img src="/images/sho2.png"
          class="w-full h-48 object-cover rounded-xl"/>
 
-    <h1 class="mt-20 text-sm font-semibold text-black">
+   <h4 class="mt-20 text-sm lg:font-semibold text-black">
       MEN'S VARSITY
-    </h1>
+</h4>
+
 
     <p class="text-gray-500 text-sm">
       Classic Everyday Sneaker
@@ -1042,27 +1044,78 @@ style="background-color:#7C8C52">
 
 
 
+<section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl"
+ style="background-image: url('/images/animalbg.webp');">
 
-<section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl" style="background-image: url('/images/animalbg.webp');">
-    <!-- Overlay -->
-   
-    <!-- Content -->
-    <div class="relative z-10 max-w-7xl mx-auto h-full flex flex-col justify-between md:px-8 text-white">
-        
-        <!-- Top Links -->
-        <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
-            <a href="#" class="hover:underline">Home/</a>
-            <a href="#" class="hover:underline">Men/</a>
-            <a href="#" class="hover:underline">Men's Dasher Nz Collection</a>
-        </div>
+  <!-- Overlay for better readability -->
+ 
+  <!-- Content -->
+  <div class="relative w-full h-full flex flex-col justify-center items-center text-center px-4 text-white">
+    
+    <!-- Top small text -->
+    <p class="text-lg md:text-base mb-4">
+      Better Things in a Better Way
+    </p>
 
-        <!-- Heading near bottom -->
-        <p class="max-w-xl text-3xl  md:text-2xl font-medium font-serif lg:mb-8 leading-tight mb-12 md:mb-16 sm:text-sm">
-            Men's Dasher NZ Collection
-</p>
+    <!-- Subtext -->
+    <p class="text-sm md:text-sm mb-6">
+      Looking to the world's greatest innovator - Nature
+    </p>
 
-    </div>
+    <!-- Main heading -->
+    <p class="max-w-xl text-3xl md:text-2xl font-medium font-serif leading-tight mb-12">
+      Men's Dasher NZ Collection
+    </p>
+
+    <!-- Learn More button -->
+    <a href="#" class="bg-white text-black px-6 py-3 rounded-full hover:bg-gray-200 transition">
+      Learn More
+    </a>
+
+  </div>
+
 </section>
 
+
+<!-- last section -->
+
+<section class="max-w-full px-6 py-8 mx-auto grid 
+                grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 
+                gap-6 mt-8">
+
+  <!-- Card 1 -->
+  <div class="bg-white rounded-2xl shadow-xl p-6 
+              w-full flex flex-col gap-4 justify-start">
+    <p class="text-xl text-black">
+      Wear All Day Comfort
+</p>
+    <p class="text-gray-600 text-sm">
+      Lightweight, bouncy, and wildly comfortable, Allbirds shoes make any outing feel effortless. Slip in, lace up, or slide them on and enjoy the comfy support.
+    </p>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="bg-white rounded-2xl shadow-xl p-6 
+              w-full flex flex-col gap-4 justify-start">
+    <p class="text-xl text-black">
+      Sustainability In Every Step
+</p>
+    <p class="text-gray-600 text-sm">
+      From materials to transport, we're working to reduce our carbon footprint to near zero. Holding ourselves accountable and striving for climate goals isn't a 30-year goal—it's now.
+    </p>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="bg-white rounded-2xl shadow-xl p-6 
+              w-full flex flex-col gap-4 justify-start">
+    <p class="text-xl text-black">
+      Materials From The Earth
+    </p>
+    <p class="text-gray-600 text-sm">
+      We replace petroleum-based synthetics with natural alternatives wherever we can. Like using wool, tree fiber, and sugarcane. They're soft, breathable, and better for the planet—win, win, win.
+    </p>
+  </div>
+
+</section>
 
 </x-layouts>

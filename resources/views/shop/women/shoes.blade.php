@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
     <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">NEW</span>
     <img src="/images/sho3.png" class="w-full h-48 object-cover rounded-xl" />
-    <h1 class="mt-20 text-sm lg:text-sm font-semibold text-black">MEN'S DASHER NZ</h1>
+    <h4 class="mt-20 text-sm lg:text-sm font-semibold text-black">MEN'S DASHER NZ</h4>
     <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
     <p class="text-black font-semibold">$140</p>
     <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <a href="/men/shop/men/detailshoes" class="group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden duration-300 ease-out hover:h-[520px] transition-transform duration-300 hover:-translate-y-2 relative">
     <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">NEW</span>
     <img src="/images/yellow1.webp" class="w-full h-48 object-cover rounded-xl" />
-    <h1 class="mt-20 text-sm lg:text-xl font-semibold text-black">MEN'S DASHER NZ</h1>
+    <h4 class="mt-20 text-sm lg:text-sm font-semibold text-black">MEN'S DASHER NZ</h4>
     <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
     <p class="text-black font-semibold">$140</p>
     <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
     <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">NEW</span>
     <img src="/images/sho5.png" class="w-full h-48 object-cover rounded-xl" />
-    <h1 class="mt-20 text-sm lg:text-xl font-semibold text-black">MEN'S DASHER NZ</h1>
+    <h4 class="mt-20 text-sm lg:text-sm font-semibold text-black">MEN'S DASHER NZ</h4>
     <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
     <p class="text-black font-semibold">$140</p>
     <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
     <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">NEW</span>
     <img src="/images/sho7.png" class="w-full h-48 object-cover rounded-xl" />
-    <h1 class="mt-20 text-sm lg:text-xl font-semibold text-black">MEN'S DASHER NZ</h1>
+    <h4 class="mt-20 text-sm lg:text-sm font-semibold text-black">MEN'S DASHER NZ</h4>
     <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
     <p class="text-black font-semibold">$140</p>
     <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">

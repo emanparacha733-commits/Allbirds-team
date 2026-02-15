@@ -180,9 +180,9 @@ document.addEventListener("DOMContentLoaded", function () {
   </span>
       <img src="/images/sho3.png" class="w-full h-48 object-cover rounded-xl" />
 
-      <h1 class="mt-20 text-sm font-semibold text-black">
+      <h4 class="mt-20 text-sm font-semibold text-black">
         MEN'S DASHER NZ
-      </h1>
+      </h4>
       <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
       <p class="text-black font-semibold">$140</p>
 
@@ -216,9 +216,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       <img src="/images/yellow1.webp" class="w-full h-48 object-cover rounded-xl" />
 
-      <h1 class="mt-20 text-sm font-semibold text-black">
+      <h4 class="mt-20 text-sm font-semibold text-black">
         MEN'S DASHER NZ
-      </h1>
+      </h4>
       <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
       <p class="text-black font-semibold">$140</p>
 
@@ -251,9 +251,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       <img src="/images/sho5.png" class="w-full h-48 object-cover rounded-xl" />
 
-      <h1 class="mt-20 text-sm font-semibold text-black">
+      <h4 class="mt-20 text-sm font-semibold text-black">
         MEN'S DASHER NZ
-      </h1>
+      </h4>
       <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
       <p class="text-black font-semibold">$140</p>
 
@@ -283,9 +283,9 @@ document.addEventListener("DOMContentLoaded", function () {
   </span>
       <img src="/images/sho7.png" class="w-full h-48 object-cover rounded-xl" />
 
-      <h1 class="mt-20 text-sm font-semibold text-black">
+      <h4 class="mt-20 text-sm font-semibold text-black">
         MEN'S DASHER NZ
-      </h1>
+      </h4>
       <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
       <p class="text-black font-semibold">$140</p>
 
