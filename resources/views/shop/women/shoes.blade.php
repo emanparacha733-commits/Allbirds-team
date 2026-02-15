@@ -165,290 +165,99 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
-</x-layouts>
+
 
 <!-- section 2 -->
-<section class="w-full px-4 sm:px-6 lg:px-20 mx-auto grid 
-                grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mt-6 
-                gap-6 sm:gap-6 md:gap-6 lg:gap-6">
-  
+<section class="max-w-full px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
 
-<div class="relative h-[520px] w-[270px]">
-
-  <!-- CARD -->
-  <div
-    class="group absolute top-0 left-0 w-full
-           bg-white p-6 pt-10 h-[420px]
-           rounded-2xl shadow-2xl overflow-hidden cursor-pointer
-          duration-300 ease-out
-           hover:h-[520px] transition-transform duration-300 hover:-translate-y-2">
-
-    <!-- NEW tag -->
-    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
-      NEW
-    </span>
-
-    <!-- Image -->
-   <img src="{{ asset('images/anothershoes.png') }}" class="w-full h-48 object-cover rounded-xl" />
-
-
-    <!-- Content -->
-    <h1 class="mt-20 text-sm font-medium font-serif text-black">
-      MEN'S DASHER NZ
-    </h1>
+  <!-- card 1 -->
+  <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">NEW</span>
+    <img src="/images/sho3.png" class="w-full h-48 object-cover rounded-xl" />
+    <h1 class="mt-20 text-sm lg:text-sm font-semibold text-black">MEN'S DASHER NZ</h1>
     <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
     <p class="text-black font-semibold">$140</p>
-
-    <!-- Sizes Section (hidden initially) -->
-    <div
-      class="mt-4 opacity-0 group-hover:opacity-100
-             transition-opacity duration-200">
-
+    <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
       <div class="grid grid-cols-5 gap-2">
-
-        <!-- Row 1 -->
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          8
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">8
           <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
         </div>
-
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10</div>
-
-        <!-- Row 2 -->
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100 ">11</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          12
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">13</div>
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">14</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          15
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  
-</div>
-
-
-<div class="relative h-[520px] w-[270px]">
-
-  <!-- Second CARD -->
-  <div
-    class="group absolute top-0 left-0 w-full
-           bg-white p-6 pt-10 h-[420px]
-           rounded-2xl shadow-2xl overflow-hidden cursor-pointer
-          duration-300 ease-out
-           hover:h-[520px] transition-transform duration-300 hover:-translate-y-2">
-
-    <!-- NEW tag -->
-    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
-      NEW
-    </span>
-
-    <!-- Image -->
-  <img src="{{ asset('images/sho6.png') }}" class="w-full h-48 object-cover rounded-xl" />
-
-
-    <!-- Content -->
-    <h1 class="mt-20 text-sm font-semibold text-black">
-      MEN'S DASHER NZ
-    </h1>
-    <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
-    <p class="text-black font-semibold">$140</p>
-
-    <!-- Sizes Section (hidden initially) -->
-    <div
-      class="mt-4 opacity-0 group-hover:opacity-100
-             transition-opacity duration-200">
-
-      <div class="grid grid-cols-5 gap-2">
-
-        <!-- Row 1 -->
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          8
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10</div>
-
-        <!-- Row 2 -->
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100 ">11</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          12
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">13</div>
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">14</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          15
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  
-</div>
-
-<div class="relative h-[520px] w-[270px]">
-
-  <!--Third CARD -->
-  <div
-    class="group absolute top-0 left-0 w-full
-           bg-white p-6 pt-10 h-[420px]
-           rounded-2xl shadow-2xl overflow-hidden cursor-pointer
-          duration-300 ease-out
-           hover:h-[520px] transition-transform duration-300 hover:-translate-y-2">
-
-    <!-- NEW tag -->
-    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
-      NEW
-    </span>
-
-    <!-- Image -->
-   <img src="{{ asset('images/sho7.png') }}" class="w-full h-48 object-cover rounded-xl" />
-
-    <!-- Content -->
-    <h1 class="mt-20 text-sm font-semibold text-black">
-      MEN'S DASHER NZ
-    </h1>
-    <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
-    <p class="text-black font-semibold">$140</p>
-
-    <!-- Sizes Section (hidden initially) -->
-    <div
-      class="mt-4 opacity-0 group-hover:opacity-100
-             transition-opacity duration-200">
-
-      <div class="grid grid-cols-5 gap-2">
-
-        <!-- Row 1 -->
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          8
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10</div>
-
-        <!-- Row 2 -->
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100 ">11</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          12
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">13</div>
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">14</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          15
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  
-</div>
-
-<div class="relative h-[520px] w-[270px]">
-
-  <!-- forth CARD -->
-<a href="{{ url('/shop/men/detailshoes') }}" class="block">
-    <!-- Card Content Here -->
-
-
-
-  <div
-    class="group relative w-full
-           bg-white p-6 pt-10 h-[420px]
-           rounded-2xl shadow-2xl overflow-hidden cursor-pointer
-           duration-300 ease-out
-           hover:h-[520px] transition-transform duration-300 hover:-translate-y-2">
-
-    <!-- NEW tag -->
-    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
-      NEW
-    </span>
-
-    <!-- Image -->
-   <img src="{{ asset('images/yellow1.webp') }}" class="w-full h-48 object-cover rounded-xl" />
-
-
-    <!-- Content -->
-    <h1 class="mt-20 text-sm font-semibold text-black">
-      MEN'S DASHER NZ
-    </h1>
-    <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
-    <p class="text-black font-semibold">$140</p>
-
-    <!-- Sizes Section (hidden initially) -->
-    <div
-      class="mt-4 opacity-0 group-hover:opacity-100
-             transition-opacity duration-200">
-
-      <div class="grid grid-cols-5 gap-2">
-
-        <!-- Row 1 -->
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          8
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10</div>
-
-        <!-- Row 2 -->
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">11</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          12
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">13</div>
-        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">14</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          15
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">11.5</div>
       </div>
     </div>
   </div>
-</a>
 
-</div>
+  <!-- card 2 -->
+  <a href="/men/shop/men/detailshoes" class="group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden duration-300 ease-out hover:h-[520px] transition-transform duration-300 hover:-translate-y-2 relative">
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">NEW</span>
+    <img src="/images/yellow1.webp" class="w-full h-48 object-cover rounded-xl" />
+    <h1 class="mt-20 text-sm lg:text-xl font-semibold text-black">MEN'S DASHER NZ</h1>
+    <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
+    <p class="text-black font-semibold">$140</p>
+    <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div class="grid grid-cols-5 gap-2">
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">8
+          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
+        </div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- card 3 -->
+  <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">NEW</span>
+    <img src="/images/sho5.png" class="w-full h-48 object-cover rounded-xl" />
+    <h1 class="mt-20 text-sm lg:text-xl font-semibold text-black">MEN'S DASHER NZ</h1>
+    <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
+    <p class="text-black font-semibold">$140</p>
+    <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div class="grid grid-cols-5 gap-2">
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">8
+          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
+        </div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10.5</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9.8</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">11</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- card 4 -->
+  <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">NEW</span>
+    <img src="/images/sho7.png" class="w-full h-48 object-cover rounded-xl" />
+    <h1 class="mt-20 text-sm lg:text-xl font-semibold text-black">MEN'S DASHER NZ</h1>
+    <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
+    <p class="text-black font-semibold">$140</p>
+    <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div class="grid grid-cols-5 gap-2">
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">8
+          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
+        </div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">8.5</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10.5</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9.8</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">11</div>
+      </div>
+    </div>
+  </div>
 
 </section>
 
@@ -602,3 +411,5 @@ document.addEventListener("DOMContentLoaded", function () {
   </div>
 
 </section>
+
+</x-layouts>

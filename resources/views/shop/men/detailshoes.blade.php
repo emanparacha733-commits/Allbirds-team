@@ -15,22 +15,22 @@
     </span>
 
     <!-- Main Large Image -->
-    <img src="/images/yellow1.webp"
+     <img id="mainImage" src="/images/yellow1.webp"
          class="w-full h-[650px] object-cover rounded-xl block">
 
     <!-- First Row of Bottom Thumbnails -->
-    <div class="grid grid-cols-2 gap-1 -mt-1">
-      <img src="/images/yellow2.webp" class="w-full h-[150px] object-cover rounded-lg">
-      <img src="/images/yellow3.webp" class="w-full h-[150px] object-cover rounded-lg">
-    </div>
+  <div id="thumbRow1" class="grid grid-cols-2 gap-1 -mt-1">
+        <img class="thumbnail w-full h-[150px] object-cover rounded-lg" src="/images/yellow2.webp">
+        <img class="thumbnail w-full h-[150px] object-cover rounded-lg" src="/images/yellow3.webp">
+      </div>
 
   <br><br>
 
     <!-- Second Row of Bottom Thumbnails -->
-    <div class="grid grid-cols-2 gap-1 -mt-1">
-      <img src="/images/yellow5.webp" class="w-full h-[150px] object-cover rounded-lg">
-      <img src="/images/yellow6.webp" class="w-full h-[150px] object-cover rounded-lg">
-    </div>
+    <div id="thumbRow2" class="grid grid-cols-2 gap-1 -mt-1">
+        <img class="thumbnail w-full h-[150px] object-cover rounded-lg" src="/images/yellow5.webp">
+        <img class="thumbnail w-full h-[150px] object-cover rounded-lg" src="/images/yellow6.webp">
+      </div>
 
   </div>
 </div>
@@ -54,50 +54,121 @@
   <p class="text-lg font-semibold text-black">$140</p>
 
   <!-- Tabs -->
-  <div class="flex gap-6 text-sm text-black">
-    <span class="underline cursor-pointer">ALL</span>
-    <span class="text-gray-500 cursor-pointer">LIMITED</span>
-    <span class="text-gray-500 cursor-pointer">CLASSIC</span>
-  </div>
+ <div class="flex gap-6 text-sm text-black">
+  <span class="tab cursor-pointer underline" data-tab="all">ALL</span>
+  <span class="tab cursor-pointer text-gray-500" data-tab="limited">LIMITED</span>
+  <span class="tab cursor-pointer text-gray-500" data-tab="classic">CLASSIC</span>
+</div>
+
 
   <!-- Color Name -->
   <p class="text-sm mb-2">Ochre</p>
 
   <!-- Color Circles -->
-  <div class="flex items-center gap-3">
-    <div class="p-[3px] rounded-full border border-black">
-      <div class="w-8 h-8 rounded-full bg-[#B59A3A] border border-gray-300"></div>
+<!-- Color Circles -->
+<div class="flex items-center gap-3">
+      <div class="color-circle p-[3px] rounded-full border border-black cursor-pointer" 
+           data-images='[
+            "/images/yellow1.webp",
+            "/images/yellow2.webp",
+            "/images/yellow3.webp",
+            "/images/yellow5.webp",
+            "/images/yellow6.webp"
+           ]'   data-tab="all limited">
+        <div class="w-8 h-8 rounded-full bg-[#B59A3A] border border-gray-300"></div>
+      </div>
+
+      <div class="color-circle w-8 h-8 rounded-full bg-[#E8E3D9] border border-gray-300 cursor-pointer"
+           data-images='[
+            "/images/whitemain.webp",
+            "/images/white2.webp",
+            "/images/white3.webp",
+            "/images/white4.webp",
+            "/images/white5.webp"
+           ]'   data-tab="all classic"></div>
+
+      <div class="color-circle w-8 h-8 rounded-full bg-[#A8A29E] border border-gray-300 cursor-pointer"
+           data-images='[
+            "/images/gray1.webp",
+            "/images/gray2.webp",
+            "/images/gray3.webp",
+            "/images/gray4.webp",
+            "/images/gray5.webp"
+           ]'  data-tab="all limited"></div>
+
+      <div class="color-circle w-8 h-8 rounded-full bg-[#4B4B4B] border border-gray-300 cursor-pointer"
+           data-images='[
+            "/images/black1.webp",
+            "/images/black2.webp",
+            "/images/black3.webp",
+            "/images/black4.webp",
+            "/images/black5.webp"
+           ]'  data-tab="all limited"></div>
+
+      <div class="color-circle w-8 h-8 rounded-full bg-[#6B705C] border border-gray-300 cursor-pointer"
+           data-images='[
+            "/images/green1.png",
+            "/images/green2.webp",
+            "/images/green3.webp",
+            "/images/green4.webp",
+            "/images/green5.webp"
+           ]'  data-tab="all classic"></div>
+
+      <div class="color-circle w-8 h-8 rounded-full bg-[#A45A52] border border-gray-300 cursor-pointer"
+           data-images='[
+            "/images/red1.webp",
+            "/images/red2.webp",
+            "/images/red3.webp",
+            "/images/red4.webp",
+            "/images/red5.webp"
+           ]'  data-tab="all limited"></div>
+
+      <div class="color-circle w-8 h-8 rounded-full border border-gray-300 cursor-pointer"
+           style="background: linear-gradient(to right,#1F2937 50%,#D1D5DB 50%)"
+           data-images='[
+            "/images/gradiant1.webp",
+            "/images/gradient2.webp",
+            "/images/gradient3.webp",
+            "/images/gradient4.webp",
+            "/images/gradient5.webp"
+           ]' data-tab="all classic"></div>
+
+      <div class="color-circle w-8 h-8 rounded-full bg-[#D6D3D1] border border-gray-300 cursor-pointer"
+           data-images='[
+            "/images/lightgray1.webp",
+            "/images/lightgray2.webp",
+            "/images/lightgray3.webp",
+            "/images/lightgray4.webp",
+            "/images/lightgray5.webp"
+           ]' data-tab="all classic"></div>
+
+     
+
     </div>
-    <div class="w-8 h-8 rounded-full bg-[#E8E3D9] border border-gray-300 hover:scale-105 transition duration-200"></div>
-    <div class="w-8 h-8 rounded-full bg-[#A8A29E] border border-gray-300 hover:scale-105 transition duration-200"></div>
-    <div class="w-8 h-8 rounded-full bg-[#4B4B4B] border border-gray-300 hover:scale-105 transition duration-200"></div>
-    <div class="w-8 h-8 rounded-full bg-[#6B705C] border border-gray-300 hover:scale-105 transition duration-200"></div>
-    <div class="w-8 h-8 rounded-full bg-[#A45A52] border border-gray-300 hover:scale-105 transition duration-200"></div>
-    <div class="w-8 h-8 rounded-full border border-gray-300 hover:scale-105 transition duration-200
-                bg-[linear-gradient(to_right,#1F2937_50%,#D1D5DB_50%)]"></div>
-    <div class="w-8 h-8 rounded-full bg-[#D6D3D1] border border-gray-300 hover:scale-105 transition duration-200"></div>
-    <div class="w-8 h-8 rounded-full bg-black border border-gray-300 hover:scale-105 transition duration-200"></div>
-  </div>
+
+
+
+
 
   <!-- Sizes -->
-  <div class="flex gap-6 text-sm mt-4">
+  <div class="flex gap-6 text-sm mt-4">F
     <span class="underline text-black">MEN'S SIZES</span>
     <span class="text-gray-500">WOMEN'S SIZES</span>
   </div>
 
   <div class="grid grid-cols-6 gap-3 mt-2 font-bold text-black">
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">8</button>
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">8.5</button>
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">9</button>
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">9.5</button>
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">10</button>
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">10.5</button>
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">11</button>
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">11.5</button>
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">12</button>
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">12.5</button>
-    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer">13</button>
-    <button class="border border-gray-300 py-2 text-sm text-gray-400 line-through">14</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all classic">8</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer"  data-tab="all classic">8.5</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer"  data-tab="all classic">9</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all classic">9.5</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer"  data-tab="all limited">10</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer"  data-tab="all classic">10.5</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer"  data-tab="all limited">11</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer"  data-tab="all classic">11.5</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer"  data-tab="all limited">12</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all classic">12.5</button>
+    <button class="border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer"  data-tab="all limited">13</button>
+    <button class="border border-gray-300 py-2 text-sm text-gray-400 line-through"  data-tab="all classic">14</button>
   </div>
 
   <p class="text-sm text-gray-600 mt-2">
@@ -105,9 +176,12 @@
     <u>Fit Guide</u>
   </p>
 
-  <button class="w-full bg-gray-200 text-gray-500 py-4 rounded-full font-medium text-sm mt-4">
-    SELECT A SIZE
-  </button>
+<button id="selectSizeBtn" 
+        class="w-full bg-gray-200 text-gray-500 py-4 rounded-full font-medium text-sm mt-4 cursor-not-allowed"
+        disabled>
+  SELECT A SIZE
+</button>
+
 
   <p class="text-gray-700 text-center mt-6 text-sm">
     Free Shipping on Orders over $75 <br> Easy Returns
@@ -119,7 +193,184 @@
 
 
 
+<script>
+  const colorCircles = document.querySelectorAll('.color-circle');
+   const tabs = document.querySelectorAll('.tab');
+  const mainImage = document.getElementById('mainImage');
+  const thumbRow1 = document.querySelectorAll('#thumbRow1 img');
+  const thumbRow2 = document.querySelectorAll('#thumbRow2 img');
+  const allThumbs = [...thumbRow1, ...thumbRow2];
 
+  colorCircles.forEach(circle => {
+  circle.addEventListener('click', () => {
+
+    //  Remove active border from all
+    colorCircles.forEach(c => {
+      c.classList.remove('border-black','border-2');
+      c.classList.add('border-gray-300');
+    });
+
+    
+    circle.classList.remove('border-gray-300');
+    circle.classList.add('border-black','border-2');
+
+    // Update images
+    const images = JSON.parse(circle.dataset.images);
+
+    if(mainImage){
+      mainImage.src = images[0];
+    }
+
+    allThumbs.forEach((thumb, index) => {
+      if(images[index + 1]) {
+        thumb.src = images[index + 1];
+      }
+    });
+
+
+
+  });
+});
+
+
+
+ 
+ document.addEventListener("DOMContentLoaded", function() {
+
+  const tabs = document.querySelectorAll('.tab');
+  const sizeButtons = document.querySelectorAll('.grid button');
+
+  function filterSizes(tab) {
+
+    sizeButtons.forEach(btn => {
+
+      if (!btn.dataset.tab) return;
+
+      const tabsForSize = btn.dataset.tab.split(' ');
+
+      if (tabsForSize.includes(tab)) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+
+    });
+
+  }
+
+  // Page load par ALL show
+  filterSizes('all');
+
+  // Tab click
+  tabs.forEach(tabEl => {
+    tabEl.addEventListener('click', () => {
+
+      const selectedTab = tabEl.dataset.tab;
+
+      // Tab styling update
+      tabs.forEach(t => {
+        t.classList.remove('underline','text-black');
+        t.classList.add('text-gray-500');
+      });
+
+      tabEl.classList.add('underline','text-black');
+      tabEl.classList.remove('text-gray-500');
+
+      // Filter sizes
+      filterSizes(selectedTab);
+
+    });
+  });
+
+});
+document.addEventListener("DOMContentLoaded", function() {
+
+  const grid = document.querySelector('.grid');
+  const selectBtn = document.getElementById('selectSizeBtn');
+  const heading = document.getElementById('actionHeading');
+
+  grid.addEventListener('click', function(e) {
+    const btn = e.target.closest('button'); // nearest button clicked
+
+    if(!btn || !grid.contains(btn)) return; // ignore clicks outside buttons
+
+    // Remove active style from all visible buttons
+    grid.querySelectorAll('button').forEach(b => {
+      b.classList.remove('bg-black','text-white');
+      b.classList.add('bg-gray-200','text-gray-500');
+    });
+
+    // Add active style to clicked button
+    btn.classList.remove('bg-gray-200','text-gray-500');
+    btn.classList.add('bg-black','text-white');
+
+    // Enable SELECT button + change heading
+    if(selectBtn && heading){
+      selectBtn.disabled = false;
+      selectBtn.classList.remove('bg-gray-200','text-gray-500','cursor-not-allowed');
+      selectBtn.classList.add('bg-black','text-white','cursor-pointer');
+
+      heading.textContent = "Add to Cart";
+    }
+  });
+
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  const grid = document.querySelector('.grid'); // parent container of size buttons
+  const selectBtn = document.getElementById('selectSizeBtn');
+
+  grid.addEventListener('click', function(e) {
+    const btn = e.target.closest('button'); // nearest button clicked
+
+    if(!btn || !grid.contains(btn)) return; // ignore clicks outside buttons
+
+    // Remove active style from all visible buttons
+    grid.querySelectorAll('button').forEach(b => {
+      b.classList.remove('bg-black','text-white');
+      b.classList.add('bg-gray-200','text-gray-500');
+    });
+
+    // Add active style to clicked button
+    btn.classList.remove('bg-gray-200','text-gray-500');
+    btn.classList.add('bg-black','text-white');
+
+    // Enable SELECT button + change its text
+    if(selectBtn){
+      selectBtn.disabled = false;
+      selectBtn.classList.remove('bg-gray-200','text-gray-500','cursor-not-allowed');
+      selectBtn.classList.add('bg-black','text-white','cursor-pointer');
+
+      // Change button text
+      selectBtn.textContent = "Add to Cart";
+    }
+  });
+
+});
+// slider js
+
+
+ const swiper = new Swiper(".mySwiper", {
+    slidesPerView: 4,
+    spaceBetween: 30,
+    loop: true,
+    speed: 800,
+    grabCursor: true,
+
+    navigation: {
+      nextEl: ".custom-next",
+      prevEl: ".custom-prev",
+    },
+
+    breakpoints: {
+      0: { slidesPerView: 1 },
+      640: { slidesPerView: 2 },
+      1024: { slidesPerView: 4 }
+    }
+  });
+  
+</script>
 
 
 
@@ -205,7 +456,7 @@
   
 
   <!-- Answers in 3 columns -->
-  <div x-show="open" x-transition class="px-4 py-4 text-gray-700 bg-gray-50 grid grid-cols-3 gap-4">
+  <div x-show="open" x-transition class="px-4 py-4 text-gray-700 bg-gray-50 grid grid-cols-4 gap-4">
     <p><strong>Upper:</strong> Tree Knit – Made from Eucalyptus tree-derived TENCEL® Lyocell and recycled polyester</p>
     <p><strong>Midsole:</strong> SweetFoam® – Sugarcane-based EVA foam provides comfort and durability while being light on the planet</p>
     <p><strong>Outsole:</strong> Natural rubber – For added durability and traction</p>
@@ -322,6 +573,496 @@ style="background-color:#7C8C52">
   </a>
 </section>
 
+<!-- slider starts here -->
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<section class="w-full bg-[#e9e6df] py-16">
+
+  <!-- Header + Arrows -->
+  <div class="flex justify-between items-center mb-8 px-10">
+    <h2 class="tracking-widest text-sm text-gray-700">
+      YOU MAY ALSO LIKE
+    </h2>
+
+    <div class="flex gap-3">
+      <div class="custom-prev w-10 h-10 rounded-full border border-black flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition">
+        ❮
+      </div>
+      <div class="custom-next w-10 h-10 rounded-full bg-black text-white flex items-center justify-center cursor-pointer hover:bg-gray-800 transition">
+        ❯
+      </div>
+    </div>
+  </div>
+
+  <!-- Swiper -->
+  <div class="swiper mySwiper px-10">
+    <div class="swiper-wrapper">
+
+      <!-- Slide 1 -->
+     <div class="swiper-slide">
+  <a href="#"
+     class="relative group block bg-white p-6 pt-10 h-[420px] 
+            rounded-2xl shadow-xl overflow-hidden
+            transition-all duration-500 
+            hover:h-[560px] hover:-translate-y-2">
+
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
+      NEW
+    </span>
+
+    <img src="/images/sho2.png"
+         class="w-full h-48 object-cover rounded-xl"/>
+
+    <h1 class="mt-20 text-sm font-semibold text-black">
+      MEN'S VARSITY
+    </h1>
+
+    <p class="text-gray-500 text-sm">
+      Classic Everyday Sneaker
+    </p>
+
+    <p class="text-black font-semibold">
+      $120
+    </p>
+
+    <!-- Sizes (Normal Flow) -->
+    <div class="mt-4 opacity-0 translate-y-4
+                group-hover:opacity-100 
+                group-hover:translate-y-0
+                transition-all duration-300">
+
+      <div class="grid grid-cols-5 gap-2 mt-3">
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">6</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">7</div>
+
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
+          8
+          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
+        </div>
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">9</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11.5</div>
+
+      </div>
+    </div>
+
+  </a>
+</div>
+
+      <!-- Slide 2 -->
+ <div class="swiper-slide">
+  <a href="#"
+     class="relative group block bg-white p-6 pt-10 h-[420px] 
+            rounded-2xl shadow-xl overflow-hidden
+            transition-all duration-500 
+            hover:h-[560px] hover:-translate-y-2">
+
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
+      NEW
+    </span>
+
+    <img src="/images/sho2.png"
+         class="w-full h-48 object-cover rounded-xl"/>
+
+    <h1 class="mt-20 text-sm font-semibold text-black">
+      MEN'S VARSITY
+    </h1>
+
+    <p class="text-gray-500 text-sm">
+      Classic Everyday Sneaker
+    </p>
+
+    <p class="text-black font-semibold">
+      $120
+    </p>
+
+    <!-- Sizes (Normal Flow) -->
+    <div class="mt-4 opacity-0 translate-y-4
+                group-hover:opacity-100 
+                group-hover:translate-y-0
+                transition-all duration-300">
+
+      <div class="grid grid-cols-5 gap-2 mt-3">
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">6</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">7</div>
+
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
+          8
+          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
+        </div>
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">9</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11.5</div>
+
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+      <!-- Slide 3 -->
+   <div class="swiper-slide">
+  <a href="#"
+     class="relative group block bg-white p-6 pt-10 h-[420px] 
+            rounded-2xl shadow-xl overflow-hidden
+            transition-all duration-500 
+            hover:h-[560px] hover:-translate-y-2">
+
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
+      NEW
+    </span>
+
+    <img src="/images/sho2.png"
+         class="w-full h-48 object-cover rounded-xl"/>
+
+    <h1 class="mt-20 text-sm font-semibold text-black">
+      MEN'S VARSITY
+    </h1>
+
+    <p class="text-gray-500 text-sm">
+      Classic Everyday Sneaker
+    </p>
+
+    <p class="text-black font-semibold">
+      $120
+    </p>
+
+    <!-- Sizes (Normal Flow) -->
+    <div class="mt-4 opacity-0 translate-y-4
+                group-hover:opacity-100 
+                group-hover:translate-y-0
+                transition-all duration-300">
+
+      <div class="grid grid-cols-5 gap-2 mt-3">
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">6</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">7</div>
+
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
+          8
+          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
+        </div>
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">9</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11.5</div>
+
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+      <!-- Slide 4 -->
+    <div class="swiper-slide">
+  <a href="#"
+     class="relative group block bg-white p-6 pt-10 h-[420px] 
+            rounded-2xl shadow-xl overflow-hidden
+            transition-all duration-500 
+            hover:h-[560px] hover:-translate-y-2">
+
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
+      NEW
+    </span>
+
+    <img src="/images/sho2.png"
+         class="w-full h-48 object-cover rounded-xl"/>
+
+    <h1 class="mt-20 text-sm font-semibold text-black">
+      MEN'S VARSITY
+    </h1>
+
+    <p class="text-gray-500 text-sm">
+      Classic Everyday Sneaker
+    </p>
+
+    <p class="text-black font-semibold">
+      $120
+    </p>
+
+    <!-- Sizes (Normal Flow) -->
+    <div class="mt-4 opacity-0 translate-y-4
+                group-hover:opacity-100 
+                group-hover:translate-y-0
+                transition-all duration-300">
+
+      <div class="grid grid-cols-5 gap-2 mt-3">
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">6</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">7</div>
+
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
+          8
+          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
+        </div>
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">9</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11.5</div>
+
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+      <!-- Slide 5 -->
+ <div class="swiper-slide">
+  <a href="#"
+     class="relative group block bg-white p-6 pt-10 h-[420px] 
+            rounded-2xl shadow-xl overflow-hidden
+            transition-all duration-500 
+            hover:h-[560px] hover:-translate-y-2">
+
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
+      NEW
+    </span>
+
+    <img src="/images/sho2.png"
+         class="w-full h-48 object-cover rounded-xl"/>
+
+    <h1 class="mt-20 text-sm font-semibold text-black">
+      MEN'S VARSITY
+    </h1>
+
+    <p class="text-gray-500 text-sm">
+      Classic Everyday Sneaker
+    </p>
+
+    <p class="text-black font-semibold">
+      $120
+    </p>
+
+    <!-- Sizes (Normal Flow) -->
+    <div class="mt-4 opacity-0 translate-y-4
+                group-hover:opacity-100 
+                group-hover:translate-y-0
+                transition-all duration-300">
+
+      <div class="grid grid-cols-5 gap-2 mt-3">
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">6</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">7</div>
+
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
+          8
+          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
+        </div>
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">9</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11.5</div>
+
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+      <!-- Slide 6 -->
+     <div class="swiper-slide">
+  <a href="#"
+     class="relative group block bg-white p-6 pt-10 h-[420px] 
+            rounded-2xl shadow-xl overflow-hidden
+            transition-all duration-500 
+            hover:h-[560px] hover:-translate-y-2">
+
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
+      NEW
+    </span>
+
+    <img src="/images/sho2.png"
+         class="w-full h-48 object-cover rounded-xl"/>
+
+    <h1 class="mt-20 text-sm font-semibold text-black">
+      MEN'S VARSITY
+    </h1>
+
+    <p class="text-gray-500 text-sm">
+      Classic Everyday Sneaker
+    </p>
+
+    <p class="text-black font-semibold">
+      $120
+    </p>
+
+    <!-- Sizes (Normal Flow) -->
+    <div class="mt-4 opacity-0 translate-y-4
+                group-hover:opacity-100 
+                group-hover:translate-y-0
+                transition-all duration-300">
+
+      <div class="grid grid-cols-5 gap-2 mt-3">
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">6</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">7</div>
+
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
+          8
+          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
+        </div>
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">9</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11.5</div>
+
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+      <!-- Slide 7 -->
+   <div class="swiper-slide">
+  <a href="#"
+     class="relative group block bg-white p-6 pt-10 h-[420px] 
+            rounded-2xl shadow-xl overflow-hidden
+            transition-all duration-500 
+            hover:h-[560px] hover:-translate-y-2">
+
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
+      NEW
+    </span>
+
+    <img src="/images/sho2.png"
+         class="w-full h-48 object-cover rounded-xl"/>
+
+    <h1 class="mt-20 text-sm font-semibold text-black">
+      MEN'S VARSITY
+    </h1>
+
+    <p class="text-gray-500 text-sm">
+      Classic Everyday Sneaker
+    </p>
+
+    <p class="text-black font-semibold">
+      $120
+    </p>
+
+    <!-- Sizes (Normal Flow) -->
+    <div class="mt-4 opacity-0 translate-y-4
+                group-hover:opacity-100 
+                group-hover:translate-y-0
+                transition-all duration-300">
+
+      <div class="grid grid-cols-5 gap-2 mt-3">
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">6</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">7</div>
+
+        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
+          8
+          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
+        </div>
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">9</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11.5</div>
+
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+
+    </div>
+  </div>
+
+</section>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  new Swiper(".mySwiper", {
+    slidesPerView: 4,
+    spaceBetween: 30,
+    loop: true,
+    speed: 800,
+    grabCursor: true,
+    navigation: {
+      nextEl: ".custom-next",
+      prevEl: ".custom-prev",
+    },
+    breakpoints: {
+      0: { slidesPerView: 1 },
+      640: { slidesPerView: 2 },
+      1024: { slidesPerView: 4 }
+    }
+  });
+</script>
+
+<!-- Tailwind Utility Classes Shortcut -->
+<style>
+.card-style {
+  @apply relative block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-xl overflow-hidden
+  transition-all duration-500 ease-out hover:h-[520px] hover:-translate-y-2;
+}
+.badge {
+  @apply absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full;
+}
+.card-img {
+  @apply w-full h-48 object-cover rounded-xl;
+}
+.card-title {
+  @apply mt-20 text-sm font-semibold text-black;
+}
+.card-desc {
+  @apply text-gray-500 text-sm;
+}
+.card-price {
+  @apply text-black font-semibold;
+}
+</style>
+
+
+
+<!-- bottom -->
+
+
+
+
+
+
+<section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl" style="background-image: url('/images/animalbg.webp');">
+    <!-- Overlay -->
+   
+    <!-- Content -->
+    <div class="relative z-10 max-w-7xl mx-auto h-full flex flex-col justify-between md:px-8 text-white">
+        
+        <!-- Top Links -->
+        <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
+            <a href="#" class="hover:underline">Home/</a>
+            <a href="#" class="hover:underline">Men/</a>
+            <a href="#" class="hover:underline">Men's Dasher Nz Collection</a>
+        </div>
+
+        <!-- Heading near bottom -->
+        <p class="max-w-xl text-3xl  md:text-2xl font-medium font-serif lg:mb-8 leading-tight mb-12 md:mb-16 sm:text-sm">
+            Men's Dasher NZ Collection
+</p>
+
+    </div>
+</section>
 
 
 </x-layouts>
