@@ -39,55 +39,66 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =======================
-       SLIDER (CLEAN VERSION)
+       SLIDER LOGIC
     ======================= */
     const track      = document.getElementById('track');
     const slides     = document.querySelectorAll('.slide');
     const dottedArea = document.getElementById('dottedArea');
+    const cursorArrow = document.getElementById('cursorArrow');
 
-    if (!track || slides.length === 0 || !dottedArea) return;
+    if (track && slides.length > 0 && dottedArea) {
+        let currentIndex = Math.floor(slides.length / 2);
 
-    let currentIndex = Math.floor(slides.length / 2);
+        function updateSlider() {
+            const slideWidth = slides[0].offsetWidth;
+            const gap = window.innerWidth < 768 ? 24 : 100;
+            const offset = -(currentIndex * (slideWidth + gap));
 
-    function updateSlider() {
-        const slideWidth = slides[0].offsetWidth;
-        const gap = window.innerWidth < 768 ? 24 : 100;
-        const offset = -(currentIndex * (slideWidth + gap));
+            track.style.transform = `translateX(${offset}px)`;
 
-        track.style.transform = `translateX(${offset}px)`;
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'side-slide');
 
-        slides.forEach((slide, index) => {
-            slide.classList.remove('active', 'side-slide');
-
-            if (index === currentIndex) {
-                slide.classList.add('active');       // center (biggest)
-            } else {
-                slide.classList.add('side-slide');   // sides (smaller)
-            }
-        });
-    }
-
-    // Hover logic (left/right half)
-    dottedArea.addEventListener('mousemove', (e) => {
-        const rect = dottedArea.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        dottedArea.dataset.dir = x < rect.width / 2 ? 'left' : 'right';
-    });
-
-    // Click logic
-    dottedArea.addEventListener('click', () => {
-        if (dottedArea.dataset.dir === 'left') {
-            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        } else {
-            currentIndex = (currentIndex + 1) % slides.length;
+                if (index === currentIndex) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.add('side-slide');
+                }
+            });
         }
+
+        // Arrow direction follows mouse position
+        if (cursorArrow) {
+            dottedArea.addEventListener('mousemove', (e) => {
+                const rect = dottedArea.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const half = rect.width / 2;
+
+                cursorArrow.textContent = mouseX < half ? '←' : '→';
+                dottedArea.dataset.dir = mouseX < half ? 'left' : 'right';
+
+                cursorArrow.style.left = (e.clientX - rect.left - 20) + 'px';
+                cursorArrow.style.top = (e.clientY - rect.top - 20) + 'px';
+            });
+
+            dottedArea.addEventListener('mouseleave', () => {
+                cursorArrow.textContent = '→';
+            });
+        }
+
+        // Click logic
+        dottedArea.addEventListener('click', () => {
+            if (dottedArea.dataset.dir === 'left') {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            } else {
+                currentIndex = (currentIndex + 1) % slides.length;
+            }
+            updateSlider();
+        });
+
+        window.addEventListener('resize', updateSlider);
         updateSlider();
-    });
-
-    // Responsive fix
-    window.addEventListener('resize', updateSlider);
-
-    updateSlider();
+    }
 });
 
 /* =======================
@@ -103,68 +114,57 @@ window.handleHeroClick = (btn) => {
         .forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 };
-// --- 3. SLIDER LOGIC ---
-const track       = document.getElementById('track');
-const slides      = document.querySelectorAll('.slide');
-const dottedArea  = document.getElementById('dottedArea');
-const cursorArrow = document.getElementById('cursorArrow');
 
-let currentIndex = 0;
+/* =======================
+   SEARCH MODAL
+======================= */
+window.toggleSearch = () => {
+    const modal = document.getElementById('searchModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            const input = document.getElementById('searchInput');
+            if (input) input.focus();
+        }, 100);
+    }
+};
 
-function updateSlider() {
-    if (!track || slides.length === 0) return;
+window.closeSearch = () => {
+    const modal = document.getElementById('searchModal');
+    if (modal) modal.classList.add('hidden');
+};
+
+/* =======================
+   CART SIDEBAR
+======================= */
+window.openCart = () => {
+    const overlay = document.getElementById('cartOverlay');
+    const sidebar = document.getElementById('cartSidebar');
     
-    const slideWidth = slides[0].offsetWidth;
-    const gap        = 100; // ← match your CSS gap
-    const offset     = -(currentIndex * (slideWidth + gap));
+    if (overlay && sidebar) {
+        overlay.classList.add('active');
+        sidebar.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+window.closeCart = () => {
+    const overlay = document.getElementById('cartOverlay');
+    const sidebar = document.getElementById('cartSidebar');
     
-    track.style.transform = `translateX(${offset}px)`;
+    if (overlay && sidebar) {
+        overlay.classList.remove('active');
+        sidebar.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+};
 
-    // Optional: highlight active slide (if you use these classes in CSS)
-    slides.forEach((slide, index) => {
-        slide.classList.toggle('active', index === currentIndex);
-        slide.classList.toggle('side-slide', index !== currentIndex);
-    });
-}
-
-// ── Arrow direction follows mouse position ──
-if (cursorArrow && dottedArea) {
-    dottedArea.addEventListener('mousemove', (e) => {
-        const rect = dottedArea.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;           // position inside container
-        const half   = rect.width / 2;
-
-        // Show left or right arrow
-        cursorArrow.textContent = mouseX < half ? '←' : '→';
-
-        // Position arrow near cursor (you can offset it if you want)
-        cursorArrow.style.left = (e.clientX - rect.left - 20) + 'px'; // -20 = small offset
-        cursorArrow.style.top  = (e.clientY - rect.top - 20)  + 'px';
-    });
-
-    // Optional: reset to right arrow when mouse leaves
-    dottedArea.addEventListener('mouseleave', () => {
-        cursorArrow.textContent = '→';
-    });
-}
-
-// ── Click to advance (still works everywhere) ──
-if (dottedArea) {
-    dottedArea.addEventListener('click', (e) => {
-        const rect   = dottedArea.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
-        const half   = rect.width / 2;
-
-        // Optional: left side = previous, right side = next
-        if (mouseX < half) {
-            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        } else {
-            currentIndex = (currentIndex + 1) % slides.length;
-        }
-
-        updateSlider();
-    });
-}
-
-// Initial setup
-updateSlider();
+/* =======================
+   KEYBOARD SHORTCUTS
+======================= */
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        window.closeCart();
+        window.closeSearch();
+    }
+});

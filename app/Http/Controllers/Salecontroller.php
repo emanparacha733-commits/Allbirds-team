@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class SaleController extends Controller
 {
@@ -11,19 +12,85 @@ class SaleController extends Controller
         return view('shop.sale.index');
     }
 
-    public function men()
+    // ========================================
+    // MEN'S SALE
+    // ========================================
+    
+    public function men(Request $request)
     {
         return view('shop.sale.men');
     }
 
-    public function menShoes()
+    public function menShoes(Request $request)
     {
         return view('shop.sale.men-shoes');
     }
 
-    public function menShoesCategory($category)
+    public function menShoesCategory(Request $request, $category)
     {
-        return view('shop.sale.men-shoes-category', compact('category'));
+        $query = Product::where('category', $category)
+                       ->where('gender', 'men')
+                       ->where('type', 'shoes')
+                       ->where('on_sale', true)
+                       ->whereNotNull('sale_price');
+
+        $sort = $request->get('sort', 'featured');
+        $query = $this->applySorting($query, $sort);
+
+        $products = $query->get();
+
+        return view('shop.sale.men-shoes-category', [
+            'category' => $category,
+            'products' => $products
+        ]);
+    }
+
+    public function menApparel(Request $request)
+    {
+        return view('shop.sale.men-apparel');
+    }
+
+    public function menApparelCategory(Request $request, $category)
+    {
+        $query = Product::where('category', $category)
+                       ->where('gender', 'men')
+                       ->where('type', 'apparel')
+                       ->where('on_sale', true)
+                       ->whereNotNull('sale_price');
+
+        $sort = $request->get('sort', 'featured');
+        $query = $this->applySorting($query, $sort);
+
+        $products = $query->get();
+
+        return view('shop.sale.men-apparel-category', [
+            'category' => $category,
+            'products' => $products
+        ]);
+    }
+
+    public function menSocks(Request $request)
+    {
+        return view('shop.sale.men-socks');
+    }
+
+    public function menSocksCategory(Request $request, $category)
+    {
+        $query = Product::where('category', $category)
+                       ->where('gender', 'men')
+                       ->where('type', 'socks')
+                       ->where('on_sale', true)
+                       ->whereNotNull('sale_price');
+
+        $sort = $request->get('sort', 'featured');
+        $query = $this->applySorting($query, $sort);
+
+        $products = $query->get();
+
+        return view('shop.sale.men-socks-category', [
+            'category' => $category,
+            'products' => $products
+        ]);
     }
 
     public function menClearance()
@@ -36,19 +103,85 @@ class SaleController extends Controller
         return view('shop.sale.men-last-chance');
     }
 
-    public function women()
+    // ========================================
+    // WOMEN'S SALE
+    // ========================================
+    
+    public function women(Request $request)
     {
         return view('shop.sale.women');
     }
 
-    public function womenShoes()
+    public function womenShoes(Request $request)
     {
         return view('shop.sale.women-shoes');
     }
 
-    public function womenShoesCategory($category)
+    public function womenShoesCategory(Request $request, $category)
     {
-        return view('shop.sale.women-shoes-category', compact('category'));
+        $query = Product::where('category', $category)
+                       ->where('gender', 'women')
+                       ->where('type', 'shoes')
+                       ->where('on_sale', true)
+                       ->whereNotNull('sale_price');
+
+        $sort = $request->get('sort', 'featured');
+        $query = $this->applySorting($query, $sort);
+
+        $products = $query->get();
+
+        return view('shop.sale.women-shoes-category', [
+            'category' => $category,
+            'products' => $products
+        ]);
+    }
+
+    public function womenApparel(Request $request)
+    {
+        return view('shop.sale.women-apparel');
+    }
+
+    public function womenApparelCategory(Request $request, $category)
+    {
+        $query = Product::where('category', $category)
+                       ->where('gender', 'women')
+                       ->where('type', 'apparel')
+                       ->where('on_sale', true)
+                       ->whereNotNull('sale_price');
+
+        $sort = $request->get('sort', 'featured');
+        $query = $this->applySorting($query, $sort);
+
+        $products = $query->get();
+
+        return view('shop.sale.women-apparel-category', [
+            'category' => $category,
+            'products' => $products
+        ]);
+    }
+
+    public function womenSocks(Request $request)
+    {
+        return view('shop.sale.women-socks');
+    }
+
+    public function womenSocksCategory(Request $request, $category)
+    {
+        $query = Product::where('category', $category)
+                       ->where('gender', 'women')
+                       ->where('type', 'socks')
+                       ->where('on_sale', true)
+                       ->whereNotNull('sale_price');
+
+        $sort = $request->get('sort', 'featured');
+        $query = $this->applySorting($query, $sort);
+
+        $products = $query->get();
+
+        return view('shop.sale.women-socks-category', [
+            'category' => $category,
+            'products' => $products
+        ]);
     }
 
     public function womenClearance()
@@ -61,13 +194,55 @@ class SaleController extends Controller
         return view('shop.sale.women-last-chance');
     }
 
+    // ========================================
+    // GENERAL SALE
+    // ========================================
+    
+    public function shoes()
+    {
+        return view('shop.sale.shoes');
+    }
+
     public function category($category)
     {
         return view('shop.sale.category', compact('category'));
     }
 
-    public function shoes()
+    // ========================================
+    // HELPER METHOD
+    // ========================================
+    
+    /**
+     * Apply sorting to query based on sort parameter
+     */
+    private function applySorting($query, $sort)
     {
-        return view('shop.sale.shoes');
+        switch ($sort) {
+            case 'best_selling':
+            case 'best':
+                return $query->orderBy('sales_count', 'desc');
+            
+            case 'alpha_asc':
+            case 'az':
+                return $query->orderBy('name', 'asc');
+            
+            case 'alpha_desc':
+            case 'za':
+                return $query->orderBy('name', 'desc');
+            
+            case 'price_low':
+                return $query->orderBy('sale_price', 'asc');
+            
+            case 'price_high':
+                return $query->orderBy('sale_price', 'desc');
+            
+            case 'discount':
+                return $query->orderByRaw('((price - sale_price) / price * 100) DESC');
+            
+            case 'featured':
+            default:
+                return $query->orderBy('is_featured', 'desc')
+                            ->orderBy('created_at', 'desc');
+        }
     }
 }

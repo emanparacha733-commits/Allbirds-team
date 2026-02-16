@@ -2,11 +2,10 @@
 
 @section('content')
 
-
     <!-- Page Header -->
     <div class="max-w-[1400px] mx-auto px-6 py-8 text-center">
         <h1 class="text-4xl md:text-5xl font-normal mb-4" style="font-family: 'Georgia', serif;">
-            Men's {{ ucfirst($category) }}
+            Women's {{ ucfirst($category) }}
         </h1>
         <p class="text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Crafted from soft, airy, natural materials like organic cotton and our breathable Tree Knit, these pieces offer exceptional comfort.
@@ -141,7 +140,7 @@
                 </svg>
                 <h2 class="text-3xl font-normal mb-3" style="font-family: 'Georgia', serif;">No Products Found</h2>
                 <p class="text-gray-600 mb-8">We don't have any {{ $category }} available right now.</p>
-                <a href="{{ route('men.apparel') }}" class="inline-block bg-black text-white px-8 py-4 rounded-full font-semibold text-sm uppercase tracking-wide hover:bg-gray-800 transition">
+                <a href="{{ route('women.apparel') }}" class="inline-block bg-black text-white px-8 py-4 rounded-full font-semibold text-sm uppercase tracking-wide hover:bg-gray-800 transition">
                     Browse All Apparel
                 </a>
             </div>
@@ -168,5 +167,5 @@
         });
     });
     </script>
-</div>
+
 @endsection

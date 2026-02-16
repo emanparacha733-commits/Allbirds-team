@@ -11,13 +11,13 @@
             {{-- Breadcrumb --}}
             <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
                 <a href="{{ url('/') }}" class="hover:underline">Home/</a>
-                <a href="{{ url('/men') }}" class="hover:underline">Men/</a>
+                <a href="{{ url('/women') }}" class="hover:underline">Women/</a>
                 <a href="#" class="hover:underline">{{ ucfirst($category) }} Socks</a>
             </div>
 
             {{-- Title --}}
             <p class="max-w-xl text-3xl md:text-2xl font-medium font-serif lg:mb-8 leading-tight mb-12 md:mb-16 sm:text-sm">
-                Men's {{ ucfirst($category) }} Socks
+                Women's {{ ucfirst($category) }} Socks
             </p>
         </div>
     </section>

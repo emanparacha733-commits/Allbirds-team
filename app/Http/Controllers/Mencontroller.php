@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product; // Make sure to import your Model!
+use App\Models\Product;
 
 class MenController extends Controller
 {
@@ -37,12 +37,20 @@ class MenController extends Controller
         return view('shop.men.apparel-collection', compact('slug'));
     }
 
-    // Fixed: Logic moved inside the method
-    public function apparelCategory($category)
+    public function apparelCategory(Request $request, $category)
     {
-        $products = Product::where('category', $category)
-                    ->where('gender', 'men')
-                    ->get();
+        $query = Product::where('gender', 'men')
+                       ->where('type', 'apparel');
+        
+        if ($category !== 'all-apparel') {
+            $query->where('category', $category);
+        }
+
+        // Apply sorting
+        $sort = $request->get('sort', 'featured');
+        $query = $this->applySorting($query, $sort);
+        
+        $products = $query->get();
 
         return view('shop.men.apparel-category', [
             'category' => $category,
@@ -50,22 +58,90 @@ class MenController extends Controller
         ]);
     }
 
-    public function socks()
+    /**
+     * Show all men's socks (all categories)
+     */
+    public function socks(Request $request)
     {
-        return view('shop.men.socks');
+        $query = Product::where('gender', 'men')
+                       ->where('type', 'socks');
+
+        // Apply sorting
+        $sort = $request->get('sort', 'featured');
+        $query = $this->applySorting($query, $sort);
+
+        $products = $query->get();
+
+        return view('shop.men.socks', compact('products'));
     }
 
-    // Fixed: Logic moved inside the method
-    public function socksCategory($category)
+    /**
+     * Show men's socks by specific category
+     */
+    public function socksCategory(Request $request, $category)
     {
-        // This fetches the products needed for the grid in your image
-        $products = Product::where('category', $category)
-                    ->where('gender', 'men')
-                    ->get();
+        $query = Product::where('category', $category)
+                       ->where('gender', 'men')
+                       ->where('type', 'socks');
+
+        // Apply sorting
+        $sort = $request->get('sort', 'featured');
+        $query = $this->applySorting($query, $sort);
+
+        $products = $query->get();
 
         return view('shop.men.socks-category', [
             'category' => $category,
             'products' => $products
         ]);
+    }
+
+    public function shoesCategory(Request $request, $category)
+    {
+        $query = Product::where('category', $category)
+                       ->where('gender', 'men')
+                       ->where('type', 'shoes');
+
+        // Apply sorting
+        $sort = $request->get('sort', 'featured');
+        $query = $this->applySorting($query, $sort);
+
+        $products = $query->get();
+
+        return view('shop.men.shoes-category', [
+            'category' => $category,
+            'products' => $products
+        ]);
+    }
+
+    /**
+     * Apply sorting to query based on sort parameter
+     */
+    private function applySorting($query, $sort)
+    {
+        switch ($sort) {
+            case 'best_selling':
+            case 'best':
+                return $query->orderBy('sales_count', 'desc');
+            
+            case 'alpha_asc':
+            case 'az':
+                return $query->orderBy('name', 'asc');
+            
+            case 'alpha_desc':
+            case 'za':
+                return $query->orderBy('name', 'desc');
+            
+            case 'price_low':
+                return $query->orderBy('price', 'asc');
+            
+            case 'price_high':
+                return $query->orderBy('price', 'desc');
+            
+            case 'featured':
+            default:
+                return $query->orderBy('is_featured', 'desc')
+                            ->orderBy('created_at', 'desc');
+        }
     }
 }

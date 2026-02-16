@@ -613,6 +613,7 @@
                                     <div class="space-y-3">
                                         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Socks</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
+                                            <li><a href="{{ route('men.socks') }}" class="hover:underline italic">All Socks</a></li>
                                             <li><a href="{{ route('men.socks.category', 'no-show') }}" class="hover:underline">No Show</a></li>
                                             <li><a href="{{ route('men.socks.category', 'ankle') }}" class="hover:underline">Ankle</a></li>
                                             <li><a href="{{ route('men.socks.category', 'crew') }}" class="hover:underline">Crew</a></li>
@@ -621,9 +622,9 @@
                                     <div class="space-y-3">
                                         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Men's Apparel</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
+                                            <li><a href="{{ route('men.apparel') }}" class="hover:underline italic">All Apparel</a></li>
                                             <li><a href="{{ route('men.apparel.category', 'tees') }}" class="hover:underline">Tees</a></li>
                                             <li><a href="{{ route('men.apparel.category', 'sweats') }}" class="hover:underline">Sweats</a></li>
-                                            <li><a href="{{ route('men.apparel') }}" class="hover:underline">All Apparel</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -658,9 +659,25 @@
                                     <div class="space-y-3">
                                         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sale Shoes</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
-                                            <li><a href="{{ route('sale.men.shoes') }}" class="hover:underline italic">Shop All Sale</a></li>
+                                            <li><a href="{{ route('sale.men.shoes') }}" class="hover:underline italic">Shop All Sale Shoes</a></li>
                                             <li><a href="{{ route('sale.men.shoes.category', 'sneakers') }}" class="hover:underline">Sneakers</a></li>
                                             <li><a href="{{ route('sale.men.shoes.category', 'running') }}" class="hover:underline">Running Shoes</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sale Apparel</h3>
+                                        <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
+                                            <li><a href="{{ route('sale.men.apparel') }}" class="hover:underline italic">Shop All Sale Apparel</a></li>
+                                            <li><a href="{{ route('sale.men.apparel.category', 'tees') }}" class="hover:underline">Tees</a></li>
+                                            <li><a href="{{ route('sale.men.apparel.category', 'sweats') }}" class="hover:underline">Sweats</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sale Socks</h3>
+                                        <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
+                                            <li><a href="{{ route('sale.men.socks') }}" class="hover:underline italic">Shop All Sale Socks</a></li>
+                                            <li><a href="{{ route('sale.men.socks.category', 'crew') }}" class="hover:underline">Crew Socks</a></li>
+                                            <li><a href="{{ route('sale.men.socks.category', 'ankle') }}" class="hover:underline">Ankle Socks</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -734,28 +751,29 @@
                         </div>
 
                         <!-- Women Apparel -->
-                        <div class="sub-panel" id="women-apparel">
+                         <div class="sub-panel" id="women-apparel">
                             <div class="panel-inner">
                                 <div class="flex gap-14">
                                     <ul class="text-[11px] font-bold space-y-4 tracking-tighter uppercase text-black">
-                                        <li><a href="#" class="hover:underline">New Arrivals</a></li>
-                                        <li><a href="#" class="hover:underline">Bestsellers</a></li>
-                                        <li><a href="#" class="hover:underline">Tree Apparel</a></li>
+                                        <li><a href="{{ route('women.apparel.collection', 'new-arrivals') }}" class="hover:underline">New Arrivals</a></li>
+                                        <li><a href="{{ route('women.apparel.collection', 'bestsellers') }}" class="hover:underline">Bestsellers</a></li>
+                                        <li><a href="{{ route('women.apparel.collection', 'tree-apparel') }}" class="hover:underline">Tree Apparel</a></li>
                                     </ul>
                                     <div class="space-y-3">
                                         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Socks</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
-                                            <li><a href="#" class="hover:underline">No Show</a></li>
-                                            <li><a href="#" class="hover:underline">Ankle</a></li>
-                                            <li><a href="#" class="hover:underline">Crew</a></li>
+                                            <li><a href="{{ route('women.socks') }}" class="hover:underline italic">All Socks</a></li>
+                                            <li><a href="{{ route('women.socks.category', 'no-show') }}" class="hover:underline">No Show</a></li>
+                                            <li><a href="{{ route('women.socks.category', 'ankle') }}" class="hover:underline">Ankle</a></li>
+                                            <li><a href="{{ route('women.socks.category', 'crew') }}" class="hover:underline">Crew</a></li>
                                         </ul>
                                     </div>
                                     <div class="space-y-3">
                                         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Women's Apparel</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
-                                            <li><a href="#" class="hover:underline">Tees</a></li>
-                                            <li><a href="#" class="hover:underline">Leggings</a></li>
-                                            <li><a href="#" class="hover:underline">All Apparel</a></li>
+                                           <li><a href="{{ route('women.apparel') }}" class="hover:underline italic">All Apparel</a></li>
+                                           <li><a href="{{ route('women.apparel.category', 'tees') }}" class="hover:underline">Tees</a></li>
+                                           <li><a href="{{ route('women.apparel.category', 'leggings') }}" class="hover:underline">Leggings</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -783,16 +801,32 @@
                             <div class="panel-inner">
                                 <div class="flex gap-14">
                                     <ul class="text-[11px] font-bold space-y-4 tracking-tighter uppercase text-black">
-                                        <li><a href="#" class="hover:underline text-red-600">Up to 50% Off</a></li>
-                                        <li><a href="#" class="hover:underline">Clearance</a></li>
-                                        <li><a href="#" class="hover:underline">Last Chance</a></li>
+                                        <li><a href="{{ route('sale.women', ['discount' => '50']) }}" class="hover:underline text-red-600">Up to 50% Off</a></li>
+                                        <li><a href="{{ route('sale.women.clearance') }}" class="hover:underline">Clearance</a></li>
+                                        <li><a href="{{ route('sale.women.last-chance') }}" class="hover:underline">Last Chance</a></li>
                                     </ul>
                                     <div class="space-y-3">
                                         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sale Shoes</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
-                                            <li><a href="#" class="hover:underline italic">Shop All Sale</a></li>
-                                            <li><a href="#" class="hover:underline">Sneakers</a></li>
-                                            <li><a href="#" class="hover:underline">Flats</a></li>
+                                            <li><a href="{{ route('sale.women.shoes') }}" class="hover:underline italic">Shop All Sale Shoes</a></li>
+                                            <li><a href="{{ route('sale.women.shoes.category', 'sneakers') }}" class="hover:underline">Sneakers</a></li>
+                                            <li><a href="{{ route('sale.women.shoes.category', 'flats') }}" class="hover:underline">Flats</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sale Apparel</h3>
+                                        <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
+                                            <li><a href="{{ route('sale.women.apparel') }}" class="hover:underline italic">Shop All Sale Apparel</a></li>
+                                            <li><a href="{{ route('sale.women.apparel.category', 'tees') }}" class="hover:underline">Tees</a></li>
+                                            <li><a href="{{ route('sale.women.apparel.category', 'leggings') }}" class="hover:underline">Leggings</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sale Socks</h3>
+                                        <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
+                                            <li><a href="{{ route('sale.women.socks') }}" class="hover:underline italic">Shop All Sale Socks</a></li>
+                                            <li><a href="{{ route('sale.women.socks.category', 'crew') }}" class="hover:underline">Crew Socks</a></li>
+                                            <li><a href="{{ route('sale.women.socks.category', 'ankle') }}" class="hover:underline">Ankle Socks</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -816,6 +850,7 @@
                             <button class="sub-tab sale-tab active" onmouseenter="switchPanel('sale','featured',this)">Featured Deals</button>
                             <button class="sub-tab" onmouseenter="switchPanel('sale','shoes',this)">Shoes</button>
                             <button class="sub-tab" onmouseenter="switchPanel('sale','apparel',this)">Apparel</button>
+                            <button class="sub-tab" onmouseenter="switchPanel('sale','socks',this)">Socks</button>
                         </div>
 
                         <!-- Sale Featured -->
@@ -823,25 +858,24 @@
                             <div class="panel-inner">
                                 <div class="flex gap-14">
                                     <ul class="text-[11px] font-bold space-y-4 tracking-tighter uppercase text-black">
-                                        <li><a href="#" class="hover:underline text-red-600">Up to 50% Off</a></li>
-                                        <li><a href="#" class="hover:underline">Clearance</a></li>
-                                        <li><a href="#" class="hover:underline">Last Chance</a></li>
+                                        <li><a href="{{ route('sale.index') }}" class="hover:underline text-red-600">Up to 50% Off</a></li>
+                                        <li><a href="{{ route('sale.men.clearance') }}" class="hover:underline">Men's Clearance</a></li>
+                                        <li><a href="{{ route('sale.women.clearance') }}" class="hover:underline">Women's Clearance</a></li>
                                     </ul>
                                     <div class="space-y-3">
-                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sale Shoes</h3>
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Men's Sale</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
-                                            <li><a href="#" class="hover:underline italic">Shop All Sale</a></li>
-                                            <li><a href="#" class="hover:underline">Sneakers</a></li>
-                                            <li><a href="#" class="hover:underline">Running Shoes</a></li>
-                                            <li><a href="#" class="hover:underline">Slip Ons</a></li>
+                                            <li><a href="{{ route('sale.men.shoes') }}" class="hover:underline">Sale Shoes</a></li>
+                                            <li><a href="{{ route('sale.men.apparel') }}" class="hover:underline">Sale Apparel</a></li>
+                                            <li><a href="{{ route('sale.men.socks') }}" class="hover:underline">Sale Socks</a></li>
                                         </ul>
                                     </div>
                                     <div class="space-y-3">
-                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Popular Now</h3>
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Women's Sale</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
-                                            <li><a href="#" class="hover:underline">Tree Runners</a></li>
-                                            <li><a href="#" class="hover:underline">Wool Runners</a></li>
-                                            <li><a href="#" class="hover:underline">Varsity</a></li>
+                                            <li><a href="{{ route('sale.women.shoes') }}" class="hover:underline">Sale Shoes</a></li>
+                                            <li><a href="{{ route('sale.women.apparel') }}" class="hover:underline">Sale Apparel</a></li>
+                                            <li><a href="{{ route('sale.women.socks') }}" class="hover:underline">Sale Socks</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -851,9 +885,9 @@
                                         <span class="absolute bottom-4 left-4 text-white font-bold uppercase text-[9px] bg-red-600 px-2 py-1">Up to 50% Off</span>
                                     </a>
                                     <div class="flex flex-col gap-3">
-                                        <a href="{{ route('sale.category', 'sneakers') }}" class="mega-menu-image w-44 h-[138px]">
+                                        <a href="{{ route('sale.shoes') }}" class="mega-menu-image w-44 h-[138px]">
                                             <img src="{{ asset('images/img4.webp') }}" class="h-full w-full object-cover">
-                                            <span class="absolute bottom-3 left-3 text-white font-bold uppercase text-[8px]">Sale Sneakers</span>
+                                            <span class="absolute bottom-3 left-3 text-white font-bold uppercase text-[8px]">Sale Shoes</span>
                                         </a>
                                         <a href="{{ route('sale.category', 'apparel') }}" class="mega-menu-image w-44 h-[138px]">
                                             <img src="{{ asset('images/img5.webp') }}" class="h-full w-full object-cover">
@@ -869,23 +903,28 @@
                             <div class="panel-inner">
                                 <div class="flex gap-14">
                                     <ul class="text-[11px] font-bold space-y-4 tracking-tighter uppercase text-black">
-                                        <li><a href="#" class="hover:underline text-red-600">Men's Sale Shoes</a></li>
-                                        <li><a href="#" class="hover:underline text-red-600">Women's Sale Shoes</a></li>
-                                        <li><a href="#" class="hover:underline">Clearance</a></li>
+                                        <li><a href="{{ route('sale.men.shoes') }}" class="hover:underline text-red-600">Men's Sale Shoes</a></li>
+                                        <li><a href="{{ route('sale.women.shoes') }}" class="hover:underline text-red-600">Women's Sale Shoes</a></li>
                                     </ul>
                                     <div class="space-y-3">
-                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">By Style</h3>
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Men's Styles</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
-                                            <li><a href="#" class="hover:underline italic">Shop All</a></li>
-                                            <li><a href="#" class="hover:underline">Sneakers</a></li>
-                                            <li><a href="#" class="hover:underline">Running</a></li>
-                                            <li><a href="#" class="hover:underline">Slip Ons</a></li>
+                                            <li><a href="{{ route('sale.men.shoes.category', 'sneakers') }}" class="hover:underline">Sneakers</a></li>
+                                            <li><a href="{{ route('sale.men.shoes.category', 'running') }}" class="hover:underline">Running</a></li>
+                                            <li><a href="{{ route('sale.men.shoes.category', 'slip-ons') }}" class="hover:underline">Slip Ons</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Women's Styles</h3>
+                                        <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
+                                            <li><a href="{{ route('sale.women.shoes.category', 'sneakers') }}" class="hover:underline">Sneakers</a></li>
+                                            <li><a href="{{ route('sale.women.shoes.category', 'flats') }}" class="hover:underline">Flats</a></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="flex gap-3 ml-8">
                                     <a href="{{ route('sale.shoes') }}" class="mega-menu-image w-60 h-72">
-                                        <img src="https://images.allbirds.com/image/fetch/q_auto,f_auto/https://v1.allbirds.com/thp/sale-shoes.jpg" class="h-full w-full object-cover">
+                                        <img src="{{ asset('images/img5.webp') }}" class="h-full w-full object-cover">
                                         <span class="absolute bottom-4 left-4 text-white font-bold uppercase text-[9px] bg-red-600 px-2 py-1">Sale Shoes</span>
                                     </a>
                                 </div>
@@ -897,17 +936,21 @@
                             <div class="panel-inner">
                                 <div class="flex gap-14">
                                     <ul class="text-[11px] font-bold space-y-4 tracking-tighter uppercase text-black">
-                                        <li><a href="#" class="hover:underline text-red-600">Men's Sale Apparel</a></li>
-                                        <li><a href="#" class="hover:underline text-red-600">Women's Sale Apparel</a></li>
-                                        <li><a href="#" class="hover:underline">Clearance</a></li>
+                                        <li><a href="{{ route('sale.men.apparel') }}" class="hover:underline text-red-600">Men's Sale Apparel</a></li>
+                                        <li><a href="{{ route('sale.women.apparel') }}" class="hover:underline text-red-600">Women's Sale Apparel</a></li>
                                     </ul>
                                     <div class="space-y-3">
-                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">By Category</h3>
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Men's Apparel</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
-                                            <li><a href="#" class="hover:underline italic">Shop All</a></li>
-                                            <li><a href="#" class="hover:underline">Tees</a></li>
-                                            <li><a href="#" class="hover:underline">Sweats</a></li>
-                                            <li><a href="#" class="hover:underline">Socks</a></li>
+                                            <li><a href="{{ route('sale.men.apparel.category', 'tees') }}" class="hover:underline">Tees</a></li>
+                                            <li><a href="{{ route('sale.men.apparel.category', 'sweats') }}" class="hover:underline">Sweats</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Women's Apparel</h3>
+                                        <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
+                                            <li><a href="{{ route('sale.women.apparel.category', 'tees') }}" class="hover:underline">Tees</a></li>
+                                            <li><a href="{{ route('sale.women.apparel.category', 'leggings') }}" class="hover:underline">Leggings</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -915,6 +958,40 @@
                                     <a href="{{ route('sale.category', 'apparel') }}" class="mega-menu-image w-60 h-72">
                                         <img src="{{ asset('images/img9.webp') }}" class="h-full w-full object-cover">
                                         <span class="absolute bottom-4 left-4 text-white font-bold uppercase text-[9px] bg-red-600 px-2 py-1">Sale Apparel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sale Socks -->
+                        <div class="sub-panel" id="sale-socks">
+                            <div class="panel-inner">
+                                <div class="flex gap-14">
+                                    <ul class="text-[11px] font-bold space-y-4 tracking-tighter uppercase text-black">
+                                        <li><a href="{{ route('sale.men.socks') }}" class="hover:underline text-red-600">Men's Sale Socks</a></li>
+                                        <li><a href="{{ route('sale.women.socks') }}" class="hover:underline text-red-600">Women's Sale Socks</a></li>
+                                    </ul>
+                                    <div class="space-y-3">
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Men's Socks</h3>
+                                        <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
+                                            <li><a href="{{ route('sale.men.socks.category', 'crew') }}" class="hover:underline">Crew</a></li>
+                                            <li><a href="{{ route('sale.men.socks.category', 'ankle') }}" class="hover:underline">Ankle</a></li>
+                                            <li><a href="{{ route('sale.men.socks.category', 'no-show') }}" class="hover:underline">No Show</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Women's Socks</h3>
+                                        <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
+                                            <li><a href="{{ route('sale.women.socks.category', 'crew') }}" class="hover:underline">Crew</a></li>
+                                            <li><a href="{{ route('sale.women.socks.category', 'ankle') }}" class="hover:underline">Ankle</a></li>
+                                            <li><a href="{{ route('sale.women.socks.category', 'no-show') }}" class="hover:underline">No Show</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3 ml-8">
+                                    <a href="{{ route('sale.men.socks') }}" class="mega-menu-image w-60 h-72">
+                                        <img src="{{ asset('images/img5.webp') }}" class="h-full w-full object-cover">
+                                        <span class="absolute bottom-4 left-4 text-white font-bold uppercase text-[9px] bg-red-600 px-2 py-1">Sale Socks</span>
                                     </a>
                                 </div>
                             </div>
@@ -928,17 +1005,68 @@
             <!-- Right icons -->
             <div class="flex-1 flex items-center justify-end space-x-5 text-gray-800">
                 <a href="#" class="text-[12px] font-bold hover:underline">About</a>
-                <a href="#" class="text-[12px] font-bold hover:underline">ReRun</a>
-                <a href="#"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></a>
+               <a href="{{ url()->current() }}" class="text-[12px] font-bold hover:underline">ReRun</a>
+               <a href="{{ route('search') }}" class="block">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+    </svg>
+</a>
                 <a href="#"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path></svg></a>
                 <a href="#"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"></path></svg></a>
                 <button onclick="openCart()" class="relative bg-transparent border-0 cursor-pointer p-0">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"></path></svg>
-                    <span class="absolute -top-1.5 -right-1.5 bg-black text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold">1</span>
-                </button>
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+        <path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"></path>
+    </svg>
+    @php
+        $cartCount = array_sum(array_column(session('cart', []), 'quantity'));
+    @endphp
+    @if($cartCount > 0)
+    <span class="absolute -top-1.5 -right-1.5 bg-black text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold">{{ $cartCount }}</span>
+    @endif
+</button>
             </div>
         </div>
     </nav>
+    <!-- Search Modal -->
+<div id="searchModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[9999]" style="top: 0;" onclick="closeSearch()">
+    <div class="bg-white w-full max-w-2xl mx-auto mt-32 rounded-lg shadow-2xl" onclick="event.stopPropagation()">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Search</h2>
+                <button onclick="closeSearch()" class="text-gray-400 hover:text-black text-3xl leading-none">&times;</button>
+            </div>
+            
+            <form action="{{ route('search') }}" method="GET">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        name="q" 
+                        id="searchInput"
+                        placeholder="Search for shoes, apparel, or collections..." 
+                        class="w-full border-2 border-gray-300 rounded-lg px-6 py-4 pr-12 text-lg focus:outline-none focus:border-black"
+                    >
+                    <button type="submit" class="absolute right-4 top-1/2 -translate-y-1/2">
+                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Quick Links -->
+            <div class="mt-6">
+                <p class="text-sm text-gray-500 mb-3 font-semibold">Popular Searches:</p>
+                <div class="flex flex-wrap gap-2">
+                    <a href="{{ route('men.shoes.category', 'sneakers') }}" class="px-4 py-2 bg-gray-100 rounded-full text-sm hover:bg-gray-200 transition">Sneakers</a>
+                    <a href="{{ route('men.shoes.category', 'slip-ons') }}" class="px-4 py-2 bg-gray-100 rounded-full text-sm hover:bg-gray-200 transition">Slip Ons</a>
+                    <a href="{{ route('sale.index') }}" class="px-4 py-2 bg-red-100 text-red-700 rounded-full text-sm hover:bg-red-200 transition">Sale</a>
+                    <a href="{{ route('men.apparel') }}" class="px-4 py-2 bg-gray-100 rounded-full text-sm hover:bg-gray-200 transition">Apparel</a>
+                    <a href="{{ route('men.socks') }}" class="px-4 py-2 bg-gray-100 rounded-full text-sm hover:bg-gray-200 transition">Socks</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </header>
 
 <main>
@@ -959,7 +1087,7 @@
     
     <!-- Cart Header -->
     <div class="cart-header">
-        <h2 class="cart-title">CART (<span id="cartCount">1</span>)</h2>
+        <h2 class="cart-title">CART (<span id="cartCount">{{ count(session('cart', [])) }}</span>)</h2>
         <button class="cart-close" id="cartClose">&times;</button>
     </div>
     
@@ -967,43 +1095,74 @@
     <div class="cart-body" id="cartBody">
         <!-- Cart Items Container -->
         <div class="cart-items" id="cartItems">
-            <!-- Example cart item -->
-            <div class="cart-item">
-                <div class="cart-item-image">
-                    <img src="https://images.allbirds.com/image/fetch/q_auto,f_auto/w_100/https://v1.allbirds.com/products/tree-runner.jpg" alt="Product">
-                </div>
-                <div class="cart-item-details">
-                    <h3 class="cart-item-name">MEN'S TREE RUNNER NZ</h3>
-                    <p class="cart-item-variant">Natural White (Natural White Sole)</p>
-                    <p class="cart-item-size">Size: 8.5</p>
-                    <button class="cart-item-remove">Remove</button>
-                </div>
-                <div class="cart-item-right">
-                    <p class="cart-item-price">$100</p>
-                    <div class="cart-item-quantity">
-                        <button class="qty-btn" onclick="decreaseQty(this)">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M3 8h10" stroke="currentColor" stroke-width="1.5"/>
-                            </svg>
-                        </button>
-                        <input type="number" value="1" min="1" class="qty-input" readonly>
-                        <button class="qty-btn" onclick="increaseQty(this)">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            @php
+                $cart = session('cart', []);
+                $subtotal = 0;
+            @endphp
 
-            <!-- Returns Protection Upsell -->
-            <div class="cart-upsell">
-                <div class="cart-upsell-content">
-                    <h4>Returns Protection</h4>
-                    <p>Buy returns protection to qualify for free returns. Does not apply to Final Sale items.</p>
+            @if(empty($cart))
+                <!-- Empty Cart State -->
+                <div class="p-8 text-center text-gray-500">
+                    <p class="mb-4">Your cart is empty</p>
+                    <a href="{{ route('men.shoes') }}" class="text-black underline hover:no-underline">Start Shopping</a>
                 </div>
-                <button class="cart-upsell-btn">ADD - $3</button>
-            </div>
+            @else
+                @foreach($cart as $id => $item)
+                    @php
+                        $subtotal += $item['price'] * $item['quantity'];
+                    @endphp
+                    <!-- Cart Item -->
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}">
+                        </div>
+                        <div class="cart-item-details">
+                            <h3 class="cart-item-name">{{ strtoupper($item['name']) }}</h3>
+                            <p class="cart-item-size">Size: {{ $item['size'] }}</p>
+                            <form action="{{ route('cart.remove') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $id }}">
+                                <button type="submit" class="cart-item-remove">Remove</button>
+                            </form>
+                        </div>
+                        <div class="cart-item-right">
+                            <p class="cart-item-price">${{ number_format($item['price'] * $item['quantity'], 2) }}</p>
+                            <div class="cart-item-quantity">
+                                <form action="{{ route('cart.update') }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $id }}">
+                                    <input type="hidden" name="quantity" value="{{ max(1, $item['quantity'] - 1) }}">
+                                    <button type="submit" class="qty-btn">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M3 8h10" stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                                <input type="number" value="{{ $item['quantity'] }}" min="1" class="qty-input" readonly>
+                                <form action="{{ route('cart.update') }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $id }}">
+                                    <input type="hidden" name="quantity" value="{{ $item['quantity'] + 1 }}">
+                                    <button type="submit" class="qty-btn">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                <!-- Returns Protection Upsell -->
+                <div class="cart-upsell">
+                    <div class="cart-upsell-content">
+                        <h4>Returns Protection</h4>
+                        <p>Buy returns protection to qualify for free returns.</p>
+                    </div>
+                    <button class="cart-upsell-btn">ADD - $3</button>
+                </div>
+            @endif
         </div>
 
         <!-- Recommended Section -->
@@ -1018,11 +1177,12 @@
     </div>
 
     <!-- Cart Footer -->
+    @if(!empty($cart))
     <div class="cart-footer">
         <div class="cart-totals">
             <div class="cart-total-row">
                 <span>Subtotal</span>
-                <span class="cart-total-price">$100</span>
+                <span class="cart-total-price">${{ number_format($subtotal, 2) }}</span>
             </div>
             <div class="cart-total-row">
                 <span>Shipping</span>
@@ -1030,7 +1190,7 @@
             </div>
         </div>
 
-        <button class="cart-checkout-btn" onclick="window.location.href='/checkout'">
+        <button class="cart-checkout-btn" onclick="window.location.href='{{ route('checkout') }}'">
             CHECKOUT
         </button>
 
@@ -1047,6 +1207,7 @@
             </button>
         </div>
     </div>
+    @endif
 </div>
 
 <script>

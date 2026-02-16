@@ -1,274 +1,361 @@
-@extends('layouts.app')
+<x-layouts>
+ 
+<section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl" style="background-image: url('/images/apparel-hero.jpeg');">
+    <!-- Content -->
+    <div class="relative z-10 max-w-7xl mx-auto h-full flex flex-col justify-between md:px-8 text-white">
+        
+        <!-- Top Links -->
+        <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
+            <a href="#" class="hover:underline">Home/</a>
+            <a href="#" class="hover:underline">Men/</a>
+            <a href="#" class="hover:underline">Men's Apparel</a>
+        </div>
 
-@section('content')
-<div class="category-container">
-    <nav class="breadcrumb-nav">
-        <a href="/">Home</a> / <a href="/shop/men">Men</a> / Men's Apparel
-    </nav>
-
-    <header class="category-header">
-        <h1>Men's Apparel</h1>
-        <p class="description">
-            From Trino™ socks to breathable tees, our apparel is made with 
-            natural materials for unbeatable comfort.
+        <!-- Heading near bottom -->
+        <p class="max-w-xl text-3xl md:text-2xl font-medium font-serif lg:mb-8 leading-tight mb-12 md:mb-16 sm:text-sm">
+            Men's Apparel
         </p>
-    </header>
 
-    <div class="filter-controls">
-        <div class="pill-container">
-            <button class="filter-trigger">
-                <span class="icon">☰</span> FILTER (4 products)
-            </button>
-            
-            <div class="gender-toggle">
-                <button class="tgl-btn active">MEN</button>
-                <button class="tgl-btn">WOMEN</button>
-            </div>
-
-            <div class="custom-dropdown" id="sortDropdown">
-                <button class="dropdown-trigger">
-                    <span id="selectedOption">FEATURED</span>
-                    <span class="arrow">▼</span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li data-value="featured">FEATURED</li>
-                    <li data-value="best-selling">BEST SELLING</li>
-                    <li data-value="alpha-asc">ALPHABETICALLY, A-Z</li>
-                    <li data-value="alpha-desc">ALPHABETICALLY, Z-A</li>
-                    <li data-value="price-low">PRICE, LOW TO HIGH</li>
-                    <li data-value="price-high">PRICE, HIGH TO LOW</li>
-                    <li data-value="date-old">DATE, OLD TO NEW</li>
-                    <li data-value="date-new">DATE, NEW TO OLD</li>
-                </ul>
-            </div>
-        </div>
     </div>
+</section>
 
-    <div class="product-grid">
-        <div class="card">
-            <span class="new-tag">NEW</span>
-            <div class="img-box"><img src="/images/no-show-grip.jpg" alt="No Show"></div>
-            <h4>ANYTIME NO SHOW HEEL GRIP SOCK</h4>
-        </div>
-        <div class="card">
-            <div class="img-box"><img src="/images/ankle-sock.jpg" alt="Ankle Sock"></div>
-            <h4>ANYTIME ANKLE SOCK</h4>
-        </div>
-        <div class="card">
-            <div class="img-box"><img src="/images/crew-sock-grey.jpg" alt="Crew Sock"></div>
-            <h4>ANYTIME CREW SOCK</h4>
-        </div>
-        <div class="card">
-            <div class="img-box"><img src="/images/crew-sock-white.jpg" alt="Crew Sock"></div>
-            <h4>ANYTIME CREW SOCK</h4>
-        </div>
-    </div>
+
+
+<div class="w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between bg-[#E6DDD0] rounded-[40px] mt-4">
+
+  <!-- Left: Filter + Count -->
+  <div class="flex items-center gap-4">
+
+    <button class="flex items-center gap-2 text-black text-sm font-medium hover:opacity-70 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707v6.172a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6.172a1 1 0 00-.293-.707L3.293 6.707A1 1 0 013 6V4z" />
+      </svg>
+      FILTER
+    </button>
+
+    @php
+      $totalApparelCount = \App\Models\Product::where('type', 'apparel')
+                                              ->where('gender', 'men')
+                                              ->count();
+    @endphp
+    <span class="text-gray-600 text-sm">({{ $totalApparelCount }} products)</span>
+
+  </div>
+
+  <!-- Right: Switch + Dropdown -->
+  <div class="flex items-center gap-4">
+
+    <!-- MEN / WOMEN Switch -->
+    <div class="flex items-center bg-[#E5DFD6] border border-[#D4CDC3] rounded-full p-[4px]">
+
+    <a href="{{ url('/men/apparel') }}"
+       class="px-6 py-1.5 rounded-full text-[13px] font-medium transition
+       {{ request()->is('men/apparel') ? 'bg-black text-white' : 'text-black' }}">
+       MEN
+    </a>
+
+    <a href="{{ url('/women/apparel') }}"
+       class="px-6 py-1.5 rounded-full text-[13px] font-medium transition
+       {{ request()->is('women/apparel') ? 'bg-black text-white' : 'text-black' }}">
+       WOMEN
+    </a>
+
 </div>
-<section id="section-6" class="bg-[#f2f0eb] pb-16 px-6 md:px-12 font-sans">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div class="bg-white rounded-xl p-8 min-h-[280px] flex flex-col justify-start transition-shadow hover:shadow-sm">
-                <h4 class="text-[11px] font-bold tracking-[0.2em] uppercase mb-6 text-gray-800">
-                    Wear All Day Comfort
-                </h4>
-                <p class="text-[15px] leading-relaxed text-gray-900 font-medium">
-                    Lightweight, bouncy, and wildly comfortable, Allbirds shoes make any outing feel effortless. Slip in, lace up, or slide them on and enjoy the comfy support.
-                </p>
+
+
+    <!-- Dropdown -->
+   <div class="relative inline-block">
+
+  <!-- Button -->
+  <button id="sortBtn"
+    class="flex items-center gap-2 px-6 py-2 bg-[#E5DFD6] border border-[#D4CDC3] rounded-full text-[13px] font-medium text-black hover:opacity-80 transition">
+    FEATURED
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-200" id="arrowIcon"
+      fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <!-- Dropdown -->
+  <div id="dropdownMenu"
+  class="absolute right-0 mt-2 w-44 bg-black border border-blue-700 rounded-xl shadow-lg hidden z-30">
+
+  <a href="?sort=featured"
+    class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition cursor-pointer">
+   FEATURED
+  </a>
+
+  <a href="?sort=best"
+    class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition">
+  BEST SELLING
+  </a>
+
+  <a href="?sort=az"
+    class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition">
+  ALPHABETICALLY, A-Z
+  </a>
+
+  <a href="?sort=za"
+    class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition">
+   ALPHABETICALLY, Z-A
+  </a>
+
+   <a href="?sort=price_low"
+    class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition">
+ PRICE, LOW TO HIGH
+  </a>
+
+  <a href="?sort=price_high"
+    class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition">
+ PRICE, HIGH TO LOW
+  </a>
+
+</div>
+</div>
+
+
+  </div>
+
+</div>
+
+<!-- JS for Men/Women toggle and Dropdown -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const btn = document.getElementById("sortBtn");
+  const menu = document.getElementById("dropdownMenu");
+  const arrow = document.getElementById("arrowIcon");
+
+  btn.addEventListener("click", function () {
+    menu.classList.toggle("hidden");
+    arrow.classList.toggle("rotate-180");
+  });
+
+  // Close if clicked outside
+  document.addEventListener("click", function (e) {
+    if (!btn.contains(e.target) && !menu.contains(e.target)) {
+      menu.classList.add("hidden");
+      arrow.classList.remove("rotate-180");
+    }
+  });
+
+});
+</script>
+
+
+
+
+<!-- APPAREL CARDS SECTION - DATABASE DRIVEN WITH SHOES ANIMATION -->
+<section class="max-w-full px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+
+  @php
+    $apparelProducts = \App\Models\Product::where('type', 'apparel')
+                                          ->where('gender', 'men')
+                                          ->orderBy('is_featured', 'desc')
+                                          ->orderBy('created_at', 'desc')
+                                          ->get();
+  @endphp
+
+  @forelse($apparelProducts as $product)
+  <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer
+          transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
+
+    @if($product->is_new)
+    <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">
+      NEW
+    </span>
+    @endif
+    
+    <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-48 object-cover rounded-xl" alt="{{ $product->name }}" />
+
+    <h1 class="mt-20 text-sm font-semibold text-black">
+      {{ strtoupper($product->name) }}
+    </h1>
+    <p class="text-gray-500 text-sm">{{ $product->color_name ?? 'Various Colors' }}</p>
+    <p class="text-black font-semibold">
+      @if($product->on_sale)
+        <span class="text-red-600">${{ number_format($product->sale_price, 0) }}</span>
+        <span class="text-gray-400 line-through ml-2 text-xs">${{ number_format($product->price, 0) }}</span>
+      @else
+        ${{ number_format($product->price, 0) }}
+      @endif
+    </p>
+
+    <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div class="grid grid-cols-4 gap-2">
+        @php
+          $apparelSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+        @endphp
+        @foreach($apparelSizes as $size)
+          @if($product->sizes && isset($product->sizes[$size]) && $product->sizes[$size] <= 0)
+            <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400 text-xs">
+              {{ $size }}
+              <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
             </div>
-
-            <div class="bg-white rounded-xl p-8 min-h-[280px] flex flex-col justify-start transition-shadow hover:shadow-sm">
-                <h4 class="text-[11px] font-bold tracking-[0.2em] uppercase mb-6 text-gray-800">
-                    Sustainability In Every Step
-                </h4>
-                <p class="text-[15px] leading-relaxed text-gray-900 font-medium">
-                    From materials to transport, we're working to reduce our carbon footprint to near zero. Holding ourselves accountable and striving for climate goals isn't a 30-year goal—it's now.
-                </p>
+          @else
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100 text-xs cursor-pointer">
+              {{ $size }}
             </div>
+          @endif
+        @endforeach
+      </div>
+    </div>
+  </div>
+  @empty
+  <div class="col-span-full text-center py-12">
+    <p class="text-gray-500 text-lg">No apparel products available at the moment.</p>
+  </div>
+  @endforelse
 
-            <div class="bg-white rounded-xl p-8 min-h-[280px] flex flex-col justify-start transition-shadow hover:shadow-sm">
-                <h4 class="text-[11px] font-bold tracking-[0.2em] uppercase mb-6 text-gray-800">
-                    Materials From The Earth
-                </h4>
-                <p class="text-[15px] leading-relaxed text-gray-900 font-medium">
-                    We replace petroleum-based synthetics with natural alternatives wherever we can. Like using wool, tree fiber, and sugarcane. They're soft, breathable, and better for the planet—win, win, win.
-                </p>
-            </div>
+</section>
 
-        </div>
-    </section>
 
-    <!-- ==================== FOOTER WITH SOCIAL MEDIA ICONS ==================== -->
-    <footer class="bg-[#0f0f0f] text-gray-300 text-sm">
-        <div class="max-w-7xl mx-auto px-6 pt-16 pb-12">
+ 
+<section class="w-full px-2 sm:px-4 lg:px-6 py-6 grid
+                grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+                gap-2 sm:gap-4 md:gap-6 lg:gap-4">
 
-            <!-- Newsletter + Main Links Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-6 lg:gap-8 mb-16">
+  <!-- Card 1 - Shoes -->
+  <div class="relative rounded-2xl overflow-hidden shadow-lg w-full mx-auto cursor-pointer group">
 
-                <!-- Newsletter Signup -->
-                <div class="md:col-span-2">
-                    <form class="flex flex-col sm:flex-row gap-3 max-w-md">
-                        <h2>Subscribe to our emails</h2>
-                        <input 
-                            type="email" 
-                            placeholder="Email Address" 
-                            class="flex-1 bg-transparent border border-gray-600 rounded-full px-6 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-gray-400 transition"
-                        >
-                        <button 
-                            type="submit"
-                            class="bg-white text-black font-medium px-8 py-3 rounded-full hover:bg-gray-200 transition whitespace-nowrap"
-                        >
-                            SIGN UP
-                        </button>
-                    </form>
-                </div>
+    <img src="{{ asset('images/first.webp') }}"
+         class="w-full h-[400px] sm:h-[300px] md:h-[350px] lg:h-auto object-cover rounded-2xl
+                transition-transform duration-1000 ease-out
+                group-hover:scale-105" />
 
-                <!-- Links Columns -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:col-span-3 gap-x-8 gap-y-10 text-gray-400">
-                    <!-- Column 1 -->
-                    <div>
-                        <ul class="space-y-3">
-                            <li><a href="#" class="hover:text-white transition">Live Chat</a></li>
-                            <li><a href="#" class="hover:text-white transition">Call Us</a></li>
-                            <li><a href="#" class="hover:text-white transition">Text Us</a></li>
-                            <li><a href="mailto:help@allbirds.com" class="hover:text-white transition">help@allbirds.com</a></li>
-                            <li><a href="#" class="hover:text-white transition">FAQ/Contact Us</a></li>
-                        </ul>
-                    </div>
+    <h1 class="absolute inset-0 flex items-center justify-center
+               text-white text-4xl 
+               bg-black/10 font-light font-serif
+               pointer-events-none">
+     Shoes
+    </h1>
 
-                    <!-- Column 2 -->
-                    <div>
-                        <ul class="space-y-3">
-                            <li><a href="#" class="hover:text-white transition">Men's Shoes</a></li>
-                            <li><a href="#" class="hover:text-white transition">Women's Shoes</a></li>
-                            <li><a href="#" class="hover:text-white transition">Men's Apparel</a></li>
-                            <li><a href="#" class="hover:text-white transition">Women's Apparel</a></li>
-                            <li><a href="#" class="hover:text-white transition">Socks</a></li>
-                            <li><a href="#" class="hover:text-white transition">Returns/Exchanges</a></li>
-                            <li><a href="#" class="hover:text-white transition">Gift Cards</a></li>
-                        </ul>
-                    </div>
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
+      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg
+                 flex items-center justify-center
+                   w-40 sm:w-38 md:w-45 lg:w-45 h-[5vh]
+                 hover:bg-white hover:text-black transition">
+    Shop Men
+  </button>
 
-                    <!-- Column 3 -->
-                    <div>
-                        <ul class="space-y-3">
-                            <li><a href="#" class="hover:text-white transition">Our Stores</a></li>
-                            <li><a href="#" class="hover:text-white transition">Our Story</a></li>
-                            <li><a href="#" class="hover:text-white transition">Our Materials</a></li>
-                            <li><a href="#" class="hover:text-white transition">Sustainability</a></li>
-                            <li><a href="#" class="hover:text-white transition">Investors</a></li>
-                            <li><a href="#" class="hover:text-white transition">Shoe Care</a></li>
-                            <li><a href="#" class="hover:text-white transition">Our Blog</a></li>
-                        </ul>
-                    </div>
+      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg
+                 flex items-center justify-center
+                 w-40 sm:w-38 md:w-45 lg:w-45 h-[5vh]
+                 hover:bg-white hover:text-black transition">
+   Shop Women
+  </button>
+    </div>
 
-                    <!-- Column 4 -->
-                    <div>
-                        <ul class="space-y-3">
-                            <li><a href="#" class="hover:text-white transition">Careers</a></li>
-                            <li><a href="#" class="hover:text-white transition">Press</a></li>
-                            <li><a href="#" class="hover:text-white transition">Allbirds Responsible</a></li>
-                            <li><a href="#" class="hover:text-white transition">Disclosure Program</a></li>
-                            <li><a href="#" class="hover:text-white transition">California Transparency Act</a></li>
-                            <li><a href="#" class="hover:text-white transition">Community Offers</a></li>
-                        </ul>
-                    </div>
+  </div>
 
-                    <!-- Column 5 -->
-                    <div class="col-span-2 sm:col-span-1">
-                        <ul class="space-y-3">
-                            <li><a href="#" class="hover:text-white transition">Refer a Friend</a></li>
-                            <li><a href="#" class="hover:text-white transition">Affiliates</a></li>
-                            <li><a href="#" class="hover:text-white transition">Bulk Orders</a></li>
-                            <li><a href="#" class="hover:text-white transition">Patents</a></li>
-                            <li><a href="#" class="hover:text-white transition">Terms of Use - Wholesale</a></li>
-                            <li><a href="#" class="hover:text-white transition">Allbirds Global Entities</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+  <!-- Card 2 - Apparel -->
+  <div class="relative rounded-2xl overflow-hidden shadow-lg w-full mx-auto cursor-pointer group">
 
-            <!-- Social + Certification + Bottom Bar -->
-            <div class="border-t border-gray-800 pt-10">
+    <img src="{{ asset('images/second.webp') }}" 
+         class="w-full h-[400px] sm:h-[300px] md:h-[350px] lg:h-auto object-cover rounded-2xl
+                transition-transform duration-1000 ease-out
+                group-hover:scale-105" />
 
-                <!-- Social Media Icons -->
-                <div class="mb-10">
-                    <p class="text-gray-400 uppercase tracking-wider text-xs mb-4 font-medium">FOLLOW THE FLOCK</p>
-                    <div class="flex gap-6">
-                        <!-- Instagram -->
-                        <a href="#" class="hover:text-white transition" aria-label="Instagram">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.332.014 7.052.072 2.579.227.228 2.578.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.156 4.474 2.507 6.825 6.98 6.98C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.474-.156 6.825-2.507 6.98-6.98.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.156-4.474-2.507-6.825-6.98-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
-                            </svg>
-                        </a>
+    <h1 class="absolute inset-0 flex items-center justify-center
+               text-white text-4xl font-light font-serif
+               bg-black/10
+               pointer-events-none">
+    Apparel
+    </h1>
 
-                        <!-- Pinterest -->
-                        <a href="#" class="hover:text-white transition" aria-label="Pinterest">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.779c0-1.667.967-2.914 2.167-2.914 1.023 0 1.518.769 1.518 1.688 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.085.345-.057.244-.184.788-.236 1.003-.068.271-.225.329-.526.197-1.96-.912-3.188-3.775-3.188-6.082 0-4.953 3.599-9.502 10.368-9.502 5.444 0 9.676 3.88 9.676 9.07 0 5.406-3.41 9.758-8.143 9.758-1.59 0-3.089-.826-3.602-1.802-.001 0-.787 2.997-.979 3.748-.223.854-.826 1.898-1.233 2.541-.519.836-1.048 1.17-1.602 1.202z"/>
-                            </svg>
-                        </a>
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
+      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg
+                 flex items-center justify-center
+                   w-40 sm:w-38 md:w-45 lg:w-45 h-[5vh]
+                 hover:bg-white hover:text-black transition">
+    Shop Men
+  </button>
 
-                        <!-- Facebook -->
-                        <a href="#" class="hover:text-white transition" aria-label="Facebook">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12c0-6.627-5.373-12-12-12S0 5.373 0 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 22.954 24 17.99 24 12z"/>
-                            </svg>
-                        </a>
+      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg
+                 flex items-center justify-center
+                 w-40 sm:w-38 md:w-45 lg:w-45 h-[5vh]
+                 hover:bg-white hover:text-black transition">
+      Shop Women
+  </button>
+    </div>
 
-                        <!-- X (Twitter) -->
-                        <a href="#" class="hover:text-white transition" aria-label="X">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                            </svg>
-                        </a>
+  </div>
 
-                        <!-- TikTok -->
-                        <a href="#" class="hover:text-white transition" aria-label="TikTok">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12.53.02C13.84 0 15.14.01 16.44.02c.08 1.53.63 3.09 1.81 4.13 1.09 1 2.5.83 3.75.83v4.03c-1.44.04-2.92-.24-4.05-1.13-1.13-.89-1.81-2.44-1.92-3.97-.01-.01-.02-.01-.03-.01v7.84c0 4.98-4.03 9.01-9.01 9.01-2.16 0-4.17-.76-5.74-2.04 1.78 1.6 4.09 2.57 6.66 2.57 4.98 0 9.01-4.03 9.01-9.01V.02zM5.84 19.71c-.57-.58-.91-1.38-.91-2.26 0-1.76 1.43-3.19 3.19-3.19.44 0 .86.09 1.24.26v4.45c-.38.17-.8.26-1.24.26-.81 0-1.55-.31-2.11-.89z"/>
-                            </svg>
-                        </a>
+  <!-- Card 3 - Accessories -->
+  <div class="relative rounded-2xl overflow-hidden shadow-lg w-full mx-auto cursor-pointer group">
 
-                        <!-- YouTube -->
-                        <a href="#" class="hover:text-white transition" aria-label="YouTube">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.121 2.136c1.872.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+    <img src="{{ asset('images/third.webp') }}" 
+         class="w-full h-[400px] sm:h-[300px] md:h-[350px] lg:h-auto object-cover rounded-2xl
+                transition-transform duration-1000 ease-out
+                group-hover:scale-105" />
 
-                <!-- Certification & Region -->
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
-                    <div class="flex items-center gap-3">
-                        <div class="text-green-500 text-4xl font-bold">B</div>
-                        <div>
-                            <p class="text-white font-medium">Certified</p>
-                            <p class="text-xs text-gray-500">Corporation</p>
-                        </div>
-                    </div>
+    <h1 class="absolute inset-0 flex items-center justify-center
+               text-white text-4xl font-light font-serif
+               bg-black/10
+               pointer-events-none">
+      Accessories
+    </h1>
 
-                    <div class="flex items-center gap-3 text-gray-400">
-                        <span>US</span>
-                        <span class="text-xl">▼</span>
-                    </div>
-                </div>
+    
+   <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
+      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg
+                 flex items-center justify-center
+                   w-40 sm:w-38 md:w-45 lg:w-45 h-[5vh]
+                 hover:bg-white hover:text-black transition">
+    Shop Men
+  </button>
 
-                <!-- Bottom legal line -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs text-gray-500 border-t border-gray-800 pt-6">
-                    <p>© 2025 Allbirds, Inc. All Rights Reserved</p>
-                    <div class="flex flex-wrap gap-x-6 gap-y-2">
-                        <a href="#" class="hover:text-gray-300 transition">Refund policy</a>
-                        <a href="#" class="hover:text-gray-300 transition">Privacy policy</a>
-                        <a href="#" class="hover:text-gray-300 transition">Terms of service</a>
-                        <a href="#" class="hover:text-gray-300 transition">Do Not Sell My Personal Information</a>
-                        <a href="#" class="hover:text-gray-300 transition">California Transparency Act</a>
-                    </div>
-                </div>
+      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg
+                 flex items-center justify-center
+                 w-40 sm:w-38 md:w-45 lg:w-45 h-[5vh]
+                 hover:bg-white hover:text-black transition">
+   Shop Women
+  </button>
+    </div>
 
-            </div>
+  </div>
 
-        </div>
-    </footer>
+</section>
 
-@endsection
+<section class="max-w-full px-6 py-8 mx-auto grid 
+                grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 
+                gap-6">
+
+  <!-- Card 1 -->
+  <div class="bg-white rounded-2xl shadow-xl p-6 
+              w-full flex flex-col gap-4 justify-start">
+    <p class="text-xl text-black">
+      Wear All Day Comfort
+    </p>
+    <p class="text-gray-600 text-sm">
+      Lightweight, bouncy, and wildly comfortable, Allbirds shoes make any outing feel effortless. Slip in, lace up, or slide them on and enjoy the comfy support.
+    </p>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="bg-white rounded-2xl shadow-xl p-6 
+              w-full flex flex-col gap-4 justify-start">
+    <p class="text-xl text-black">
+      Sustainability In Every Step
+    </p>
+    <p class="text-gray-600 text-sm">
+      From materials to transport, we're working to reduce our carbon footprint to near zero. Holding ourselves accountable and striving for climate goals isn't a 30-year goal—it's now.
+    </p>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="bg-white rounded-2xl shadow-xl p-6 
+              w-full flex flex-col gap-4 justify-start">
+    <p class="text-xl text-black">
+      Materials From The Earth
+    </p>
+    <p class="text-gray-600 text-sm">
+      We replace petroleum-based synthetics with natural alternatives wherever we can. Like using wool, tree fiber, and sugarcane. They're soft, breathable, and better for the planet—win, win, win.
+    </p>
+  </div>
+
+</section>
+
+</x-layouts>

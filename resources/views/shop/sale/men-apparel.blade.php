@@ -5,19 +5,19 @@
 
     {{-- Hero Section --}}
     <section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl" 
-             style="background-image: url('/images/socks-hero.webp');">
+             style="background-image: url('/images/sale-apparel-hero.webp');">
         <div class="relative z-10 max-w-7xl mx-auto h-full flex flex-col justify-between md:px-8 text-white">
             
             {{-- Breadcrumb --}}
             <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
                 <a href="{{ url('/') }}" class="hover:underline">Home/</a>
-                <a href="{{ url('/men') }}" class="hover:underline">Men/</a>
-                <a href="#" class="hover:underline">{{ ucfirst($category) }} Socks</a>
+                <a href="{{ url('/sale') }}" class="hover:underline">Sale/</a>
+                <a href="#" class="hover:underline">Men's Apparel</a>
             </div>
 
             {{-- Title --}}
             <p class="max-w-xl text-3xl md:text-2xl font-medium font-serif lg:mb-8 leading-tight mb-12 md:mb-16 sm:text-sm">
-                Men's {{ ucfirst($category) }} Socks
+                Men's Apparel on Sale
             </p>
         </div>
     </section>
@@ -34,7 +34,13 @@
                 </svg>
                 FILTER
             </button>
-            <span class="text-gray-600 text-sm">({{ $products->count() }} products)</span>
+            @php
+                $saleCount = \App\Models\Product::where('type', 'apparel')
+                                                ->where('gender', 'men')
+                                                ->where('on_sale', true)
+                                                ->count();
+            @endphp
+            <span class="text-gray-600 text-sm">({{ $saleCount }} products)</span>
         </div>
 
         {{-- Right: Switch + Dropdown --}}
@@ -42,14 +48,12 @@
             
             {{-- MEN / WOMEN Switch --}}
             <div class="flex items-center bg-[#E5DFD6] border border-[#D4CDC3] rounded-full p-[4px]">
-                <a href="{{ url('/men/socks/' . $category) }}"
-                   class="px-6 py-1.5 rounded-full text-[13px] font-medium transition
-                   {{ request()->is('men/socks/*') ? 'bg-black text-white' : 'text-black' }}">
+                <a href="{{ url('/sale/men/apparel') }}"
+                   class="px-6 py-1.5 rounded-full text-[13px] font-medium transition bg-black text-white">
                    MEN
                 </a>
-                <a href="{{ url('/women/socks/' . $category) }}"
-                   class="px-6 py-1.5 rounded-full text-[13px] font-medium transition
-                   {{ request()->is('women/socks/*') ? 'bg-black text-white' : 'text-black' }}">
+                <a href="{{ url('/sale/women/apparel') }}"
+                   class="px-6 py-1.5 rounded-full text-[13px] font-medium transition text-black">
                    WOMEN
                 </a>
             </div>
@@ -73,22 +77,37 @@
                     <a href="?sort=alpha_desc" class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition">ALPHABETICALLY, Z-A</a>
                     <a href="?sort=price_low" class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition">PRICE, LOW TO HIGH</a>
                     <a href="?sort=price_high" class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition">PRICE, HIGH TO LOW</a>
+                    <a href="?sort=discount" class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition">BIGGEST DISCOUNT</a>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Product Grid with Shoes-Style Animation --}}
+    {{-- Product Grid --}}
     <section class="max-w-full px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
         
+        @php
+            $products = \App\Models\Product::where('type', 'apparel')
+                                          ->where('gender', 'men')
+                                          ->where('on_sale', true)
+                                          ->whereNotNull('sale_price')
+                                          ->orderBy('sales_count', 'desc')
+                                          ->get();
+        @endphp
+
         @forelse($products as $product)
         <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer
                    transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
 
-            {{-- NEW tag (if product is new) --}}
-            @if($product->is_new)
-            <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">
-                NEW
+            {{-- SALE tag --}}
+            <span class="absolute top-4 left-4 bg-red-500 text-white text-xs px-3 py-1 rounded-full z-10 font-semibold">
+                SALE
+            </span>
+
+            {{-- Discount Badge --}}
+            @if($product->discount_percentage)
+            <span class="absolute top-4 right-4 bg-orange-500 text-white text-xs px-2 py-1 rounded-full z-10 font-bold">
+                -{{ $product->discount_percentage }}%
             </span>
             @endif
 
@@ -103,23 +122,17 @@
             </h4>
             <p class="text-gray-500 text-sm">{{ $product->color_name ?? 'Various Colors' }}</p>
             <p class="text-black font-semibold">
-                @if($product->on_sale ?? false)
-                    <span class="text-red-600">${{ number_format($product->sale_price, 0) }}</span>
-                    <span class="text-gray-400 line-through ml-2 text-xs">${{ number_format($product->price, 0) }}</span>
-                @else
-                    ${{ number_format($product->price, 0) }}
-                @endif
+                <span class="text-red-600">${{ number_format($product->sale_price, 0) }}</span>
+                <span class="text-gray-400 line-through ml-2 text-xs">${{ number_format($product->price, 0) }}</span>
             </p>
 
             {{-- Sizes Section (appears on hover) --}}
             <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <div class="grid grid-cols-5 gap-2">
-                    
+                <div class="grid grid-cols-4 gap-2">
                     @php
-                        $sockSizes = ['S', 'M', 'L', 'XL'];
+                        $apparelSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
                     @endphp
-                    
-                    @foreach($sockSizes as $size)
+                    @foreach($apparelSizes as $size)
                         @if($product->sizes && isset($product->sizes[$size]) && $product->sizes[$size] <= 0)
                             <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400 text-xs">
                                 {{ $size }}
@@ -136,10 +149,10 @@
         </div>
         @empty
         <div class="col-span-full text-center py-20">
-            <p class="text-gray-500 text-lg">No products found in this category.</p>
-            <a href="{{ url('/admin/products/create') }}" 
+            <p class="text-gray-500 text-lg">No apparel on sale at the moment.</p>
+            <a href="{{ url('/men/apparel') }}" 
                class="inline-block mt-4 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
-                Add Products
+                Browse All Apparel
             </a>
         </div>
         @endforelse
@@ -195,7 +208,7 @@
         <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4">
             <p class="text-xl text-black">Wear All Day Comfort</p>
             <p class="text-gray-600 text-sm">
-                Lightweight, bouncy, and wildly comfortable, Allbirds socks make any outing feel effortless.
+                Lightweight, soft, and wildly comfortable, Allbirds apparel makes any day feel effortless.
             </p>
         </div>
 

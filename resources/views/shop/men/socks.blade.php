@@ -12,12 +12,12 @@
             <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
                 <a href="{{ url('/') }}" class="hover:underline">Home/</a>
                 <a href="{{ url('/men') }}" class="hover:underline">Men/</a>
-                <a href="#" class="hover:underline">{{ ucfirst($category) }} Socks</a>
+                <a href="#" class="hover:underline">Socks</a>
             </div>
 
             {{-- Title --}}
             <p class="max-w-xl text-3xl md:text-2xl font-medium font-serif lg:mb-8 leading-tight mb-12 md:mb-16 sm:text-sm">
-                Men's {{ ucfirst($category) }} Socks
+                Men's Socks
             </p>
         </div>
     </section>
@@ -42,14 +42,14 @@
             
             {{-- MEN / WOMEN Switch --}}
             <div class="flex items-center bg-[#E5DFD6] border border-[#D4CDC3] rounded-full p-[4px]">
-                <a href="{{ url('/men/socks/' . $category) }}"
+                <a href="{{ url('/men/socks') }}"
                    class="px-6 py-1.5 rounded-full text-[13px] font-medium transition
-                   {{ request()->is('men/socks/*') ? 'bg-black text-white' : 'text-black' }}">
+                   {{ request()->is('men/socks*') ? 'bg-black text-white' : 'text-black' }}">
                    MEN
                 </a>
-                <a href="{{ url('/women/socks/' . $category) }}"
+                <a href="{{ url('/women/socks') }}"
                    class="px-6 py-1.5 rounded-full text-[13px] font-medium transition
-                   {{ request()->is('women/socks/*') ? 'bg-black text-white' : 'text-black' }}">
+                   {{ request()->is('women/socks*') ? 'bg-black text-white' : 'text-black' }}">
                    WOMEN
                 </a>
             </div>
