@@ -369,8 +369,22 @@ document.addEventListener("DOMContentLoaded", function() {
       1024: { slidesPerView: 4 }
     }
   });
+
+
+  
+  // Responsive balls positions
+  const circles = [
+    {rx: 275, ry: 210, balls: 3},
+    {rx: 259, ry: 189, balls: 3},
+    {rx: 240, ry: 168, balls: 3},
+  ];
+
   
 </script>
+
+  
+  
+
 
 
 
@@ -596,27 +610,25 @@ style="background-color:#7C8C52">
   </div>
 
   <!-- Swiper -->
-  <div class="swiper mySwiper px-10">
+  <div class="swiper mySwiper px-10 relative z-30 isolate overflow-visible max-w-full  py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 auto-rows-[420px]">
     <div class="swiper-wrapper">
 
       <!-- Slide 1 -->
-     <div class="swiper-slide shadow-2xl z-30">
+   <!-- Swiper Slide -->
+<div class="swiper-slide relative overflow-visible">
   <a href="#"
-     class="relative group block bg-white p-6 pt-10 h-[420px] 
-            rounded-2xl shadow-xl overflow-hidden
-            transition-all duration-500 
-            hover:h-[560px] hover:-translate-y-2">
+     class="group block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-xl relative z-30 transition-all duration-500 hover:z-50 hover:-translate-y-2">
 
     <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">
       NEW
     </span>
 
-    <img src="/images/sho2.png"
+    <img src="/images/sho7.png"
          class="w-full h-48 object-cover rounded-xl"/>
 
-     <h4 class="mt-20 text-sm lg:font-semibold text-black">
+    <h4 class="mt-20 text-sm lg:font-semibold text-black">
       MEN'S VARSITY
-</h4>
+    </h4>
 
     <p class="text-gray-500 text-sm">
       Classic Everyday Sneaker
@@ -626,38 +638,33 @@ style="background-color:#7C8C52">
       $120
     </p>
 
-    <!-- Sizes (Normal Flow) -->
-    <div class="mt-4 opacity-0 translate-y-4
-                group-hover:opacity-100 
-                group-hover:translate-y-0
-                transition-all duration-300">
-
-      <div class="grid grid-cols-5 gap-2 mt-3">
-
+    <!-- Sizes Box -->
+    <div class="absolute left-0 bottom-0 w-full p-4 bg-white rounded-b-2xl opacity-0 translate-y-4
+                group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-50 shadow-xl">
+      <div class="grid grid-cols-5 gap-2">
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">6</div>
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">7</div>
-
-        <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-          8
-          <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-        </div>
-
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">8</div>
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">9</div>
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10</div>
+
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10.5</div>
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11</div>
         <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11.5</div>
-
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">12</div>
+        <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">12.5</div>
       </div>
     </div>
 
   </a>
 </div>
 
+
       <!-- Slide 2 -->
- <div class="swiper-slide shadow-2xl z-30">
+ <div class="swiper-slide shadow-2xl z-50">
   <a href="#"
      class="relative group block bg-white p-6 pt-10 h-[420px] 
-            rounded-2xl shadow-xl overflow-hidden
+            rounded-2xl shadow-xl overflow-visible
             transition-all duration-500 
             hover:h-[560px] hover:-translate-y-2">
 
@@ -1039,42 +1046,98 @@ style="background-color:#7C8C52">
 
 
 <!-- bottom -->
+ <section class="relative w-full h-[60vh] md:h-[80vh] bg-cover bg-center rounded-2xl overflow-hidden"
+         style="background-image: url('/images/animalbg.webp');">
 
-
-
-
-
-<section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl"
- style="background-image: url('/images/animalbg.webp');">
-
-  <!-- Overlay for better readability -->
- 
   <!-- Content -->
   <div class="relative w-full h-full flex flex-col justify-center items-center text-center px-4 text-white">
-    
-    <!-- Top small text -->
-    <p class="text-lg md:text-base mb-4">
-      Better Things in a Better Way
-    </p>
 
-    <!-- Subtext -->
-    <p class="text-sm md:text-sm mb-6">
-      Looking to the world's greatest innovator - Nature
-    </p>
+    <!-- Circles container -->
+    <div id="circlesWrapper" class="absolute w-[90%] max-w-[600px] aspect-[550/420] md:w-[600px] md:h-[420px] flex justify-center items-center">
 
-    <!-- Main heading -->
-    <p class="max-w-xl text-3xl md:text-2xl font-medium font-serif leading-tight mb-12">
-      Men's Dasher NZ Collection
-    </p>
+      <!-- Circles (ovals using border radius 50% / 50%) -->
+      <div class="absolute border border-white rounded-full w-full h-full"></div>
+      <div class="absolute border border-white rounded-full w-[94%] h-[90%]"></div>
+      <div class="absolute border border-white bg-white/10 rounded-full w-[87%] h-[80%]"></div>
 
-    <!-- Learn More button -->
-    <a href="#" class="bg-white text-black px-6 py-3 rounded-full hover:bg-gray-200 transition">
-      Learn More
-    </a>
+      <!-- Balls container -->
+      <div id="ballsContainer" class="absolute w-full h-full top-0 left-0 z-20"></div>
+
+      <!-- Labels -->
+      <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 md:-top-4 md:-left-6 bg-transparent border border-white text-white text-xs px-2 py-1 rounded-full">RENEWABLE MATERIALS</span>
+      <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 md:-top-4 md:-right-6 border border-white text-white text-xs px-2 py-1 rounded-full">RESPONSIBLE ENERGY</span>
+      <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 md:-bottom-4 md:-right-6 border border-white text-white text-xs px-2 py-1 rounded-full">REGENERATIVE AGRICULTURE</span>
+    </div>
+
+    <!-- Main Text -->
+    <h4 class="text-lg md:text-xl mb-2 font-semibold">Better Things in a Better Way</h4>
+    <p class="text-xs md:text-sm mb-4 font-serif">Looking to the world's greatest innovator - Nature</p>
+   
+    <!-- Button -->
+    <a href="#" class="bg-white text-black px-4 md:px-6 py-2 md:py-3 rounded-full hover:bg-gray-200 transition">Learn More</a>
 
   </div>
-
 </section>
+
+<script>
+function placeBalls() {
+  const container = document.getElementById('ballsContainer');
+  const wrapper = document.getElementById('circlesWrapper');
+  container.innerHTML = ''; // clear previous balls
+
+  const rect = wrapper.getBoundingClientRect();
+  const cx = rect.width / 2;
+  const cy = rect.height / 2;
+
+  // Circles radii relative to original 550x420
+  const baseCircles = [
+    {rx: 275, ry: 210, balls: 3}, // outer
+   
+  ];
+
+  const scaleX = rect.width / 550;
+  const scaleY = rect.height / 420;
+
+  baseCircles.forEach(circle => {
+    for (let i = 0; i < circle.balls; i++) {
+      const angle = Math.random() * 2 * Math.PI;
+      const x = cx + circle.rx * Math.cos(angle) * scaleX - 5;
+      const y = cy + circle.ry * Math.sin(angle) * scaleY - 5;
+
+      const ball = document.createElement('div');
+      ball.className = "w-3 h-3 bg-white rounded-full absolute";
+      ball.style.left = `${x}px`;
+      ball.style.top = `${y}px`;
+      container.appendChild(ball);
+    }
+  });
+}
+
+// Run on load and resize
+window.addEventListener('load', placeBalls);
+window.addEventListener('resize', placeBalls);
+</script>
+<style>
+  .animate-orbit {
+    top:50%;
+    left:50%;
+    transform-origin: center center;
+    animation: orbit var(--duration,8s) linear infinite;
+    animation-delay: var(delay,4s);
+  }
+
+  @keyframes orbit {
+    0% {
+      transform: rotate(0deg) translateX(var(--rx)) translateY(calc(var(--ry) - var(--rx))) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateX(var(--rx)) translateY(calc(var(--ry) - var(--rx))) rotate(-360deg);
+    }
+  }
+
+</style>
+
+
 
 
 <!-- last section -->

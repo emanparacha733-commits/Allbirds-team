@@ -8,9 +8,9 @@
         
         <!-- Top Links -->
         <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
-            <a href="#" class="hover:underline">Home/</a>
-            <a href="#" class="hover:underline">Men/</a>
-            <a href="#" class="hover:underline">Men's Dasher Nz Collection</a>
+            <a href='/' class="hover:underline">Home/</a>
+            <a href='/women/shoes' class="hover:underline">Women/</a>
+            <a href='/women/shoes' class="hover:underline">Women's Dasher Nz Collection</a>
         </div>
 
         <!-- Heading near bottom -->
@@ -77,7 +77,7 @@
 
   <!-- Dropdown -->
   <div id="dropdownMenu"
-  class="absolute right-0 mt-2 w-44 bg-black border border-blue-700 rounded-xl shadow-lg hidden z-30">
+  class="absolute right-0 mt-2 w-44 bg-black border border-blue-700 rounded-xl shadow-lg hidden z-50">
 
   <a href="?sort=best"
     class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition cursor-pointer">
@@ -168,151 +168,78 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 <!-- section 2 -->
-<section class="max-w-full px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+<x-product-grid>
 
-  <div
-     
-    class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer
-          transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
-
-  <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">
-    NEW
-  </span>
-      <img src="/images/sho3.png" class="w-full h-48 object-cover rounded-xl" />
-
-      <h4 class="mt-20 text-sm font-semibold text-black">
-        MEN'S DASHER NZ
-      </h4>
-      <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
-      <p class="text-black font-semibold">$140</p>
-
-      <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+    <x-product-card 
+        image="/images/sho3.png"
+        title="MEN'S DASHER NZ"
+        subtitle="Comfortable Running Shoes"
+        price="140"
+    >
         <div class="grid grid-cols-5 gap-2">
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
-          <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">8
-            <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-          </div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10</div>
-            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">11</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">11.5</div>
-          
-          
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">6.5</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">7</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">8</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">6.5</div>
         </div>
-      </div>
-  </div>
-  <!-- card2 -->
-  
+    </x-product-card>
 
- <a href="/men/shop/men/detailshoes" class="group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden
-             duration-300 ease-out hover:h-[520px] transition-transform duration-300 hover:-translate-y-2 relative">
-
- 
-  <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">
-    NEW
-  </span>
-
-
-      <img src="/images/yellow1.webp" class="w-full h-48 object-cover rounded-xl" />
-
-      <h4 class="mt-20 text-sm font-semibold text-black">
-        MEN'S DASHER NZ
-      </h4>
-      <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
-      <p class="text-black font-semibold">$140</p>
-
-      <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+    <x-product-card 
+        image="/images/yellow1.webp"
+        title="MEN'S DASHER NZ"
+        subtitle="Comfortable Running Shoes"
+        price="140"
+        link="/men/shop/men/detailshoes"
+    >
         <div class="grid grid-cols-5 gap-2">
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
-          <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">8
-            <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-          </div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">8</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">9</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center">8</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">9</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">6.5</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">9</div>
         </div>
-      </div>
-  </a>
+    </x-product-card>
 
-
-
-  <!-- card3 -->
-
-  <div
-       class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer
-          transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
-
-  <!-- NEW tag (hamesha visible) -->
-  <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">
-    NEW
-  </span>
-
-
-      <img src="/images/sho5.png" class="w-full h-48 object-cover rounded-xl" />
-
-      <h4 class="mt-20 text-sm font-semibold text-black">
-        MEN'S DASHER NZ
-      </h4>
-      <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
-      <p class="text-black font-semibold">$140</p>
-
-      <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+    <x-product-card 
+        image="/images/sho6.png"
+        title="MEN'S DASHER NZ"
+        subtitle="Comfortable Running Shoes"
+        price="140"
+    >
         <div class="grid grid-cols-5 gap-2">
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
-          <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">8
-            <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-          </div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10</div>
-           <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10.5</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9.8</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">11</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">8</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">9</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">8</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">9</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">6.5</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">9</div>
         </div>
-        </div>
-      </div>
+    </x-product-card>
 
-       <div
-     class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer
-          transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
-
-  
-  <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">
-    NEW
-  </span>
-      <img src="/images/sho7.png" class="w-full h-48 object-cover rounded-xl" />
-
-      <h4 class="mt-20 text-sm font-semibold text-black">
-        MEN'S DASHER NZ
-      </h4>
-      <p class="text-gray-500 text-sm">Comfortable Running Shoes</p>
-      <p class="text-black font-semibold">$140</p>
-
-      <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+    <x-product-card 
+        image="/images/sho6.png"
+        title="MEN'S DASHER NZ"
+        subtitle="Comfortable Running Shoes"
+        price="140"
+    >
         <div class="grid grid-cols-5 gap-2">
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">6</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
-          <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">8
-            <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-          </div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">7</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">8.5</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">10.5</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">9.8</div>
-          <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100">11</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">8</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">9</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">8</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">9</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">6.5</div>
+            <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-200">9</div>
         </div>
-      </div>
-  </div>
-  </div>
+    </x-product-card>
+
+</x-product-grid>
 
 
-</section>
 
 
  
-<section class="w-full px-2 sm:px-4 lg:px-6 py-6 grid
+<section class="relative z-10 w-full px-2 sm:px-4 lg:px-6 py-6 grid
                 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3
                 gap-2 sm:gap-4 md:gap-6 lg:gap-4">
 

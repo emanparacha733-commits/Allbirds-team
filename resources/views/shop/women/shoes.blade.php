@@ -8,9 +8,9 @@
         
         <!-- Top Links -->
         <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
-            <a href="#" class="hover:underline">Home/</a>
-            <a href="#" class="hover:underline">Men/</a>
-            <a href="#" class="hover:underline">Men's Dasher Nz Collection</a>
+            <a href='/' class="hover:underline">Home/</a>
+            <a href='/men/shoes' class="hover:underline">Men/</a>
+            <a href='/men/shoes' class="hover:underline">Men's Dasher Nz Collection</a>
         </div>
 
         <!-- Heading near bottom -->
@@ -62,7 +62,7 @@
 
 
     <!-- Dropdown -->
-   <div class="relative inline-block">
+  <div class="relative inline-block">
 
   <!-- Button -->
   <button id="sortBtn"
@@ -77,7 +77,7 @@
 
   <!-- Dropdown -->
   <div id="dropdownMenu"
-  class="absolute right-0 mt-2 w-44 bg-black border border-blue-700 rounded-xl shadow-lg hidden z-30">
+  class="absolute right-0 mt-2 w-44 bg-black border border-blue-700 rounded-xl shadow-lg hidden z-50">
 
   <a href="?sort=best"
     class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition cursor-pointer">
@@ -165,10 +165,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
-
-
 <!-- section 2 -->
-<section class="max-w-full px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+<section class="relative z-30 isolate overflow-visible max-w-full px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 auto-rows-[420px]">
 
   <!-- card 1 -->
   <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
