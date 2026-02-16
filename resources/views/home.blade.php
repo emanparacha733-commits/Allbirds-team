@@ -124,11 +124,11 @@
             
             <div class="dotted-wrapper relative" id="dottedArea">
                 <div class="slider-track" id="track">
-                    <div class="slide"><img src="{{ asset('images/redshoe.jpg') }}" alt=""></div>
-                    <div class="slide"><img src="{{ asset('images/whiteshoe.jpg') }}" alt=""></div>
-                    <div class="slide"><img src="{{ asset('images/greyshoe.jpg') }}" alt=""></div>
-                    <div class="slide"><img src="{{ asset('images/whiteshoe.jpg') }}" alt=""></div>
-                    <div class="slide"><img src="{{ asset('images/greyshoe.jpg') }}" alt=""></div>
+                    <div class="slide"><img src="{{ asset('images/yellow1.webp') }}" alt=""></div>
+                    <div class="slide"><img src="{{ asset('images/red1.webp') }}" alt=""></div>
+                    <div class="slide"><img src="{{ asset('images/lightgrey1.webp') }}" alt=""></div>
+                    <div class="slide"><img src="{{ asset('images/gradient1.webp') }}" alt=""></div>
+                    <div class="slide"><img src="{{ asset('images/') }}" alt=""></div>
                 </div>
                 <div id="cursorArrow" class="floating-arrow pointer-events-none">→</div>
             </div>
