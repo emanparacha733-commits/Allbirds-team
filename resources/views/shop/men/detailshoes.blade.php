@@ -171,10 +171,12 @@
     <button class="border border-gray-300 py-2 text-sm text-gray-400 line-through"  data-tab="all classic">14</button>
   </div>
 
-  <p class="text-sm text-gray-600 mt-2">
-    The Dasher NZ fits true-to-size for most customers.<br>
-    <u>Fit Guide</u>
-  </p>
+ <p class="text-sm text-gray-600 mt-2">
+  The Dasher NZ fits true-to-size for most customers.<br>
+  <button id="openFitGuide" class="underline hover:text-black">
+    Fit Guide
+  </button>
+</p>
 
 <button id="selectSizeBtn" 
         class="w-full bg-gray-200 text-gray-500 py-4 rounded-full font-medium text-sm mt-4 cursor-not-allowed"
@@ -191,57 +193,58 @@
 
 </div>
 
-
-
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  /* =========================
+     COLOR SWITCH LOGIC
+  ========================== */
+
   const colorCircles = document.querySelectorAll('.color-circle');
-   const tabs = document.querySelectorAll('.tab');
   const mainImage = document.getElementById('mainImage');
   const thumbRow1 = document.querySelectorAll('#thumbRow1 img');
   const thumbRow2 = document.querySelectorAll('#thumbRow2 img');
   const allThumbs = [...thumbRow1, ...thumbRow2];
 
+  // Store the currently selected main image
+  let selectedImage = mainImage ? mainImage.src : null;
+
   colorCircles.forEach(circle => {
-  circle.addEventListener('click', () => {
+    circle.addEventListener('click', () => {
 
-    //  Remove active border from all
-    colorCircles.forEach(c => {
-      c.classList.remove('border-black','border-2');
-      c.classList.add('border-gray-300');
-    });
+      // Update border for selected color
+      colorCircles.forEach(c => {
+        c.classList.remove('border-black','border-2');
+        c.classList.add('border-gray-300');
+      });
 
-    
-    circle.classList.remove('border-gray-300');
-    circle.classList.add('border-black','border-2');
+      circle.classList.remove('border-gray-300');
+      circle.classList.add('border-black','border-2');
 
-    // Update images
-    const images = JSON.parse(circle.dataset.images);
+      // Update main image and thumbnails
+      const images = JSON.parse(circle.dataset.images);
 
-    if(mainImage){
-      mainImage.src = images[0];
-    }
-
-    allThumbs.forEach((thumb, index) => {
-      if(images[index + 1]) {
-        thumb.src = images[index + 1];
+      if(mainImage){
+        mainImage.src = images[0];
+        selectedImage = images[0]; // store selected main image
       }
+
+      allThumbs.forEach((thumb, index) => {
+        if(images[index + 1]){
+          thumb.src = images[index + 1];
+        }
+      });
     });
-
-
-
   });
-});
 
-
-
- 
- document.addEventListener("DOMContentLoaded", function() {
+  /* =========================
+     TABS + SIZE FILTER
+  ========================== */
 
   const tabs = document.querySelectorAll('.tab');
   const sizeButtons = document.querySelectorAll('.grid button');
 
   function filterSizes(tab) {
-
     sizeButtons.forEach(btn => {
 
       if (!btn.dataset.tab) return;
@@ -253,21 +256,16 @@
       } else {
         btn.style.display = "none";
       }
-
     });
-
   }
 
-  // Page load par ALL show
   filterSizes('all');
 
-  // Tab click
   tabs.forEach(tabEl => {
     tabEl.addEventListener('click', () => {
 
       const selectedTab = tabEl.dataset.tab;
 
-      // Tab styling update
       tabs.forEach(t => {
         t.classList.remove('underline','text-black');
         t.classList.add('text-gray-500');
@@ -276,93 +274,128 @@
       tabEl.classList.add('underline','text-black');
       tabEl.classList.remove('text-gray-500');
 
-      // Filter sizes
       filterSizes(selectedTab);
-
     });
   });
 
-});
-document.addEventListener("DOMContentLoaded", function() {
+  /* =========================
+     SIZE SELECT UI
+  ========================== */
 
   const grid = document.querySelector('.grid');
   const selectBtn = document.getElementById('selectSizeBtn');
-  const heading = document.getElementById('actionHeading');
+  let selectedSize = null;
 
   grid.addEventListener('click', function(e) {
-    const btn = e.target.closest('button'); // nearest button clicked
 
-    if(!btn || !grid.contains(btn)) return; // ignore clicks outside buttons
+    const btn = e.target.closest('button');
+    if(!btn || btn.disabled) return;
 
-    // Remove active style from all visible buttons
     grid.querySelectorAll('button').forEach(b => {
       b.classList.remove('bg-black','text-white');
       b.classList.add('bg-gray-200','text-gray-500');
     });
 
-    // Add active style to clicked button
     btn.classList.remove('bg-gray-200','text-gray-500');
     btn.classList.add('bg-black','text-white');
 
-    // Enable SELECT button + change heading
-    if(selectBtn && heading){
-      selectBtn.disabled = false;
-      selectBtn.classList.remove('bg-gray-200','text-gray-500','cursor-not-allowed');
-      selectBtn.classList.add('bg-black','text-white','cursor-pointer');
+    selectedSize = btn.textContent.trim();
 
-      heading.textContent = "Add to Cart";
-    }
-  });
-
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-
-  const grid = document.querySelector('.grid'); // parent container of size buttons
-  const selectBtn = document.getElementById('selectSizeBtn');
-
-  grid.addEventListener('click', function(e) {
-    const btn = e.target.closest('button'); // nearest button clicked
-
-    if(!btn || !grid.contains(btn)) return; // ignore clicks outside buttons
-
-    // Remove active style from all visible buttons
-    grid.querySelectorAll('button').forEach(b => {
-      b.classList.remove('bg-black','text-white');
-      b.classList.add('bg-gray-200','text-gray-500');
-    });
-
-    // Add active style to clicked button
-    btn.classList.remove('bg-gray-200','text-gray-500');
-    btn.classList.add('bg-black','text-white');
-
-    // Enable SELECT button + change its text
     if(selectBtn){
       selectBtn.disabled = false;
       selectBtn.classList.remove('bg-gray-200','text-gray-500','cursor-not-allowed');
       selectBtn.classList.add('bg-black','text-white','cursor-pointer');
-
-      // Change button text
-      selectBtn.textContent = "Add to Cart";
+      selectBtn.textContent = "ADD TO CART";
     }
   });
 
-});
-// slider js
+  /* =========================
+     CART LOGIC
+  ========================== */
 
+  const cartSidebar = document.getElementById("cartSidebar");
+  const cartOverlay = document.getElementById("cartOverlay");
+  const cartItems = document.getElementById("cartItems");
+  const cartCount = document.getElementById("cartCount");
+  const subtotalElement = document.querySelector(".cart-total-price");
 
- const swiper = new Swiper(".mySwiper", {
+  let cart = [];
+
+  function openCart() {
+    cartSidebar.classList.add("active");
+    cartOverlay.classList.add("active");
+  }
+
+  selectBtn.addEventListener("click", function () {
+
+    if (!selectedSize) return;
+
+    const product = {
+      name: "MEN'S TREE RUNNER NZ",
+      price: 100,
+      image: selectedImage || "https://images.allbirds.com/image/fetch/q_auto,f_auto/w_100/https://v1.allbirds.com/products/tree-runner.jpg",
+      // <-- selected color image
+      variant: "Natural White (Natural White Sole)",
+      size: selectedSize,
+      qty: 1
+    };
+
+    cart.push(product);
+
+    renderCart();
+    openCart();
+  });
+
+  function renderCart() {
+
+    cartItems.innerHTML = "";
+    let subtotal = 0;
+
+    cart.forEach((item, index) => {
+
+      subtotal += item.price * item.qty;
+
+      cartItems.innerHTML += `
+        <div class="cart-item">
+          <div class="cart-item-image">
+            <img src="${item.image}">
+          </div>
+          <div class="cart-item-details">
+            <h3>${item.name}</h3>
+            <p>${item.variant}</p>
+            <p>Size: ${item.size}</p>
+            <button onclick="removeItem(${index})">Remove</button>
+          </div>
+          <div class="cart-item-right">
+            <p>$${item.price}</p>
+          </div>
+        </div>
+      `;
+    });
+
+    cartCount.innerText = cart.length;
+    subtotalElement.innerText = "$" + subtotal;
+  }
+
+  window.removeItem = function(index){
+    cart.splice(index,1);
+    renderCart();
+  };
+
+  /* =========================
+     SWIPER SLIDER
+  ========================== */
+
+  const swiper = new Swiper(".mySwiper", {
     slidesPerView: 4,
     spaceBetween: 30,
     loop: true,
     speed: 800,
     grabCursor: true,
-
     navigation: {
       nextEl: ".custom-next",
       prevEl: ".custom-prev",
     },
-
     breakpoints: {
       0: { slidesPerView: 1 },
       640: { slidesPerView: 2 },
@@ -370,16 +403,44 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
+});
 
-  
-  // Responsive balls positions
-  const circles = [
-    {rx: 275, ry: 210, balls: 3},
-    {rx: 259, ry: 189, balls: 3},
-    {rx: 240, ry: 168, balls: 3},
-  ];
 
-  
+/* =========================
+   FIT GUIDE MODAL
+========================= */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  const openBtn = document.getElementById("openFitGuide");
+  const closeBtn = document.getElementById("closeFitGuide");
+  const modal = document.getElementById("fitModal");
+  const modalContent = document.getElementById("modalContent");
+
+  openBtn.addEventListener("click", () => {
+    modal.classList.remove("opacity-0","invisible");
+    modal.classList.add("opacity-100","visible");
+
+    modalContent.classList.remove("scale-95");
+    modalContent.classList.add("scale-100");
+  });
+
+  closeBtn.addEventListener("click", closeModal);
+  modal.addEventListener("click", function(e){
+    if(e.target === modal){
+      closeModal();
+    }
+  });
+
+  function closeModal(){
+    modal.classList.remove("opacity-100","visible");
+    modal.classList.add("opacity-0","invisible");
+
+    modalContent.classList.remove("scale-100");
+    modalContent.classList.add("scale-95");
+  }
+
+});
 </script>
 
   
@@ -572,6 +633,117 @@ document.addEventListener("DOMContentLoaded", function() {
 
 </section>
 
+<!-- FIT GUIDE MODAL -->
+<div id="fitModal" class="fixed inset-0 bg-black/50 flex items-center justify-center opacity-0 invisible transition-all duration-300 z-50">
+
+  <div class="bg-white w-[95%] max-w-5xl rounded-2xl p-6 relative transform scale-95 transition-all duration-300" id="modalContent">
+
+    <!-- Close Button -->
+    <button id="closeFitGuide" class="absolute top-4 right-4 text-xl">&times;</button>
+
+    <!-- Product Title -->
+    <h2 class="text-2xl font-semibold text-center mb-2">
+  Men's Dasher NZ Relay
+</h2>
+
+<!-- Fit Description -->
+<div class="w-full flex justify-center mt-2">
+  <p class="bg-red-100 inline-block px-4 py-2 rounded-full text-sm">
+    The Dasher NZ Relay fits true-to-size for most customers.
+  </p>
+</div>
+
+
+    <!-- Product Images -->
+    <div class="grid grid-cols-2 gap-4 mb-6">
+      <div class="flex justify-center">
+        <img src='/images/yellow2.webp' alt="Top View" class="rounded-xl max-h-60">
+      </div>
+      <div class="flex justify-center">
+        <img src="/images/yellow3.webp" alt="Side View" class="rounded-xl max-h-60">
+      </div>
+    </div>
+
+    <!-- Sliders -->
+    <div class="grid grid-cols-2 gap-6 mb-6">
+      <div>
+        <h3 class="text-sm font-medium mb-1 text-center">AVERAGE WIDTH</h3>
+        <div class="h-2 bg-gray-200 rounded-full relative">
+          <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-black rounded-full -top-1"></div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-medium mb-1 text-center">AVERAGE LENGTH</h3>
+        <div class="h-2 bg-gray-200 rounded-full relative">
+          <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-black rounded-full -top-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIZE CHART -->
+   <div class="overflow-x-auto rounded-2xl border border-gray-200">
+  <table class="w-full text-center text-sm border-collapse">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-3 py-2 border border-gray-200 bg-red-100">US</th>
+            <th class="px-3 py-2 border border-gray-200">8</th>
+            <th class="px-3 py-2 border border-gray-200">8.5</th>
+            <th class="px-3 py-2 border border-gray-200  bg-red-100">9</th>
+            <th class="px-3 py-2 border border-gray-200">9.5</th>
+            <th class="px-3 py-2 border border-gray-200">10</th>
+            <th class="px-3 py-2 border border-gray-200">10.5</th>
+            <th class="px-3 py-2 border border-gray-200  bg-red-100">11</th>
+            <th class="px-3 py-2 border border-gray-200">11.5</th>
+            <th class="px-3 py-2 border border-gray-200">12</th>
+            <th class="px-3 py-2 border border-gray-200">12.5</th>
+            <th class="px-3 py-2 border border-gray-200">13</th>
+            <th class="px-3 py-2 border border-gray-200">13.5</th>
+            <th class="px-3 py-2 border border-gray-200  bg-red-100">14</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-gray-50">
+            <td class="px-3 py-2 border border-gray-200 bg-red-100">UK</td>
+            <td class="px-3 py-2 border border-gray-200">7</td>
+            <td class="px-3 py-2 border border-gray-200">7.5</td>
+            <td class="px-3 py-2 border border-gray-200  bg-red-100">8</td>
+            <td class="px-3 py-2 border border-gray-200">8.5</td>
+            <td class="px-3 py-2 border border-gray-200">9</td>
+            <td class="px-3 py-2 border border-gray-200">9.5</td>
+            <td class="px-3 py-2 border border-gray-200  bg-red-100">10</td>
+            <td class="px-3 py-2 border border-gray-200">10.5</td>
+            <td class="px-3 py-2 border border-gray-200">11</td>
+            <td class="px-3 py-2 border border-gray-200">11.5</td>
+            <td class="px-3 py-2 border border-gray-200">12</td>
+            <td class="px-3 py-2 border border-gray-200">12.5</td>
+            <td class="px-3 py-2 border border-gray-200  bg-red-100">13</td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2 border border-gray-200 bg-red-100">cm</td>
+            <td class="px-3 py-2 border border-gray-200">26</td>
+            <td class="px-3 py-2 border border-gray-200">26.5</td>
+            <td class="px-3 py-2 border border-gray-200  bg-red-100">27</td>
+            <td class="px-3 py-2 border border-gray-200">27.5</td>
+            <td class="px-3 py-2 border border-gray-200">28</td>
+            <td class="px-3 py-2 border border-gray-200">28.5</td>
+            <td class="px-3 py-2 border border-gray-200  bg-red-100">29</td>
+            <td class="px-3 py-2 border border-gray-200">29.5</td>
+            <td class="px-3 py-2 border border-gray-200">30</td>
+            <td class="px-3 py-2 border border-gray-200">30.5</td>
+            <td class="px-3 py-2 border border-gray-200">31</td>
+            <td class="px-3 py-2 border border-gray-200">31.5</td>
+            <td class="px-3 py-2 border border-gray-200  bg-red-100">32</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- cards -->
 <section class="w-full text-center rounded-2xl py-12 px-4 sm:px-6 lg:px-8"
 style="background-color:#7C8C52">
   <p class="text-white text-sm sm:text-base font-medium mb-2 uppercase tracking-widest">
