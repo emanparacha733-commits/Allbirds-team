@@ -267,3 +267,64 @@ Route::prefix('admin')->name('admin.')->group(function () {
 */
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+// admin panel routes
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+});
+
+
+// buttons page route
+
+Route::get('admin/buttons', function () {
+    return view('admin.buttons'); // 
+});
+// alerts page route
+Route:: get('admin/alerts', function (){
+    return view('admin.alerts');
+
+});
+
+Route:: get('admin/avatars', function (){
+    return view('admin.avatars');
+
+});
+
+Route:: get('admin/badge', function (){
+    return view('admin.badge');
+
+});
+
+Route:: get('admin/bar-chart', function (){
+    return view('admin.bar-chart');
+
+});
+
+Route:: get('admin/basic-tables', function (){
+    return view('admin.basic-tables');
+
+});
+
+Route:: get('admin/blank', function (){
+    return view('admin.blank');
+
+});
+
+Route:: get('admin/calender', function (){
+    return view('admin.calender');
+
+});
+
+Route:: get('admin/form-elements', function (){
+    return view('admin.form-elements');
+
+});
+
+Route:: get('admin/images', function (){
+    return view('admin.images');
+
+});

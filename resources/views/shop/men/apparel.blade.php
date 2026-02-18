@@ -159,8 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
   @endphp
 
   @forelse($apparelProducts as $product)
-  <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer
-          transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
+  <div class="relative z-30 group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2 hover:z-50 overflow-visible">
 
     @if($product->is_new)
     <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">
@@ -170,9 +169,9 @@ document.addEventListener("DOMContentLoaded", function () {
     
     <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-48 object-cover rounded-xl" alt="{{ $product->name }}" />
 
-    <h1 class="mt-20 text-sm font-semibold text-black">
+    <h4 class="mt-20 text-sm font-semibold text-black">
       {{ strtoupper($product->name) }}
-    </h1>
+    </h4>
     <p class="text-gray-500 text-sm">{{ $product->color_name ?? 'Various Colors' }}</p>
     <p class="text-black font-semibold">
       @if($product->on_sale)
@@ -213,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
  
-<section class="w-full px-2 sm:px-4 lg:px-6 py-6 grid
+<section class=" relative z-10 w-full px-2 sm:px-4 lg:px-6 py-6 grid
                 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3
                 gap-2 sm:gap-4 md:gap-6 lg:gap-4">
 

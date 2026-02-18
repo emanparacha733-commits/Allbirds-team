@@ -1189,10 +1189,17 @@
                 <span class="cart-shipping-price"><s>$5.00</s> FREE</span>
             </div>
         </div>
+<button class="cart-checkout-btn" id="cartCheckoutBtn">
+    CHECKOUT
+</button>
 
-        <button class="cart-checkout-btn" onclick="window.location.href='{{ route('checkout') }}'">
-            CHECKOUT
-        </button>
+<script>
+document.getElementById("cartCheckoutBtn").addEventListener("click", function() {
+    window.location.href = "{{ route('checkout') }}";
+});
+</script>
+
+
 
         <!-- Payment Options -->
         <div class="cart-payment-options">
