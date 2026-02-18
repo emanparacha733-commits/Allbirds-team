@@ -6,77 +6,75 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    // Show checkout page
     public function index()
     {
-        $cart = session()->get('cart', []);
+        $cart = session('cart', []);
         $subtotal = 0;
-        
         foreach ($cart as $item) {
             $subtotal += $item['price'] * $item['quantity'];
         }
-        
-        return view('checkout', compact('cart', 'subtotal'));
+        $cartCount = array_sum(array_column($cart, 'quantity'));
+
+        return view('checkout', compact('cart', 'subtotal', 'cartCount'));
     }
-    
+
+    // Add item to cart
     public function add(Request $request)
     {
-        $cart = session()->get('cart', []);
-        
+        $cart = session('cart', []);
+
         $productId = $request->product_id;
-        
-        // If product already in cart, increase quantity
-        if(isset($cart[$productId])) {
-            $cart[$productId]['quantity']++;
+
+        if (isset($cart[$productId])) {
+            $cart[$productId]['quantity'] += 1;
         } else {
-            // Add new product to cart
             $cart[$productId] = [
-                'id' => $request->product_id,
-                'name' => $request->name,
-                'price' => $request->price,
-                'size' => $request->size ?? 'N/A',
-                'image' => $request->image ?? 'images/product-placeholder.jpg',
-                'quantity' => 1
+                'name'     => $request->name,
+                'price'    => $request->price,
+                'size'     => $request->size,
+                'image'    => $request->image,
+                'quantity' => 1,
             ];
         }
-        
-        session()->put('cart', $cart);
-        
-        return redirect()->back()->with('success', 'Product added to cart!');
+
+        session(['cart' => $cart]);
+
+        return back()->with('cart_updated', true);
     }
-    
-    public function remove(Request $request)
-    {
-        $cart = session()->get('cart', []);
-        
-        if(isset($cart[$request->product_id])) {
-            unset($cart[$request->product_id]);
-            session()->put('cart', $cart);
-        }
-        
-        return redirect()->back()->with('success', 'Product removed from cart!');
-    }
-    
+
+    // Update quantity
     public function updateQuantity(Request $request)
     {
-        $cart = session()->get('cart', []);
-        
-        if(isset($cart[$request->product_id])) {
-            $cart[$request->product_id]['quantity'] = max(1, $request->quantity);
-            session()->put('cart', $cart);
+        $cart = session('cart', []);
+        $productId = $request->product_id;
+        $quantity = (int) $request->quantity;
+
+        if (isset($cart[$productId])) {
+            if ($quantity <= 0) {
+                unset($cart[$productId]); // Remove if quantity reaches 0
+            } else {
+                $cart[$productId]['quantity'] = $quantity;
+            }
         }
-        
-        return redirect()->back();
+
+        session(['cart' => $cart]);
+
+        return back();
+    }
+
+    // Remove item from cart
+    public function remove(Request $request)
+    {
+        $cart = session('cart', []);
+        $productId = $request->product_id;
+
+        if (isset($cart[$productId])) {
+            unset($cart[$productId]);
+        }
+
+        session(['cart' => $cart]);
+
+        return back();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

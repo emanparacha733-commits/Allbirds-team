@@ -246,3 +246,24 @@ class SaleController extends Controller
         }
     }
 }
+
+{
+    // You can filter products with a clearance flag or specific discount
+    $products = Product::where('gender', 'men')
+                      ->where('is_clearance', true) // or however you mark clearance items
+                      ->where('is_on_sale', true)
+                      ->get();
+    
+    return view('sale.men.clearance', compact('products'));
+}
+
+
+{
+    // You can filter products marked as last chance
+    $products = Product::where('gender', 'men')
+                      ->where('is_last_chance', true) // or however you mark last chance items
+                      ->where('is_on_sale', true)
+                      ->get();
+    
+    return view('sale.men.last-chance', compact('products'));
+}

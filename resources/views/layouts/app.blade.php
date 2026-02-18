@@ -47,30 +47,32 @@
     }
 
     /* ── Mega menu: full width, beige background ── */
-    .mega-menu {
-        display: none;
-        position: fixed;
-        top: 112px;
-        left: 0;
-        right: 0;
-        width: 100vw;
-        background: #f0ede8;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.10);
-        z-index: 100;
-    }
+   .mega-menu {
+    display: none;
+    position: fixed;
+    top: 112px;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    background: #f1eee9;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+    z-index: 100;
+}
 
     .nav-item:hover .mega-menu {
         display: block;
     }
 
     /* ── Sub-tab bar: slightly darker beige strip ── */
-    .sub-tab-bar {
-        background: #e4e0d8;
-        padding: 10px 0;
-        display: flex;
-        justify-content: center;
-        gap: 32px;
-    }
+   .sub-tab-bar {
+    background: #e4e0d8;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin: 12px 16px;
+    border-radius: 999px;
+}
 
     .sub-tab {
         font-size: 11px;
@@ -494,6 +496,46 @@
     .payment-option-btn.shop-pay {
         background: #5a31f4;
     }
+    #main-header {
+    transition: background 0.2s ease;
+}@media (max-width: 640px) {
+        .cart-sidebar {
+            width: 100vw;
+            right: -100vw;
+        }
+    }
+
+    /* ── Global #ECE9E2 theme overrides ── */
+    body { background-color: #ECE9E2 !important; }
+    .mega-menu { background: #ECE9E2 !important; }
+    .sub-tab-bar { background: rgba(0,0,0,0.06) !important; }
+    .cart-sidebar { background: #ECE9E2 !important; }
+    .cart-footer { background: #ECE9E2 !important; }
+    .cart-upsell { background: rgba(0,0,0,0.04) !important; }
+    .cart-recommended-toggle { background: #ECE9E2 !important; }
+    .cart-recommended-toggle:hover { background: rgba(0,0,0,0.04) !important; }
+    .qty-btn { background: #ECE9E2 !important; }
+    .qty-btn:hover { background: rgba(0,0,0,0.08) !important; }
+
+    /* ── Cart #ECE9E2 fix ── */
+    .cart-sidebar,
+    .cart-sidebar .cart-footer,
+    .cart-sidebar .cart-header,
+    .cart-sidebar .cart-body,
+    .cart-sidebar .cart-items,
+    .cart-sidebar .cart-item,
+    .cart-sidebar .cart-upsell,
+    .cart-sidebar .cart-recommended-toggle,
+    .cart-sidebar .cart-progress {
+        background-color: #ECE9E2 !important;
+        background: #ECE9E2 !important;
+    }
+
+
+
+#main-header:has(.nav-item:hover) {
+    background: #f1eee9;
+}
 
     /* Mobile Responsive */
     @media (max-width: 640px) {
@@ -501,13 +543,14 @@
             width: 100vw;
             right: -100vw;
         }
+
     }
 </style>
 </head>
 
 <body class="antialiased bg-white">
 
-<header class="w-full">
+<header class="w-full" id="main-header">
     <!-- Announcement bar -->
     <div class="bg-black text-white text-[11px] py-2.5 text-center font-bold tracking-tight sticky top-0 left-0 right-0 z-50">
         <span>Shop New Arrivals. </span>
@@ -516,13 +559,13 @@
         <a href="/women" class="underline hover:no-underline">Shop Women</a>
     </div>
 
-    <nav class="bg-white border-b border-gray-100">
-        <div class="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
+    <nav class="bg-white border border-gray-100 mx-4 mt-2 rounded-2xl shadow-sm">
+    <div class="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
 
             <!-- Logo -->
             <div class="flex-1">
                 <a href="/">
-                    <img src="{{ asset('images/logo-seo.jpeg') }}" alt="allbirds" class="h-20 w-auto">
+                    <img src="{{ asset('images/logo-seo.jpeg') }}" alt="allbirds" class="h-15 w-auto">
                 </a>
             </div>
 
@@ -650,12 +693,7 @@
                         <!-- Men Sale -->
                         <div class="sub-panel" id="men-sale">
                             <div class="panel-inner">
-                                <div class="flex gap-14">
-                                    <ul class="text-[11px] font-bold space-y-4 tracking-tighter uppercase text-black">
-                                        <li><a href="{{ route('sale.men', ['discount' => '50']) }}" class="hover:underline text-red-600">Up to 50% Off</a></li>
-                                        <li><a href="{{ route('sale.men.clearance') }}" class="hover:underline">Clearance</a></li>
-                                        <li><a href="{{ route('sale.men.last-chance') }}" class="hover:underline">Last Chance</a></li>
-                                    </ul>
+                                
                                     <div class="space-y-3">
                                         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sale Shoes</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
@@ -1073,143 +1111,235 @@
     @yield('content')
 </main>
 
-
-
 <!-- Cart Overlay -->
 <div class="cart-overlay" id="cartOverlay"></div>
 
 <!-- Cart Sidebar -->
 <div class="cart-sidebar" id="cartSidebar">
-    <!-- Progress Bar -->
+
+    {{-- Progress bar --}}
+    @php
+        $sidebarCart = session('cart', []);
+        $sidebarSubtotal = 0;
+        foreach ($sidebarCart as $sidebarItem) {
+            $sidebarSubtotal += $sidebarItem['price'] * $sidebarItem['quantity'];
+        }
+        $freeShippingThreshold = 75;
+        $remaining = max(0, $freeShippingThreshold - $sidebarSubtotal);
+    @endphp
+
     <div class="cart-progress">
-        <p id="cartProgressText">You've earned free shipping!</p>
+        @if($remaining > 0)
+            <p>Spend <strong>${{ number_format($remaining, 2) }}</strong> more to get free shipping!</p>
+        @else
+            <p>🎉 You've earned free shipping!</p>
+        @endif
     </div>
-    
-    <!-- Cart Header -->
+
+    {{-- Cart Header --}}
     <div class="cart-header">
-        <h2 class="cart-title">CART (<span id="cartCount">{{ count(session('cart', [])) }}</span>)</h2>
+        <h2 class="cart-title">
+            CART ({{ array_sum(array_column($sidebarCart, 'quantity')) }})
+        </h2>
         <button class="cart-close" id="cartClose">&times;</button>
     </div>
-    
-    <!-- Cart Body -->
-    <div class="cart-body" id="cartBody">
-        <!-- Cart Items Container -->
-        <div class="cart-items" id="cartItems">
-            @php
-                $cart = session('cart', []);
-                $subtotal = 0;
-            @endphp
 
-            @if(empty($cart))
-                <!-- Empty Cart State -->
-                <div class="p-8 text-center text-gray-500">
-                    <p class="mb-4">Your cart is empty</p>
-                    <a href="{{ route('men.shoes') }}" class="text-black underline hover:no-underline">Start Shopping</a>
-                </div>
-            @else
-                @foreach($cart as $id => $item)
-                    @php
-                        $subtotal += $item['price'] * $item['quantity'];
-                    @endphp
-                    <!-- Cart Item -->
-                    <div class="cart-item">
-                        <div class="cart-item-image">
-                            <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}">
-                        </div>
-                        <div class="cart-item-details">
-                            <h3 class="cart-item-name">{{ strtoupper($item['name']) }}</h3>
-                            <p class="cart-item-size">Size: {{ $item['size'] }}</p>
-                            <form action="{{ route('cart.remove') }}" method="POST" style="display: inline;">
+    {{-- Cart Body --}}
+    <div class="cart-body" id="cartBody">
+        <div class="cart-items" id="cartItems">
+
+            @forelse($sidebarCart as $itemId => $sidebarItem)
+                <div class="cart-item">
+
+                    {{-- Product Image --}}
+                    <div class="cart-item-image">
+                        <img
+                            src="{{ asset($sidebarItem['image']) }}"
+                            alt="{{ $sidebarItem['name'] }}"
+                            onerror="this.src='https://via.placeholder.com/80x80?text=Product'"
+                        >
+                    </div>
+
+                    {{-- Product Details --}}
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-name">{{ strtoupper($sidebarItem['name']) }}</h3>
+
+                        @if(!empty($sidebarItem['color']))
+                            <p class="cart-item-variant">{{ $sidebarItem['color'] }}</p>
+                        @endif
+
+                        <p class="cart-item-size">Size: {{ $sidebarItem['size'] }}</p>
+
+                        {{-- Remove button --}}
+                        <form action="{{ route('cart.remove') }}" method="POST" style="display:inline;">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $itemId }}">
+                            <button type="submit" class="cart-item-remove">Remove</button>
+                        </form>
+                    </div>
+
+                    {{-- Price + Quantity --}}
+                    <div class="cart-item-right">
+                        <p class="cart-item-price">${{ number_format($sidebarItem['price'] * $sidebarItem['quantity'], 2) }}</p>
+
+                        <div class="cart-item-quantity">
+                            {{-- Decrease --}}
+                            <form action="{{ route('cart.update') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="product_id" value="{{ $id }}">
-                                <button type="submit" class="cart-item-remove">Remove</button>
+                                <input type="hidden" name="product_id" value="{{ $itemId }}">
+                                <input type="hidden" name="quantity" value="{{ $sidebarItem['quantity'] - 1 }}">
+                                <button type="submit" class="qty-btn">−</button>
+                            </form>
+
+                            <span class="qty-input" style="width:40px;text-align:center;font-weight:600;">
+                                {{ $sidebarItem['quantity'] }}
+                            </span>
+
+                            {{-- Increase --}}
+                            <form action="{{ route('cart.update') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $itemId }}">
+                                <input type="hidden" name="quantity" value="{{ $sidebarItem['quantity'] + 1 }}">
+                                <button type="submit" class="qty-btn">+</button>
                             </form>
                         </div>
-                        <div class="cart-item-right">
-                            <p class="cart-item-price">${{ number_format($item['price'] * $item['quantity'], 2) }}</p>
-                            <div class="cart-item-quantity">
-                                <form action="{{ route('cart.update') }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $id }}">
-                                    <input type="hidden" name="quantity" value="{{ max(1, $item['quantity'] - 1) }}">
-                                    <button type="submit" class="qty-btn">
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M3 8h10" stroke="currentColor" stroke-width="1.5"/>
-                                        </svg>
-                                    </button>
-                                </form>
-                                <input type="number" value="{{ $item['quantity'] }}" min="1" class="qty-input" readonly>
-                                <form action="{{ route('cart.update') }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $id }}">
-                                    <input type="hidden" name="quantity" value="{{ $item['quantity'] + 1 }}">
-                                    <button type="submit" class="qty-btn">
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5"/>
-                                        </svg>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
                     </div>
-                @endforeach
 
-                <!-- Returns Protection Upsell -->
-                <div class="cart-upsell">
-                    <div class="cart-upsell-content">
-                        <h4>Returns Protection</h4>
-                        <p>Buy returns protection to qualify for free returns.</p>
-                    </div>
-                    <button class="cart-upsell-btn">ADD - $3</button>
                 </div>
-            @endif
-        </div>
+            @empty
+                <div class="p-8 text-center text-gray-500">
+                    <p class="text-lg mb-4">Your cart is empty</p>
+                    <a href="{{ route('men.shoes') }}" class="text-black underline text-sm">Start Shopping</a>
+                </div>
+            @endforelse
 
-        <!-- Recommended Section -->
-        <div class="cart-recommended">
-            <button class="cart-recommended-toggle">
-                <span>RECOMMENDED FOR YOU</span>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="toggle-icon">
-                    <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5"/>
-                </svg>
-            </button>
         </div>
     </div>
 
-    <!-- Cart Footer -->
-    @if(!empty($cart))
+    {{-- Cart Footer (only show if cart has items) --}}
+    @if(!empty($sidebarCart))
     <div class="cart-footer">
         <div class="cart-totals">
             <div class="cart-total-row">
                 <span>Subtotal</span>
-                <span class="cart-total-price">${{ number_format($subtotal, 2) }}</span>
+                <span class="cart-total-price">${{ number_format($sidebarSubtotal, 2) }}</span>
             </div>
             <div class="cart-total-row">
                 <span>Shipping</span>
-                <span class="cart-shipping-price"><s>$5.00</s> FREE</span>
+                @if($sidebarSubtotal >= $freeShippingThreshold)
+                    <span class="cart-shipping-price"><s>$5.00</s> FREE</span>
+                @else
+                    <span class="cart-shipping-price">$5.00</span>
+                @endif
             </div>
         </div>
 
-        <button class="cart-checkout-btn" onclick="window.location.href='{{ route('checkout') }}'">
-            CHECKOUT
-        </button>
+        <a href="{{ route('checkout') }}" class="cart-checkout-btn" style="display:block;text-align:center;text-decoration:none;">
+            CHECKOUT — ${{ number_format($sidebarSubtotal, 2) }}
+        </a>
 
-        <!-- Payment Options -->
         <div class="cart-payment-options">
-            <button class="payment-option-btn amazon-pay" style="background: #ffc439;">
-                <span style="font-weight: bold; font-size: 11px;">amazon pay</span>
-            </button>
-            <button class="payment-option-btn paypal" style="background: #0070ba; color: white;">
-                <span style="font-weight: bold; font-size: 11px;">PayPal</span>
-            </button>
-            <button class="payment-option-btn shop-pay" style="background: #5a31f4; color: white;">
-                <span style="font-weight: bold; font-size: 11px;">Shop Pay</span>
-            </button>
+            <button class="payment-option-btn">amazon pay</button>
+            <button class="payment-option-btn paypal">PayPal</button>
+            <button class="payment-option-btn shop-pay">Shop Pay</button>
         </div>
     </div>
     @endif
-</div>
 
+</div>
+<script>
+    function openCart() {
+        document.getElementById('cartOverlay').classList.add('active');
+        document.getElementById('cartSidebar').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeCart() {
+        document.getElementById('cartOverlay').classList.remove('active');
+        document.getElementById('cartSidebar').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    document.getElementById('cartOverlay')?.addEventListener('click', closeCart);
+    document.getElementById('cartClose')?.addEventListener('click', closeCart);
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeCart();
+    });
+</script>
+
+<script>
+    // Safe cart functions
+    function openCart() {
+        const overlay = document.getElementById('cartOverlay');
+        const sidebar = document.getElementById('cartSidebar');
+        if (overlay && sidebar) {
+            overlay.classList.add('active');
+            sidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        } else {
+            console.warn('Cart elements not found on this page.');
+        }
+    }
+
+    function closeCart() {
+        const overlay = document.getElementById('cartOverlay');
+        const sidebar = document.getElementById('cartSidebar');
+        if (overlay && sidebar) {
+            overlay.classList.remove('active');
+            sidebar.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Attach event listeners only if elements exist
+    document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.getElementById('cartOverlay');
+        const closeBtn = document.getElementById('cartClose');
+        if (overlay) overlay.addEventListener('click', closeCart);
+        if (closeBtn) closeBtn.addEventListener('click', closeCart);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeCart();
+        });
+    });
+
+    // Mega menu functions (unchanged)
+    function switchPanel(menu, panel, hoveredBtn) {
+        const navItem = document.getElementById('nav-' + menu);
+        if (!navItem) return;
+        navItem.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+        navItem.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(menu + '-' + panel);
+        if (target) target.classList.add('active');
+        hoveredBtn.classList.add('active');
+    }
+
+    document.querySelectorAll('.nav-item').forEach(navItem => {
+        let leaveTimer;
+        const hideMenu = () => {
+            const megaMenu = navItem.querySelector('.mega-menu');
+            if (megaMenu) megaMenu.style.display = 'none';
+            navItem.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+            navItem.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+            const firstPanel = navItem.querySelector('.sub-panel');
+            const firstTab = navItem.querySelector('.sub-tab');
+            if (firstPanel) firstPanel.classList.add('active');
+            if (firstTab) firstTab.classList.add('active');
+        };
+        const showMenu = () => {
+            clearTimeout(leaveTimer);
+            const megaMenu = navItem.querySelector('.mega-menu');
+            if (megaMenu) megaMenu.style.display = 'block';
+        };
+        const delayHide = () => {
+            leaveTimer = setTimeout(hideMenu, 100);
+        };
+        navItem.addEventListener('mouseenter', showMenu);
+        navItem.addEventListener('mouseleave', delayHide);
+        const megaMenu = navItem.querySelector('.mega-menu');
+        if (megaMenu) {
+            megaMenu.addEventListener('mouseenter', showMenu);
+            megaMenu.addEventListener('mouseleave', delayHide);
+        }
+    });
+</script>
 <script>
     function switchPanel(menu, panel, hoveredBtn) {
         const navItem = document.getElementById('nav-' + menu);

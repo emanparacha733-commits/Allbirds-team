@@ -168,3 +168,6 @@ document.addEventListener('keydown', (e) => {
         window.closeSearch();
     }
 });
+document.querySelector('.cart-checkout-btn').addEventListener('click', function() {
+    window.location.href = '/checkout'; // Or your specific checkout URL
+});
