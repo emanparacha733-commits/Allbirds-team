@@ -1233,10 +1233,23 @@
                 @endif
             </div>
         </div>
+<button class="cart-checkout-btn" id="cartCheckoutBtn">
+    CHECKOUT
+</button>
 
+<script>
+document.getElementById("cartCheckoutBtn").addEventListener("click", function() {
+    window.location.href = "{{ route('checkout') }}";
+});
+</script>
+
+
+<<<<<<< HEAD
         <a href="{{ route('checkout') }}" class="cart-checkout-btn" style="display:block;text-align:center;text-decoration:none;">
             CHECKOUT — ${{ number_format($sidebarSubtotal, 2) }}
         </a>
+=======
+>>>>>>> db9f491e54bffb6161727fb84612b6c649af587d
 
         <div class="cart-payment-options">
             <button class="payment-option-btn">amazon pay</button>

@@ -24,7 +24,6 @@
 
     {{-- Filter Bar --}}
     <div class="w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between bg-[#E6DDD0] rounded-[40px] mt-4">
-        
         {{-- Left: Filter + Count --}}
         <div class="flex items-center gap-4">
             <button class="flex items-center gap-2 text-black text-sm font-medium hover:opacity-70 transition">
@@ -39,7 +38,6 @@
 
         {{-- Right: Switch + Dropdown --}}
         <div class="flex items-center gap-4">
-            
             {{-- MEN / WOMEN Switch --}}
             <div class="flex items-center bg-[#E5DFD6] border border-[#D4CDC3] rounded-full p-[4px]">
                 <a href="{{ url('/men/socks/' . $category) }}"
@@ -78,47 +76,22 @@
         </div>
     </div>
 
-    {{-- Product Grid with Shoes-Style Animation --}}
+    {{-- Product Grid Using ProductCard Component --}}
     <section class="max-w-full px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
-        
         @forelse($products as $product)
-        <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer
-                   transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
-
-            {{-- NEW tag (if product is new) --}}
-            @if($product->is_new)
-            <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">
-                NEW
-            </span>
-            @endif
-
-            {{-- Product Image --}}
-            <img src="{{ asset('storage/' . $product->image) }}" 
-                 class="w-full h-48 object-cover rounded-xl" 
-                 alt="{{ $product->name }}" />
-
-            {{-- Product Info --}}
-            <h4 class="mt-20 text-sm font-semibold text-black">
-                {{ strtoupper($product->name) }}
-            </h4>
-            <p class="text-gray-500 text-sm">{{ $product->color_name ?? 'Various Colors' }}</p>
-            <p class="text-black font-semibold">
-                @if($product->on_sale ?? false)
-                    <span class="text-red-600">${{ number_format($product->sale_price, 0) }}</span>
-                    <span class="text-gray-400 line-through ml-2 text-xs">${{ number_format($product->price, 0) }}</span>
-                @else
-                    ${{ number_format($product->price, 0) }}
-                @endif
-            </p>
-
-            {{-- Sizes Section (appears on hover) --}}
-            <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <x-product-card 
+                :image="asset('storage/' . $product->image)" 
+                :title="$product->name" 
+                :subtitle="$product->color_name ?? 'Various Colors'" 
+                :price="$product->on_sale ? $product->sale_price : $product->price" 
+                :link="url('/product/' . $product->slug)"
+                :isNew="$product->is_new">
+                
+                {{-- Sizes --}}
                 <div class="grid grid-cols-5 gap-2">
-                    
                     @php
-                        $sockSizes = ['S', 'M', 'L', 'XL'];
+                        $sockSizes = ['S','M','L','XL'];
                     @endphp
-                    
                     @foreach($sockSizes as $size)
                         @if($product->sizes && isset($product->sizes[$size]) && $product->sizes[$size] <= 0)
                             <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400 text-xs">
@@ -132,89 +105,20 @@
                         @endif
                     @endforeach
                 </div>
-            </div>
-        </div>
+            </x-product-card>
         @empty
-        <div class="col-span-full text-center py-20">
-            <p class="text-gray-500 text-lg">No products found in this category.</p>
-            <a href="{{ url('/admin/products/create') }}" 
-               class="inline-block mt-4 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
-                Add Products
-            </a>
-        </div>
+            <div class="col-span-full text-center py-20">
+                <p class="text-gray-500 text-lg">No products found in this category.</p>
+                <a href="{{ url('/admin/products/create') }}" 
+                   class="inline-block mt-4 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
+                    Add Products
+                </a>
+            </div>
         @endforelse
-
     </section>
 
     {{-- Bottom Category Cards --}}
-    <section class="w-full px-2 sm:px-4 lg:px-6 py-6 grid
-                    grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3
-                    gap-2 sm:gap-4 md:gap-6 lg:gap-4 mt-12">
-
-        @php
-            $categories = [
-                ['title' => 'Shoes', 'image' => 'first.webp'],
-                ['title' => 'Apparel', 'image' => 'second.webp'],
-                ['title' => 'Accessories', 'image' => 'third.webp']
-            ];
-        @endphp
-
-        @foreach($categories as $cat)
-        <div class="relative rounded-2xl overflow-hidden shadow-lg w-full mx-auto cursor-pointer group">
-            <img src="{{ asset('images/' . $cat['image']) }}"
-                 class="w-full h-[400px] sm:h-[300px] md:h-[350px] lg:h-auto object-cover rounded-2xl
-                        transition-transform duration-1000 ease-out group-hover:scale-105" />
-
-            <h1 class="absolute inset-0 flex items-center justify-center
-                       text-white text-4xl bg-black/10 font-light font-serif pointer-events-none">
-                {{ $cat['title'] }}
-            </h1>
-
-            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
-                <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg
-                             flex items-center justify-center w-40 h-[5vh]
-                             hover:bg-white hover:text-black transition">
-                    Shop Men
-                </button>
-                <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg
-                             flex items-center justify-center w-40 h-[5vh]
-                             hover:bg-white hover:text-black transition">
-                    Shop Women
-                </button>
-            </div>
-        </div>
-        @endforeach
-
-    </section>
-
-    {{-- Info Cards --}}
-    <section class="max-w-full px-6 py-8 mx-auto grid 
-                    grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 
-                    gap-6">
-
-        <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4">
-            <p class="text-xl text-black">Wear All Day Comfort</p>
-            <p class="text-gray-600 text-sm">
-                Lightweight, bouncy, and wildly comfortable, Allbirds socks make any outing feel effortless.
-            </p>
-        </div>
-
-        <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4">
-            <p class="text-xl text-black">Sustainability In Every Step</p>
-            <p class="text-gray-600 text-sm">
-                From materials to transport, we're working to reduce our carbon footprint to near zero.
-            </p>
-        </div>
-
-        <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4">
-            <p class="text-xl text-black">Materials From The Earth</p>
-            <p class="text-gray-600 text-sm">
-                We replace petroleum-based synthetics with natural alternatives wherever we can.
-            </p>
-        </div>
-
-    </section>
-
+    <x-product-grid :products="$categories ?? []"/>
 </div>
 
 {{-- Dropdown Toggle Script --}}
@@ -229,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
         arrow.classList.toggle("rotate-180");
     });
 
-    // Close if clicked outside
     document.addEventListener("click", function (e) {
         if (!btn.contains(e.target) && !menu.contains(e.target)) {
             menu.classList.add("hidden");
@@ -238,5 +141,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-
 @endsection

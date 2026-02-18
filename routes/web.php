@@ -8,6 +8,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\AccessoriesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\OrderController;
 
 // Home
 Route::get('/', function () {
@@ -23,10 +24,10 @@ Route::prefix('men')->name('men.')->group(function () {
     Route::get('/collection/{slug}', [MenController::class, 'collection'])->name('collection');
     Route::get('/new-arrivals', [MenController::class, 'newArrivals'])->name('new-arrivals');
     Route::get('/bestsellers', [MenController::class, 'bestsellers'])->name('bestsellers');
-    // If you want the URL to be /shop/men/detailshoes
-Route::get('/shop/men/detailshoes', function () {
-    return view('shop.men.detailshoes'); 
-});
+
+    Route::get('/shop/men/detailshoes', function () {
+        return view('shop.men.detailshoes');
+    });
 
     Route::get('/shoes', function () {
         return view('shop.men.shoes');
@@ -75,7 +76,6 @@ Route::prefix('women')->name('women.')->group(function () {
 });
 
 // Sale section
-// Sale section
 Route::prefix('sale')->name('sale.')->group(function () {
     Route::get('/', [SaleController::class, 'index'])->name('index');
 
@@ -103,7 +103,7 @@ Route::prefix('sale')->name('sale.')->group(function () {
     Route::get('/{category}', [SaleController::class, 'category'])->name('category');
 });
 
-// Accessories, Gift cards, etc.
+// Accessories
 Route::get('/accessories', [AccessoriesController::class, 'index'])->name('accessories');
 Route::get('/accessories/{category}', [AccessoriesController::class, 'category'])->name('accessories.category');
 
@@ -116,17 +116,65 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update');
 Route::get('/checkout', [CartController::class, 'index'])->name('checkout');
-
+Route::post('/checkout/place', [OrderController::class, 'place'])->name('checkout.place');
+Route::get('/order/success', [OrderController::class, 'success'])->name('order.success');
 
 // Search
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
+// Products
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
 // Admin
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('products', ProductController::class);
+
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
+
+    Route::get('/buttons', function () {
+        return view('admin.buttons');
+    })->name('buttons');
+
+    Route::get('/alerts', function () {
+        return view('admin.alerts');
+    })->name('alerts');
+
+    Route::get('/avatars', function () {
+        return view('admin.avatars');
+    })->name('avatars');
+
+    Route::get('/badge', function () {
+        return view('admin.badge');
+    })->name('badge');
+
+    Route::get('/bar-chart', function () {
+        return view('admin.bar-chart');
+    })->name('bar-chart');
+
+    Route::get('/basic-tables', function () {
+        return view('admin.basic-tables');
+    })->name('basic-tables');
+
+    Route::get('/blank', function () {
+        return view('admin.blank');
+    })->name('blank');
+
+    Route::get('/calender', function () {
+        return view('admin.calender');
+    })->name('calender');
+
+    Route::get('/form-elements', function () {
+        return view('admin.form-elements');
+    })->name('form-elements');
+
+    Route::get('/images', function () {
+        return view('admin.images');
+    })->name('images');
 });
 
-// Test route
+// Debug / Test routes (remove in production)
 Route::get('/test-cart', function () {
     $cart = session('cart', []);
     $cart['test-product-123'] = [
@@ -140,19 +188,20 @@ Route::get('/test-cart', function () {
     session(['cart' => $cart]);
     return redirect()->route('home')->with('success', 'Test product added!');
 });
-use App\Http\Controllers\OrderController;
 
-Route::post('/checkout/place', [OrderController::class, 'place'])->name('checkout.place');
-Route::get('/order/success', [OrderController::class, 'success'])->name('order.success');
-Route::get('/session-test', function() {
+Route::get('/session-test', function () {
     return session('cart', 'empty');
-});Route::get('/debug-session', function () {
+});
+
+Route::get('/debug-session', function () {
     return response()->json([
         'cart' => session('cart'),
         'session_id' => session()->getId(),
         'all' => session()->all(),
     ]);
-});Route::get('/clear-old-cart', function () {
+});
+
+Route::get('/clear-old-cart', function () {
     session()->forget('cart');
     session()->save();
     return redirect('/')->with('success', 'Cart cleared!');

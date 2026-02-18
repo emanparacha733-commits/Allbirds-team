@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -8,26 +8,49 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * Show all products
-     */
-    public function index()
+    // Show all products
+    public function index(Request $request, $gender = null, $category = null)
     {
-        $products = Product::orderBy('created_at', 'desc')->get();
-        return view('products.index', compact('products'));
+        $products = Product::query();
+
+        if ($gender) $products->forGender($gender);
+        if ($category) $products->ofCategory($category);
+
+        // Sorting
+        switch ($request->get('sort')) {
+            case 'best_selling':
+                $products->bestSelling();
+                break;
+            case 'price_low':
+                $products->priceLowToHigh();
+                break;
+            case 'price_high':
+                $products->priceHighToLow();
+                break;
+            case 'alpha_asc':
+                $products->alphabetically('asc');
+                break;
+            case 'alpha_desc':
+                $products->alphabetically('desc');
+                break;
+            default:
+                $products->latest();
+        }
+
+        return view('products.index', [
+            'products' => $products->get(),
+            'category' => $category,
+            'gender' => $gender
+        ]);
     }
 
-    /**
-     * Show the form for creating a new product
-     */
+    // Show create form
     public function create()
     {
         return view('layouts.admin.products.create');
     }
 
-    /**
-     * Store a newly created product in storage
-     */
+    // Store product
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -47,38 +70,31 @@ class ProductController extends Controller
             'sizes' => 'nullable|array',
         ]);
 
-        // Handle image upload
+        // Image upload
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
-            $validated['image'] = $imagePath;
+            $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
-        // Convert checkboxes to boolean
+        // Checkbox conversion
         $validated['is_new'] = $request->has('is_new');
         $validated['is_featured'] = $request->has('is_featured');
         $validated['on_sale'] = $request->has('on_sale');
 
-        // Handle sizes as JSON
-        if ($request->has('sizes')) {
-            $validated['sizes'] = $request->sizes;
-        }
+        // Ensure sizes always exists
+        $validated['sizes'] = $request->input('sizes', []);
 
         Product::create($validated);
 
         return redirect()->back()->with('success', 'Product added successfully!');
     }
 
-    /**
-     * Show the form for editing the specified product
-     */
+    // Edit product
     public function edit(Product $product)
     {
         return view('layouts.admin.products.edit', compact('product'));
     }
 
-    /**
-     * Update the specified product in storage
-     */
+    // Update product
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
@@ -98,31 +114,26 @@ class ProductController extends Controller
             'sizes' => 'nullable|array',
         ]);
 
-        // Handle image upload
         if ($request->hasFile('image')) {
-            // Delete old image
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
             $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
-        // Convert checkboxes to boolean
         $validated['is_new'] = $request->has('is_new');
         $validated['is_featured'] = $request->has('is_featured');
         $validated['on_sale'] = $request->has('on_sale');
+        $validated['sizes'] = $request->input('sizes', []);
 
         $product->update($validated);
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
 
-    /**
-     * Remove the specified product from storage
-     */
+    // Delete product
     public function destroy(Product $product)
     {
-        // Delete image file
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
