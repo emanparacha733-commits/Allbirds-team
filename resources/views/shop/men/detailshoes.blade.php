@@ -3,121 +3,122 @@
 
   <!-- LEFT SIDE (Images) -->
   <div class="relative w-full flex flex-col gap-0 h-[150vh]">
-
-    <!-- Main Image Container -->
     <div class="relative w-full flex flex-col gap-0">
 
-      <!-- Badge -->
       <span class="absolute top-0 left-0 bg-gray-200 text-xs mt-30 px-3 py-1 rounded-full z-10">
-        NEW
+        {{ $product->is_new ? 'NEW' : ($product->on_sale ? 'SALE' : 'IN STOCK') }}
       </span>
 
       <!-- Main Large Image -->
-      <img id="mainImage" src="/images/yellow1.webp"
+      <img id="mainImage" src="{{ $product->image_url }}"
            class="w-full h-[650px] object-cover rounded-xl block">
 
-      <!-- First Row of Bottom Thumbnails -->
-      <div id="thumbRow1" class="grid grid-cols-2 gap-1 -mt-1">
-        <img class="thumbnail w-full h-[150px] object-cover rounded-lg" src="/images/yellow2.webp">
-        <img class="thumbnail w-full h-[150px] object-cover rounded-lg" src="/images/yellow3.webp">
+      <!-- Thumbnail Row 1 — shown if product has extra_images -->
+      @if(!empty($product->extra_images) && count($product->extra_images) >= 2)
+      <div class="grid grid-cols-2 gap-1 -mt-1">
+        <img class="w-full h-[150px] object-cover rounded-lg cursor-pointer hover:opacity-80 transition"
+             src="{{ $product->extra_images[0] }}" onclick="swapMain(this)">
+        <img class="w-full h-[150px] object-cover rounded-lg cursor-pointer hover:opacity-80 transition"
+             src="{{ $product->extra_images[1] }}" onclick="swapMain(this)">
       </div>
+      @else
+      {{-- Fallback thumbnails using same main image --}}
+      <div class="grid grid-cols-2 gap-1 -mt-1">
+        <img class="w-full h-[150px] object-cover rounded-lg opacity-70"
+             src="{{ $product->image_url }}">
+        <img class="w-full h-[150px] object-cover rounded-lg opacity-70"
+             src="{{ $product->image_url }}">
+      </div>
+      @endif
 
       <br><br>
 
-      <!-- Second Row of Bottom Thumbnails -->
-      <div id="thumbRow2" class="grid grid-cols-2 gap-1 -mt-1">
-        <img class="thumbnail w-full h-[150px] object-cover rounded-lg" src="/images/yellow5.webp">
-        <img class="thumbnail w-full h-[150px] object-cover rounded-lg" src="/images/yellow6.webp">
+      @if(!empty($product->extra_images) && count($product->extra_images) >= 4)
+      <div class="grid grid-cols-2 gap-1 -mt-1">
+        <img class="w-full h-[150px] object-cover rounded-lg cursor-pointer hover:opacity-80 transition"
+             src="{{ $product->extra_images[2] }}" onclick="swapMain(this)">
+        <img class="w-full h-[150px] object-cover rounded-lg cursor-pointer hover:opacity-80 transition"
+             src="{{ $product->extra_images[3] }}" onclick="swapMain(this)">
       </div>
+      @else
+      <div class="grid grid-cols-2 gap-1 -mt-1">
+        <img class="w-full h-[150px] object-cover rounded-lg opacity-70"
+             src="{{ $product->image_url }}">
+        <img class="w-full h-[150px] object-cover rounded-lg opacity-70"
+             src="{{ $product->image_url }}">
+      </div>
+      @endif
 
     </div>
   </div>
 
-  <!-- RIGHT SIDE PANEL (Details) -->
-  <div class="flex flex-col gap-3 justify-start py-4 px-6 bg-white rounded-x mt-20 rounded-2xl">
+  <!-- RIGHT SIDE PANEL -->
+  <div class="flex flex-col gap-3 justify-start py-4 px-6 bg-white mt-20 rounded-2xl">
 
-    <!-- Title -->
     <h1 class="text-3xl font-serif text-black mt-0">
-      Men's Dasher NZ
+      {{ $product->name }}
     </h1>
 
     <p class="text-sm text-gray-500">
-      ALSO AVAILABLE IN: <span class="underline cursor-pointer">WOMEN'S SIZES</span>
+      ALSO AVAILABLE IN:
+      <span class="underline cursor-pointer">
+        {{ $product->gender === 'men' ? "WOMEN'S SIZES" : "MEN'S SIZES" }}
+      </span>
     </p>
 
-    <p class="text-lg font-semibold text-black">$140</p>
+    <!-- Price -->
+    <div class="flex items-center gap-3">
+      @if($product->on_sale && $product->sale_price)
+        <p class="text-lg font-semibold text-red-600">${{ number_format($product->sale_price, 0) }}</p>
+        <p class="text-base text-gray-400 line-through">${{ number_format($product->price, 0) }}</p>
+        <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">SALE</span>
+      @else
+        <p class="text-lg font-semibold text-black">${{ number_format($product->price, 0) }}</p>
+      @endif
+    </div>
 
-    <!-- Tabs -->
-    <div class="flex gap-6 text-sm text-black">
-      <span class="tab cursor-pointer underline" data-tab="all">ALL</span>
+    <!-- Tabs (ALL / LIMITED / CLASSIC) -->
+    <div class="flex gap-6 text-sm text-black mt-1">
+      <span class="tab cursor-pointer underline font-medium" data-tab="all">ALL</span>
       <span class="tab cursor-pointer text-gray-500" data-tab="limited">LIMITED</span>
       <span class="tab cursor-pointer text-gray-500" data-tab="classic">CLASSIC</span>
     </div>
 
-    <!-- Color Name -->
-    <p class="text-sm mb-2">Ochre</p>
+    <!-- Color -->
+    @if($product->color_name)
+    <p class="text-sm mb-1">{{ $product->color_name }}</p>
+    @endif
 
-    <!-- Color Circles -->
+    @if($product->color_hex)
     <div class="flex items-center gap-3">
-      <div class="color-circle p-[3px] rounded-full border border-black cursor-pointer"
-           data-images='["/images/yellow1.webp","/images/yellow2.webp","/images/yellow3.webp","/images/yellow5.webp","/images/yellow6.webp"]'
-           data-tab="all limited">
-        <div class="w-8 h-8 rounded-full bg-[#B59A3A] border border-gray-300"></div>
+      <div class="p-[3px] rounded-full border border-black cursor-pointer">
+        <div class="w-8 h-8 rounded-full border border-gray-300"
+             style="background-color: {{ $product->color_hex }}"></div>
       </div>
-
-      <div class="color-circle w-8 h-8 rounded-full bg-[#E8E3D9] border border-gray-300 cursor-pointer"
-           data-images='["/images/whitemain.webp","/images/white2.webp","/images/white3.webp","/images/white4.webp","/images/white5.webp"]'
-           data-tab="all classic"></div>
-
-      <div class="color-circle w-8 h-8 rounded-full bg-[#A8A29E] border border-gray-300 cursor-pointer"
-           data-images='["/images/gray1.webp","/images/gray2.webp","/images/gray3.webp","/images/gray4.webp","/images/gray5.webp"]'
-           data-tab="all limited"></div>
-
-      <div class="color-circle w-8 h-8 rounded-full bg-[#4B4B4B] border border-gray-300 cursor-pointer"
-           data-images='["/images/black1.webp","/images/black2.webp","/images/black3.webp","/images/black4.webp","/images/black5.webp"]'
-           data-tab="all limited"></div>
-
-      <div class="color-circle w-8 h-8 rounded-full bg-[#6B705C] border border-gray-300 cursor-pointer"
-           data-images='["/images/green1.png","/images/green2.webp","/images/green3.webp","/images/green4.webp","/images/green5.webp"]'
-           data-tab="all classic"></div>
-
-      <div class="color-circle w-8 h-8 rounded-full bg-[#A45A52] border border-gray-300 cursor-pointer"
-           data-images='["/images/red1.webp","/images/red2.webp","/images/red3.webp","/images/red4.webp","/images/red5.webp"]'
-           data-tab="all limited"></div>
-
-      <div class="color-circle w-8 h-8 rounded-full border border-gray-300 cursor-pointer"
-           style="background: linear-gradient(to right,#1F2937 50%,#D1D5DB 50%)"
-           data-images='["/images/gradiant1.webp","/images/gradient2.webp","/images/gradient3.webp","/images/gradient4.webp","/images/gradient5.webp"]'
-           data-tab="all classic"></div>
-
-      <div class="color-circle w-8 h-8 rounded-full bg-[#D6D3D1] border border-gray-300 cursor-pointer"
-           data-images='["/images/lightgray1.webp","/images/lightgray2.webp","/images/lightgray3.webp","/images/lightgray4.webp","/images/lightgray5.webp"]'
-           data-tab="all classic"></div>
     </div>
+    @endif
 
     <!-- Sizes -->
     <div class="flex gap-6 text-sm mt-4">
-      <span class="underline text-black">MEN'S SIZES</span>
-      <span class="text-gray-500">WOMEN'S SIZES</span>
+      <span class="underline text-black">
+        {{ strtoupper($product->gender === 'women' ? "Women's" : "Men's") }} SIZES
+      </span>
     </div>
 
     <div id="sizeGrid" class="grid grid-cols-6 gap-3 mt-2 font-bold text-black">
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all classic">8</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all classic">8.5</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all classic">9</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all classic">9.5</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all limited">10</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all classic">10.5</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all limited">11</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all classic">11.5</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all limited">12</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all classic">12.5</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer" data-tab="all limited">13</button>
-      <button class="size-btn border border-gray-300 py-2 text-sm text-gray-400 line-through" data-tab="all classic" disabled>14</button>
+      @forelse($product->available_sizes as $size)
+        <button
+          class="size-btn border border-gray-300 py-2 text-sm hover:bg-gray-200 cursor-pointer rounded-md transition"
+          data-tab="all classic">
+          {{ $size }}
+        </button>
+      @empty
+        <p class="col-span-6 text-sm text-gray-400 py-2">Sizes not available</p>
+      @endforelse
     </div>
 
     <p class="text-sm text-gray-600 mt-2">
-      The Dasher NZ fits true-to-size for most customers.<br>
+      Fits true-to-size for most customers.<br>
       <button id="openFitGuide" class="underline hover:text-black">Fit Guide</button>
     </p>
 
@@ -132,182 +133,119 @@
     </p>
 
   </div>
-
 </div>
 
-<!-- ===================== SINGLE SCRIPT BLOCK ===================== -->
+<!-- ===================== SCRIPTS ===================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  /* =========================
-     COLOR SWITCH LOGIC
-  ========================== */
+  /* ── Thumbnail swap ── */
+  window.swapMain = function(thumb) {
+    const main = document.getElementById('mainImage');
+    const tmp  = main.src;
+    main.src   = thumb.src;
+    thumb.src  = tmp;
+  };
 
-  const colorCircles = document.querySelectorAll('.color-circle');
-  const mainImage    = document.getElementById('mainImage');
-  const thumbRow1    = document.querySelectorAll('#thumbRow1 img');
-  const thumbRow2    = document.querySelectorAll('#thumbRow2 img');
-  const allThumbs    = [...thumbRow1, ...thumbRow2];
-
-  let selectedImage = mainImage ? mainImage.src : null;
-
-  colorCircles.forEach(circle => {
-    circle.addEventListener('click', () => {
-
-      colorCircles.forEach(c => {
-        c.classList.remove('border-black', 'border-2');
-        c.classList.add('border-gray-300');
-      });
-      circle.classList.remove('border-gray-300');
-      circle.classList.add('border-black', 'border-2');
-
-      const images = JSON.parse(circle.dataset.images);
-      if (mainImage) {
-        mainImage.src = images[0];
-        selectedImage = images[0];
-      }
-      allThumbs.forEach((thumb, index) => {
-        if (images[index + 1]) thumb.src = images[index + 1];
-      });
-    });
-  });
-
-  /* =========================
-     TABS + SIZE FILTER
-  ========================== */
-
+  /* ── Tabs ── */
   const tabs        = document.querySelectorAll('.tab');
   const sizeButtons = document.querySelectorAll('.size-btn');
 
   function filterSizes(tab) {
     sizeButtons.forEach(btn => {
-      if (!btn.dataset.tab) return;
-      const allowed = btn.dataset.tab.split(' ');
+      const allowed = (btn.dataset.tab || 'all').split(' ');
       btn.style.display = allowed.includes(tab) ? 'block' : 'none';
     });
   }
-
   filterSizes('all');
 
   tabs.forEach(tabEl => {
     tabEl.addEventListener('click', () => {
-      const selectedTab = tabEl.dataset.tab;
       tabs.forEach(t => {
-        t.classList.remove('underline', 'text-black');
+        t.classList.remove('underline', 'font-medium', 'text-black');
         t.classList.add('text-gray-500');
       });
-      tabEl.classList.add('underline', 'text-black');
+      tabEl.classList.add('underline', 'font-medium', 'text-black');
       tabEl.classList.remove('text-gray-500');
-      filterSizes(selectedTab);
+      filterSizes(tabEl.dataset.tab);
     });
   });
 
-  /* =========================
-     SIZE SELECT + CART LOGIC
-     (declared only once here)
-  ========================== */
-
+  /* ── Size select & Add to Cart ── */
   const sizeGrid  = document.getElementById('sizeGrid');
   const selectBtn = document.getElementById('selectSizeBtn');
   let selectedSize = null;
 
-  sizeGrid.addEventListener('click', function (e) {
-    const btn = e.target.closest('button');
-    if (!btn || btn.disabled) return;
+  if (sizeGrid) {
+    sizeGrid.addEventListener('click', function (e) {
+      const btn = e.target.closest('button.size-btn');
+      if (!btn || btn.disabled) return;
 
-    // Deselect all
-    sizeGrid.querySelectorAll('button').forEach(b => {
-      b.classList.remove('bg-black', 'text-white');
-      b.classList.add('border-gray-300');
+      sizeGrid.querySelectorAll('button.size-btn').forEach(b => {
+        b.classList.remove('bg-black', 'text-white');
+        b.classList.add('border-gray-300');
+      });
+      btn.classList.remove('border-gray-300');
+      btn.classList.add('bg-black', 'text-white');
+
+      selectedSize = btn.textContent.trim();
+      selectBtn.disabled = false;
+      selectBtn.classList.remove('bg-gray-200', 'text-gray-500', 'cursor-not-allowed');
+      selectBtn.classList.add('bg-black', 'text-white', 'cursor-pointer');
+      selectBtn.textContent = 'ADD TO CART';
     });
+  }
 
-    // Select clicked
-    btn.classList.remove('border-gray-300');
-    btn.classList.add('bg-black', 'text-white');
-
-    // Store size
-    selectedSize = btn.textContent.trim();
-
-    // Enable Add to Cart button
-    selectBtn.disabled = false;
-    selectBtn.classList.remove('bg-gray-200', 'text-gray-500', 'cursor-not-allowed');
-    selectBtn.classList.add('bg-black', 'text-white', 'cursor-pointer');
-    selectBtn.textContent = 'ADD TO CART';
-  });
-
-  // Submit real Laravel form
   selectBtn.addEventListener('click', function () {
     if (!selectedSize) return;
     document.getElementById('formSize').value = selectedSize;
     document.getElementById('addToCartForm').submit();
   });
 
-  /* =========================
-     FIT GUIDE MODAL
-  ========================== */
-
+  /* ── Fit Guide Modal ── */
   const openBtn     = document.getElementById('openFitGuide');
   const closeBtn    = document.getElementById('closeFitGuide');
   const modal       = document.getElementById('fitModal');
   const modalContent= document.getElementById('modalContent');
 
-  function openModal() {
-    modal.classList.remove('opacity-0', 'invisible');
-    modal.classList.add('opacity-100', 'visible');
-    modalContent.classList.remove('scale-95');
-    modalContent.classList.add('scale-100');
+  if (openBtn && modal) {
+    function openModal() {
+      modal.classList.remove('opacity-0', 'invisible');
+      modal.classList.add('opacity-100', 'visible');
+      modalContent.classList.remove('scale-95');
+      modalContent.classList.add('scale-100');
+    }
+    function closeModal() {
+      modal.classList.remove('opacity-100', 'visible');
+      modal.classList.add('opacity-0', 'invisible');
+      modalContent.classList.remove('scale-100');
+      modalContent.classList.add('scale-95');
+    }
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
   }
 
-  function closeModal() {
-    modal.classList.remove('opacity-100', 'visible');
-    modal.classList.add('opacity-0', 'invisible');
-    modalContent.classList.remove('scale-100');
-    modalContent.classList.add('scale-95');
+  /* ── Swiper ── */
+  if (typeof Swiper !== 'undefined') {
+    new Swiper('.mySwiper', {
+      slidesPerView: 4, spaceBetween: 30, loop: true, speed: 800, grabCursor: true,
+      navigation: { nextEl: '.custom-next', prevEl: '.custom-prev' },
+      breakpoints: { 0: { slidesPerView: 1 }, 640: { slidesPerView: 2 }, 1024: { slidesPerView: 4 } },
+    });
   }
-
-  openBtn.addEventListener('click', openModal);
-  closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', function (e) {
-    if (e.target === modal) closeModal();
-  });
-
-  /* =========================
-     SWIPER SLIDER
-  ========================== */
-
-  new Swiper('.mySwiper', {
-    slidesPerView: 4,
-    spaceBetween: 30,
-    loop: true,
-    speed: 800,
-    grabCursor: true,
-    navigation: {
-      nextEl: '.custom-next',
-      prevEl: '.custom-prev',
-    },
-    breakpoints: {
-      0:    { slidesPerView: 1 },
-      640:  { slidesPerView: 2 },
-      1024: { slidesPerView: 4 },
-    },
-  });
 
 });
 </script>
-<!-- ================= END SCRIPT BLOCK ================= -->
 
 
-
-
+<!-- ── Product Details ── -->
 <div class="w-full mx-auto lg:px-16 px-4 py-8 bg-white rounded-xl shadow-md grid mt-20 lg:grid-cols-3 gap-8 items-center">
 
-  <!-- Left Column: Description -->
   <div class="lg:col-span-1 flex flex-col gap-4">
     <h2 class="text-sm tracking-widest text-gray-600">WHY WE LOVE THIS</h2>
     <p class="text-gray-800 leading-relaxed">
-      A new take on our fan-favorite Dasher, made for busy days and spontaneous plans.
-      Lightweight, breathable comfort keeps you cool as you move, with added heel protection
-      where it counts. Fast when you want. Comfortable always.
+      {{ $product->description ?? 'A new take on our fan-favorite Dasher, made for busy days and spontaneous plans. Lightweight, breathable comfort keeps you cool as you move, with added heel protection where it counts. Fast when you want. Comfortable always.' }}
     </p>
 
     <h3 class="text-xs tracking-widest text-gray-500 mt-2">BEST FOR</h3>
@@ -320,11 +258,10 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
 
     <div x-data="{ open: false }" class="mt-2">
-      <a href="#" @click.prevent="open = !open"
-         class="text-sm text-gray-600 hover:underline inline-block">
+      <a href="#" @click.prevent="open = !open" class="text-sm text-gray-600 hover:underline inline-block">
         <span x-text="open ? 'Hide technical details' : '> View technical details'"></span>
       </a>
-      <ul x-show="open" x-transition class="mt-2 text-gray-700 space-y-1">
+      <ul x-show="open" x-transition class="mt-2 text-gray-700 space-y-1 text-sm">
         <li><strong>Weight:</strong> 10.9oz (M9) 9.0oz (W7)</li>
         <li><strong>Heel/Toe Drop:</strong> 7mm</li>
         <li><strong>Stack Height:</strong> Heel: 22.9mm, Toe: 15.9mm</li>
@@ -333,14 +270,12 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
   </div>
 
-  <!-- Middle Column: Shoe Image -->
   <div class="lg:col-span-1 flex justify-center">
-    <div class="w-64 h-64 rounded-full bg-gray-100 flex items-center justify-center relative">
-      <img src="/images/yellow1.webp" alt="Shoe" class="w-52 h-52 object-contain rounded-full">
+    <div class="w-64 h-64 rounded-full bg-gray-100 flex items-center justify-center">
+      <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-52 h-52 object-contain rounded-full">
     </div>
   </div>
 
-  <!-- Right Column: Features -->
   <div class="lg:col-span-1 flex flex-col gap-2 text-gray-700">
     <h3 class="text-xs tracking-widest text-gray-500">THOUGHTFULLY DESIGNED</h3>
     <ul class="list-disc pl-4 space-y-1 text-sm">
@@ -348,45 +283,35 @@ document.addEventListener("DOMContentLoaded", function () {
       <li><span class="font-semibold">Easy-entry heel tab</span> for quick slip on and off</li>
       <li><span class="font-semibold">Wool-blend lining</span> for softness, socks optional</li>
       <li><span class="font-semibold">Sugarcane-based SweetFoam® cushioning</span> with responsive energy return</li>
-      <li><span class="font-semibold">Plush Featherbed™ memory foam</span> insole for extra comfort and bounce</li>
+      <li><span class="font-semibold">Plush Featherbed™ memory foam</span> insole for extra comfort</li>
       <li><span class="font-semibold">Redesigned traction</span> pattern for more grip on paved surfaces</li>
     </ul>
   </div>
-
 </div>
 
 
-<!-- FAQ Question 1 -->
+<!-- ── FAQ Accordions ── -->
 <div x-data="{ open: false }" class="w-full border border-gray-200 overflow-hidden mb-4 bg-white mt-8 shadow-md rounded-2xl">
   <button @click="open = !open"
           class="w-full flex justify-between items-center px-4 py-8 font-mono text-left text-gray-800 font-medium text-xl hover:bg-gray-50 transition">
     <span>Materials & Sustainability</span>
-    <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-    </svg>
-    <svg x-show="open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-    </svg>
+    <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+    <svg x-show="open"  xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" /></svg>
   </button>
-  <div x-show="open" x-transition class="px-4 py-4 text-gray-700 bg-gray-50 grid grid-cols-4 gap-4">
-    <p><strong>Upper:</strong> Tree Knit – Made from Eucalyptus tree-derived TENCEL® Lyocell and recycled polyester</p>
-    <p><strong>Midsole:</strong> SweetFoam® – Sugarcane-based EVA foam provides comfort and durability while being light on the planet</p>
-    <p><strong>Outsole:</strong> Natural rubber – For added durability and traction</p>
-    <p><strong>Laces:</strong> 100% recycled polyester – Sourced from plastic bottles</p>
+  <div x-show="open" x-transition class="px-4 py-4 text-gray-700 bg-gray-50 grid grid-cols-2 md:grid-cols-4 gap-4">
+    <p><strong>Upper:</strong> Tree Knit – TENCEL® Lyocell and recycled polyester</p>
+    <p><strong>Midsole:</strong> SweetFoam® – Sugarcane-based EVA foam</p>
+    <p><strong>Outsole:</strong> Natural rubber – For durability and traction</p>
+    <p><strong>Laces:</strong> 100% recycled polyester from plastic bottles</p>
   </div>
 </div>
 
-<!-- FAQ Question 2 -->
 <div x-data="{ open: false }" class="w-full border border-gray-200 rounded-2xl overflow-hidden mb-4 bg-white shadow-md">
   <button @click="open = !open"
           class="w-full flex justify-between items-center px-4 py-6 text-left text-gray-800 font-medium hover:bg-gray-50 transition font-mono text-xl">
     <span>Care Instructions</span>
-    <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-    </svg>
-    <svg x-show="open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-    </svg>
+    <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+    <svg x-show="open"  xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" /></svg>
   </button>
   <div x-show="open" x-transition class="px-4 py-4 text-gray-700 bg-gray-50">
     Yes, they're machine washable. Remove the insoles, hand wash those separately, and let everything air dry.
@@ -396,162 +321,103 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 <br>
 
-<!-- Image Section -->
+<!-- ── Comfort Section ── -->
 <h1 class="text-5xl text-center mt-6 font-light font-sans">Wildly Comfortable. Super Natural.</h1>
 
 <section class="w-full px-2 sm:px-4 lg:px-6 py-6 grid mt-5
                 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3
                 gap-2 sm:gap-4 md:gap-6 lg:gap-4">
-
   <div class="relative rounded-2xl overflow-hidden w-full mx-auto cursor-pointer group font-sans">
-    <img src="{{ asset('images/detsho1.webp') }}" alt="Shoe 1"
+    <img src="{{ asset('images/detsho1.webp') }}"
          class="w-full object-cover rounded-2xl sm:h-48 lg:h-auto md:h-auto transition-transform duration-1000 ease-out group-hover:scale-105" />
     <div class="mt-6 text-center">
       <h1 class="text-lg font-semibold text-gray-800 mb-1">LOOK GOOD</h1>
-      <p class="text-sm text-gray-600">Build to look sharp whether you're moving <br> fast-or taking your time</p>
+      <p class="text-sm text-gray-600">Built to look sharp whether you're moving fast—or taking your time</p>
     </div>
   </div>
-
   <div class="relative rounded-2xl overflow-hidden w-full mx-auto cursor-pointer group font-sans">
-    <img src="{{ asset('images/detsho2.webp') }}" alt="Shoe 2"
+    <img src="{{ asset('images/detsho2.webp') }}"
          class="w-full object-cover rounded-2xl sm:h-48 lg:h-auto md:h-auto transition-transform duration-1000 ease-out group-hover:scale-105" />
     <div class="mt-4 text-center">
       <h1 class="text-lg font-semibold text-gray-800 mb-1">FEEL GOOD</h1>
-      <p class="text-sm text-gray-600">Wildly comfortable from the first step,<br> with breathable support that moves naturally with you</p>
+      <p class="text-sm text-gray-600">Wildly comfortable from the first step, with breathable support that moves naturally with you</p>
     </div>
   </div>
-
   <div class="relative rounded-2xl overflow-hidden w-full mx-auto cursor-pointer group font-sans">
-    <img src="{{ asset('images/detsho3.webp') }}" alt="Shoe 3"
+    <img src="{{ asset('images/detsho3.webp') }}"
          class="w-full object-cover rounded-2xl sm:h-48 lg:h-auto md:h-auto transition-transform duration-1000 ease-out group-hover:scale-105" />
     <div class="mt-4 text-center">
       <h1 class="text-lg font-semibold text-gray-800 mb-1">DO GOOD</h1>
       <p class="text-sm text-gray-600">Made with TENCEL Lyocell (tree fiber) with breathable support that moves naturally with you</p>
     </div>
   </div>
-
 </section>
 
-<!-- FIT GUIDE MODAL -->
+
+<!-- ── Fit Guide Modal ── -->
 <div id="fitModal" class="fixed inset-0 bg-black/50 flex items-center justify-center opacity-0 invisible transition-all duration-300 z-50">
   <div class="bg-white w-[95%] max-w-5xl rounded-2xl p-6 relative transform scale-95 transition-all duration-300" id="modalContent">
-
-    <button id="closeFitGuide" class="absolute top-4 right-4 text-xl">&times;</button>
-
-    <h2 class="text-2xl font-semibold text-center mb-2">Men's Dasher NZ Relay</h2>
-
-    <div class="w-full flex justify-center mt-2">
+    <button id="closeFitGuide" class="absolute top-4 right-4 text-2xl font-light">&times;</button>
+    <h2 class="text-2xl font-semibold text-center mb-2">{{ $product->name }}</h2>
+    <div class="w-full flex justify-center mt-2 mb-4">
       <p class="bg-red-100 inline-block px-4 py-2 rounded-full text-sm">
-        The Dasher NZ Relay fits true-to-size for most customers.
+        Fits true-to-size for most customers.
       </p>
     </div>
-
     <div class="grid grid-cols-2 gap-4 mb-6">
-      <div class="flex justify-center">
-        <img src='/images/yellow2.webp' alt="Top View" class="rounded-xl max-h-60">
-      </div>
-      <div class="flex justify-center">
-        <img src="/images/yellow3.webp" alt="Side View" class="rounded-xl max-h-60">
-      </div>
+      <img src="{{ $product->image_url }}" alt="Front View" class="rounded-xl max-h-60 w-full object-cover">
+      <img src="{{ $product->image_url }}" alt="Side View"  class="rounded-xl max-h-60 w-full object-cover opacity-80">
     </div>
-
-    <div class="grid grid-cols-2 gap-6 mb-6">
-      <div>
-        <h3 class="text-sm font-medium mb-1 text-center">AVERAGE WIDTH</h3>
-        <div class="h-2 bg-gray-200 rounded-full relative">
-          <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-black rounded-full -top-1"></div>
-        </div>
-      </div>
-      <div>
-        <h3 class="text-sm font-medium mb-1 text-center">AVERAGE LENGTH</h3>
-        <div class="h-2 bg-gray-200 rounded-full relative">
-          <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-black rounded-full -top-1"></div>
-        </div>
-      </div>
-    </div>
-
     <div class="overflow-x-auto rounded-2xl border border-gray-200">
       <table class="w-full text-center text-sm border-collapse">
         <thead class="bg-gray-50">
           <tr>
             <th class="px-3 py-2 border border-gray-200 bg-red-100">US</th>
-            <th class="px-3 py-2 border border-gray-200">8</th>
-            <th class="px-3 py-2 border border-gray-200">8.5</th>
-            <th class="px-3 py-2 border border-gray-200 bg-red-100">9</th>
-            <th class="px-3 py-2 border border-gray-200">9.5</th>
-            <th class="px-3 py-2 border border-gray-200">10</th>
-            <th class="px-3 py-2 border border-gray-200">10.5</th>
-            <th class="px-3 py-2 border border-gray-200 bg-red-100">11</th>
-            <th class="px-3 py-2 border border-gray-200">11.5</th>
-            <th class="px-3 py-2 border border-gray-200">12</th>
-            <th class="px-3 py-2 border border-gray-200">12.5</th>
-            <th class="px-3 py-2 border border-gray-200">13</th>
-            <th class="px-3 py-2 border border-gray-200">13.5</th>
-            <th class="px-3 py-2 border border-gray-200 bg-red-100">14</th>
+            @foreach(['8','8.5','9','9.5','10','10.5','11','11.5','12','12.5','13','13.5','14'] as $s)
+            <th class="px-3 py-2 border border-gray-200">{{ $s }}</th>
+            @endforeach
           </tr>
         </thead>
         <tbody>
           <tr class="bg-gray-50">
             <td class="px-3 py-2 border border-gray-200 bg-red-100">UK</td>
-            <td class="px-3 py-2 border border-gray-200">7</td>
-            <td class="px-3 py-2 border border-gray-200">7.5</td>
-            <td class="px-3 py-2 border border-gray-200 bg-red-100">8</td>
-            <td class="px-3 py-2 border border-gray-200">8.5</td>
-            <td class="px-3 py-2 border border-gray-200">9</td>
-            <td class="px-3 py-2 border border-gray-200">9.5</td>
-            <td class="px-3 py-2 border border-gray-200 bg-red-100">10</td>
-            <td class="px-3 py-2 border border-gray-200">10.5</td>
-            <td class="px-3 py-2 border border-gray-200">11</td>
-            <td class="px-3 py-2 border border-gray-200">11.5</td>
-            <td class="px-3 py-2 border border-gray-200">12</td>
-            <td class="px-3 py-2 border border-gray-200">12.5</td>
-            <td class="px-3 py-2 border border-gray-200 bg-red-100">13</td>
+            @foreach(['7','7.5','8','8.5','9','9.5','10','10.5','11','11.5','12','12.5','13'] as $s)
+            <td class="px-3 py-2 border border-gray-200">{{ $s }}</td>
+            @endforeach
           </tr>
           <tr>
             <td class="px-3 py-2 border border-gray-200 bg-red-100">cm</td>
-            <td class="px-3 py-2 border border-gray-200">26</td>
-            <td class="px-3 py-2 border border-gray-200">26.5</td>
-            <td class="px-3 py-2 border border-gray-200 bg-red-100">27</td>
-            <td class="px-3 py-2 border border-gray-200">27.5</td>
-            <td class="px-3 py-2 border border-gray-200">28</td>
-            <td class="px-3 py-2 border border-gray-200">28.5</td>
-            <td class="px-3 py-2 border border-gray-200 bg-red-100">29</td>
-            <td class="px-3 py-2 border border-gray-200">29.5</td>
-            <td class="px-3 py-2 border border-gray-200">30</td>
-            <td class="px-3 py-2 border border-gray-200">30.5</td>
-            <td class="px-3 py-2 border border-gray-200">31</td>
-            <td class="px-3 py-2 border border-gray-200">31.5</td>
-            <td class="px-3 py-2 border border-gray-200 bg-red-100">32</td>
+            @foreach(['26','26.5','27','27.5','28','28.5','29','29.5','30','30.5','31','31.5','32'] as $s)
+            <td class="px-3 py-2 border border-gray-200">{{ $s }}</td>
+            @endforeach
           </tr>
         </tbody>
       </table>
     </div>
-
   </div>
 </div>
 
 
-<!-- Collection Banner -->
+<!-- ── Collection Banner ── -->
 <section class="w-full text-center rounded-2xl py-12 px-4 sm:px-6 lg:px-8 mt-8"
          style="background-color:#7C8C52">
-  <p class="text-white text-sm sm:text-base font-medium mb-2 uppercase tracking-widest">
-    The Dasher NZ Collection
+  <p class="text-white text-sm font-medium mb-2 uppercase tracking-widest">
+    The {{ $product->name }} Collection
   </p>
   <h1 class="text-white text-4xl sm:text-3xl md:text-5xl mt-5 font-serif">
     Comfort That Keeps Up
   </h1>
-  <a href="/shop"
-     class="inline-block bg-transparent text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-300 mt-8 border border-white hover:text-black">
+  <a href="{{ url('/men/shoes') }}"
+     class="inline-block bg-transparent text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-gray-100 hover:text-black transition mt-8 border border-white">
     Shop Now
   </a>
 </section>
 
 
-<!-- Swiper CSS -->
+<!-- ── You May Also Like Swiper ── -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
 <section class="w-full py-16">
-
   <div class="flex justify-between items-center mb-8 px-10">
     <h2 class="tracking-widest text-sm text-gray-700">YOU MAY ALSO LIKE</h2>
     <div class="flex gap-3">
@@ -563,67 +429,50 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="swiper mySwiper px-10 relative z-30 isolate overflow-visible max-w-full py-6">
     <div class="swiper-wrapper">
 
-      <!-- Slide 1 -->
+      @forelse($relatedProducts as $related)
       <div class="swiper-slide relative overflow-visible">
-        <a href="#" class="group block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-xl relative z-30 transition-all duration-500 hover:z-50 hover:-translate-y-2">
+        <a href="{{ route('products.show', $related->id) }}"
+           class="group block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-xl relative z-30 transition-all duration-500 hover:z-50 hover:-translate-y-2">
+          @if($related->is_new)
           <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">NEW</span>
-          <img src="/images/sho7.png" class="w-full h-48 object-cover rounded-xl"/>
-          <h4 class="mt-20 text-sm lg:font-semibold text-black">MEN'S VARSITY</h4>
-          <p class="text-gray-500 text-sm">Classic Everyday Sneaker</p>
-          <p class="text-black font-semibold">$120</p>
+          @endif
+          <img src="{{ $related->image_url }}" class="w-full h-48 object-cover rounded-xl"/>
+          <h4 class="mt-4 text-sm font-semibold text-black uppercase">{{ $related->name }}</h4>
+          <p class="text-gray-500 text-sm">{{ $related->description ?? 'Men\'s Shoes' }}</p>
+          <p class="text-black font-semibold">${{ number_format($related->price, 0) }}</p>
+          <!-- Hover size panel -->
           <div class="absolute left-0 bottom-0 w-full p-4 bg-white rounded-b-2xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-50 shadow-xl">
             <div class="grid grid-cols-5 gap-2">
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">6</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">7</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">8</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">9</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10.5</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11.5</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">12</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">12.5</div>
+              @foreach(array_slice($related->available_sizes ?? [], 0, 10) as $size)
+              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100 text-sm">{{ $size }}</div>
+              @endforeach
             </div>
           </div>
         </a>
       </div>
-
-      <!-- Slides 2-7 -->
-      @foreach([2,3,4,5,6,7] as $i)
+      @empty
+      {{-- Fallback static slides if no related products --}}
+      @foreach(range(1,4) as $i)
       <div class="swiper-slide shadow-2xl z-30">
-        <a href="#" class="relative group block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:h-[560px] hover:-translate-y-2">
+        <a href="{{ url('/men/shoes') }}" class="relative group block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:-translate-y-2">
           <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full">NEW</span>
           <img src="/images/sho2.png" class="w-full h-48 object-cover rounded-xl"/>
-          <h4 class="mt-20 text-sm lg:font-semibold text-black">MEN'S VARSITY</h4>
+          <h4 class="mt-8 text-sm font-semibold text-black">MEN'S VARSITY</h4>
           <p class="text-gray-500 text-sm">Classic Everyday Sneaker</p>
           <p class="text-black font-semibold">$120</p>
-          <div class="mt-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            <div class="grid grid-cols-5 gap-2 mt-3">
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">6</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">7</div>
-              <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400">
-                8 <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-              </div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">9</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">10</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11</div>
-              <div class="h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-100">11.5</div>
-            </div>
-          </div>
         </a>
       </div>
       @endforeach
+      @endforelse
 
     </div>
   </div>
-
 </section>
 
-<!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 
-<!-- Bottom Section -->
+<!-- ── Nature Section ── -->
 <section class="relative w-full h-[60vh] md:h-[80vh] bg-cover bg-center rounded-2xl overflow-hidden mt-8"
          style="background-image: url('/images/animalbg.webp');">
   <div class="relative w-full h-full flex flex-col justify-center items-center text-center px-4 text-white">
@@ -632,9 +481,9 @@ document.addEventListener("DOMContentLoaded", function () {
       <div class="absolute border border-white rounded-full w-[94%] h-[90%]"></div>
       <div class="absolute border border-white bg-white/10 rounded-full w-[87%] h-[80%]"></div>
       <div id="ballsContainer" class="absolute w-full h-full top-0 left-0 z-20"></div>
-      <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 md:-top-4 md:-left-6 bg-transparent border border-white text-white text-xs px-2 py-1 rounded-full">RENEWABLE MATERIALS</span>
-      <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 md:-top-4 md:-right-6 border border-white text-white text-xs px-2 py-1 rounded-full">RESPONSIBLE ENERGY</span>
-      <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 md:-bottom-4 md:-right-6 border border-white text-white text-xs px-2 py-1 rounded-full">REGENERATIVE AGRICULTURE</span>
+      <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 border border-white text-white text-xs px-2 py-1 rounded-full">RENEWABLE MATERIALS</span>
+      <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 border border-white text-white text-xs px-2 py-1 rounded-full">RESPONSIBLE ENERGY</span>
+      <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 border border-white text-white text-xs px-2 py-1 rounded-full">REGENERATIVE AGRICULTURE</span>
     </div>
     <h4 class="text-lg md:text-xl mb-2 font-semibold">Better Things in a Better Way</h4>
     <p class="text-xs md:text-sm mb-4 font-serif">Looking to the world's greatest innovator - Nature</p>
@@ -646,54 +495,53 @@ document.addEventListener("DOMContentLoaded", function () {
 function placeBalls() {
   const container = document.getElementById('ballsContainer');
   const wrapper   = document.getElementById('circlesWrapper');
+  if (!container || !wrapper) return;
   container.innerHTML = '';
-  const rect  = wrapper.getBoundingClientRect();
-  const cx    = rect.width / 2;
-  const cy    = rect.height / 2;
+  const rect   = wrapper.getBoundingClientRect();
+  const cx     = rect.width / 2;
+  const cy     = rect.height / 2;
   const scaleX = rect.width / 550;
   const scaleY = rect.height / 420;
-  const baseCircles = [{ rx: 275, ry: 210, balls: 3 }];
-  baseCircles.forEach(circle => {
-    for (let i = 0; i < circle.balls; i++) {
-      const angle = Math.random() * 2 * Math.PI;
-      const x = cx + circle.rx * Math.cos(angle) * scaleX - 5;
-      const y = cy + circle.ry * Math.sin(angle) * scaleY - 5;
-      const ball = document.createElement('div');
-      ball.className = 'w-3 h-3 bg-white rounded-full absolute';
-      ball.style.left = `${x}px`;
-      ball.style.top  = `${y}px`;
-      container.appendChild(ball);
-    }
-  });
+  for (let i = 0; i < 3; i++) {
+    const angle = Math.random() * 2 * Math.PI;
+    const x = cx + 275 * Math.cos(angle) * scaleX - 5;
+    const y = cy + 210 * Math.sin(angle) * scaleY - 5;
+    const ball = document.createElement('div');
+    ball.className = 'w-3 h-3 bg-white rounded-full absolute';
+    ball.style.left = `${x}px`;
+    ball.style.top  = `${y}px`;
+    container.appendChild(ball);
+  }
 }
 window.addEventListener('load', placeBalls);
 window.addEventListener('resize', placeBalls);
 </script>
 
 
-<!-- Last Section -->
+<!-- ── Bottom Feature Cards ── -->
 <section class="max-w-full px-6 py-8 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-  <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4 justify-start">
+  <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4">
     <p class="text-xl text-black">Wear All Day Comfort</p>
-    <p class="text-gray-600 text-sm">Lightweight, bouncy, and wildly comfortable, Allbirds shoes make any outing feel effortless. Slip in, lace up, or slide them on and enjoy the comfy support.</p>
+    <p class="text-gray-600 text-sm">Lightweight, bouncy, and wildly comfortable, Allbirds shoes make any outing feel effortless.</p>
   </div>
-  <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4 justify-start">
+  <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4">
     <p class="text-xl text-black">Sustainability In Every Step</p>
-    <p class="text-gray-600 text-sm">From materials to transport, we're working to reduce our carbon footprint to near zero. Holding ourselves accountable and striving for climate goals isn't a 30-year goal—it's now.</p>
+    <p class="text-gray-600 text-sm">From materials to transport, we're working to reduce our carbon footprint to near zero.</p>
   </div>
-  <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4 justify-start">
+  <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4">
     <p class="text-xl text-black">Materials From The Earth</p>
-    <p class="text-gray-600 text-sm">We replace petroleum-based synthetics with natural alternatives wherever we can. Like using wool, tree fiber, and sugarcane. They're soft, breathable, and better for the planet—win, win, win.</p>
+    <p class="text-gray-600 text-sm">We replace petroleum-based synthetics with natural alternatives wherever we can.</p>
   </div>
 </section>
 
-<!-- Hidden Add to Cart Form — submits to Laravel -->
+
+<!-- ── Hidden Add to Cart Form ── -->
 <form id="addToCartForm" action="{{ route('cart.add') }}" method="POST" style="display:none;">
   @csrf
-  <input type="hidden" name="product_id" value="dasher-nz">
-  <input type="hidden" name="name"       value="Men's Dasher NZ">
-  <input type="hidden" name="price"      value="140">
-  <input type="hidden" name="image"      value="images/yellow1.webp">
+  <input type="hidden" name="product_id" value="{{ $product->id }}">
+  <input type="hidden" name="name"       value="{{ $product->name }}">
+  <input type="hidden" name="price"      value="{{ $product->on_sale && $product->sale_price ? $product->sale_price : $product->price }}">
+  <input type="hidden" name="image"      value="{{ $product->image_url }}">
   <input type="hidden" name="size"       id="formSize" value="">
 </form>
 

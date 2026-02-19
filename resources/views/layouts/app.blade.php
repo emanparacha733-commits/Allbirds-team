@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:ital,wght@1,600&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+  
    
     <style>
     body { font-family: 'Inter', sans-serif; }
@@ -570,7 +571,7 @@
             </div>
 
             <!-- Nav items -->
-            <div class="flex items-center h-full relative" id="nav-wrapper">
+            <div class="flex items-center h-full relative flex-1 justify-center" id="nav-wrapper">
 
                 <!-- ── MEN ── -->
                 <div class="nav-item" id="nav-men">
@@ -693,7 +694,12 @@
                         <!-- Men Sale -->
                         <div class="sub-panel" id="men-sale">
                             <div class="panel-inner">
-                                
+                                <div class="flex gap-14">
+                                    <ul class="text-[11px] font-bold space-y-4 tracking-tighter uppercase text-black">
+                                        <li><a href="{{ route('sale.men', ['discount' => '50']) }}" class="hover:underline text-red-600">Up to 50% Off</a></li>
+                                        <li><a href="{{ route('sale.men.clearance') }}" class="hover:underline">Clearance</a></li>
+                                        <li><a href="{{ route('sale.men.last-chance') }}" class="hover:underline">Last Chance</a></li>
+                                    </ul>
                                     <div class="space-y-3">
                                         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sale Shoes</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
@@ -1233,23 +1239,10 @@
                 @endif
             </div>
         </div>
-<button class="cart-checkout-btn" id="cartCheckoutBtn">
-    CHECKOUT
-</button>
 
-<script>
-document.getElementById("cartCheckoutBtn").addEventListener("click", function() {
-    window.location.href = "{{ route('checkout') }}";
-});
-</script>
-
-
-<<<<<<< HEAD
         <a href="{{ route('checkout') }}" class="cart-checkout-btn" style="display:block;text-align:center;text-decoration:none;">
             CHECKOUT — ${{ number_format($sidebarSubtotal, 2) }}
         </a>
-=======
->>>>>>> db9f491e54bffb6161727fb84612b6c649af587d
 
         <div class="cart-payment-options">
             <button class="payment-option-btn">amazon pay</button>

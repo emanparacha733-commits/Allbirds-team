@@ -1,3 +1,5 @@
+@props(['image', 'title', 'subtitle', 'price', 'link' => null])
+
 @if($link)
 <a href="{{ $link }}" class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2 hover:z-50 overflow-visible">
 @else

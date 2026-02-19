@@ -1,7 +1,7 @@
 module.exports = {
   content: [
-    "./resources/views/**/*.blade.php",
-    "./public/admin/**/*.html",
+    "./resources/views/*/.blade.php",
+    "./public/admin/*/.html",
   ],
   theme: {
     extend: {},
