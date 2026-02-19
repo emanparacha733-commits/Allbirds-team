@@ -115,3 +115,13 @@ Route::prefix('manage')->name('admin.')->group(function () {
     Route::get('/customers', [AdminController::class, 'customers'])->name('customers.index');
     Route::resource('products', ProductController::class);
 });
+
+
+Route::prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('dashboard', [\App\Http\Controllers\Admin\ProductController::class, 'index'])
+            ->name('dashboard');
+
+        Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+    });
