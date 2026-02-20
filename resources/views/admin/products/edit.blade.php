@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
 <div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-3xl mx-auto">
-        
+
         {{-- Header --}}
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">Add New Product</h1>
-            <p class="mt-2 text-sm text-gray-600">Fill in the details below to add a new product to your store</p>
+            <h1 class="text-3xl font-bold text-gray-900">Edit Product</h1>
+            <p class="mt-2 text-sm text-gray-600">Update the details of your product below</p>
         </div>
 
         {{-- Success Message --}}
@@ -29,9 +29,10 @@
         @endif
 
         {{-- Form --}}
-        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data"
+        <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data"
               class="bg-white shadow-lg rounded-xl p-8 space-y-6">
             @csrf
+            @method('PUT')
 
             {{-- Basic Info Section --}}
             <div class="space-y-6">
@@ -42,7 +43,7 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         Product Name <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" name="name" value="{{ old('name') }}" required
+                    <input type="text" name="name" value="{{ old('name', $product->name) }}" required
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                            placeholder="e.g., Men's Dasher NZ">
                 </div>
@@ -52,15 +53,20 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
                     <textarea name="description" rows="3"
                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Product description...">{{ old('description') }}</textarea>
+                              placeholder="Product description...">{{ old('description', $product->description) }}</textarea>
                 </div>
 
                 {{-- Product Image --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
-                        Product Image <span class="text-red-500">*</span>
+                        Current Image
                     </label>
-                    <input type="file" name="image" accept="image/*" required
+                    <img src="{{ asset('storage/'.$product->image) }}" class="mt-2 mb-4 rounded-lg max-h-48" alt="Current Image">
+
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Change Image
+                    </label>
+                    <input type="file" name="image" accept="image/*"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                            onchange="previewImage(event)">
                     <img id="imagePreview" class="mt-4 rounded-lg max-h-48 hidden" alt="Preview">
@@ -80,10 +86,10 @@
                         <select name="type" required
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="">Select Type</option>
-                            <option value="shoes" {{ old('type') == 'shoes' ? 'selected' : '' }}>Shoes</option>
-                            <option value="socks" {{ old('type') == 'socks' ? 'selected' : '' }}>Socks</option>
-                            <option value="apparel" {{ old('type') == 'apparel' ? 'selected' : '' }}>Apparel</option>
-                            <option value="accessories" {{ old('type') == 'accessories' ? 'selected' : '' }}>Accessories</option>
+                            <option value="shoes" {{ old('type', $product->type) == 'shoes' ? 'selected' : '' }}>Shoes</option>
+                            <option value="socks" {{ old('type', $product->type) == 'socks' ? 'selected' : '' }}>Socks</option>
+                            <option value="apparel" {{ old('type', $product->type) == 'apparel' ? 'selected' : '' }}>Apparel</option>
+                            <option value="accessories" {{ old('type', $product->type) == 'accessories' ? 'selected' : '' }}>Accessories</option>
                         </select>
                     </div>
 
@@ -92,7 +98,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Category <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="category" value="{{ old('category') }}" required
+                        <input type="text" name="category" value="{{ old('category', $product->category) }}" required
                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                placeholder="e.g., ankle, crew, no-show">
                     </div>
@@ -105,9 +111,9 @@
                         <select name="gender" required
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="">Select Gender</option>
-                            <option value="men" {{ old('gender') == 'men' ? 'selected' : '' }}>Men</option>
-                            <option value="women" {{ old('gender') == 'women' ? 'selected' : '' }}>Women</option>
-                            <option value="unisex" {{ old('gender') == 'unisex' ? 'selected' : '' }}>Unisex</option>
+                            <option value="men" {{ old('gender', $product->gender) == 'men' ? 'selected' : '' }}>Men</option>
+                            <option value="women" {{ old('gender', $product->gender) == 'women' ? 'selected' : '' }}>Women</option>
+                            <option value="unisex" {{ old('gender', $product->gender) == 'unisex' ? 'selected' : '' }}>Unisex</option>
                         </select>
                     </div>
                 </div>
@@ -121,7 +127,7 @@
                     {{-- Color Name --}}
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Color Name</label>
-                        <input type="text" name="color_name" value="{{ old('color_name') }}"
+                        <input type="text" name="color_name" value="{{ old('color_name', $product->color_name) }}"
                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                placeholder="e.g., Natural White">
                     </div>
@@ -130,9 +136,9 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Color Code</label>
                         <div class="flex gap-2">
-                            <input type="color" name="color_hex" value="{{ old('color_hex', '#000000') }}"
+                            <input type="color" name="color_hex" value="{{ old('color_hex', $product->color_hex ?? '#000000') }}"
                                    class="h-10 w-20 border border-gray-300 rounded-lg cursor-pointer">
-                            <input type="text" id="colorHexText" value="{{ old('color_hex', '#000000') }}"
+                            <input type="text" id="colorHexText" value="{{ old('color_hex', $product->color_hex ?? '#000000') }}"
                                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg"
                                    placeholder="#000000" readonly>
                         </div>
@@ -152,7 +158,7 @@
                         </label>
                         <div class="relative">
                             <span class="absolute left-4 top-2 text-gray-500">$</span>
-                            <input type="number" name="price" value="{{ old('price') }}" step="0.01" required
+                            <input type="number" name="price" value="{{ old('price', $product->price) }}" step="0.01" required
                                    class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                    placeholder="0.00">
                         </div>
@@ -163,7 +169,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">Sale Price (Optional)</label>
                         <div class="relative">
                             <span class="absolute left-4 top-2 text-gray-500">$</span>
-                            <input type="number" name="sale_price" value="{{ old('sale_price') }}" step="0.01"
+                            <input type="number" name="sale_price" value="{{ old('sale_price', $product->sale_price) }}" step="0.01"
                                    class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                    placeholder="0.00">
                         </div>
@@ -178,21 +184,21 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {{-- Is New --}}
                     <label class="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-                        <input type="checkbox" name="is_new" value="1" {{ old('is_new') ? 'checked' : '' }}
+                        <input type="checkbox" name="is_new" value="1" {{ old('is_new', $product->is_new) ? 'checked' : '' }}
                                class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                         <span class="text-sm font-medium text-gray-700">Mark as New Arrival</span>
                     </label>
 
                     {{-- Is Featured --}}
                     <label class="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-                        <input type="checkbox" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}
+                        <input type="checkbox" name="is_featured" value="1" {{ old('is_featured', $product->is_featured) ? 'checked' : '' }}
                                class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                         <span class="text-sm font-medium text-gray-700">Featured Product</span>
                     </label>
 
                     {{-- On Sale --}}
                     <label class="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-                        <input type="checkbox" name="on_sale" value="1" {{ old('on_sale') ? 'checked' : '' }}
+                        <input type="checkbox" name="on_sale" value="1" {{ old('on_sale', $product->on_sale) ? 'checked' : '' }}
                                class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                         <span class="text-sm font-medium text-gray-700">On Sale</span>
                     </label>
@@ -203,9 +209,9 @@
             <div class="flex gap-4 pt-6 border-t">
                 <button type="submit"
                         class="flex-1 bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition">
-                    Add Product
+                    Update Product
                 </button>
-                <a href="{{ route('products.index') }}"
+                <a href="{{ route('admin.products.index') }}"
                    class="px-6 py-3 border border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition">
                     Cancel
                 </a>
