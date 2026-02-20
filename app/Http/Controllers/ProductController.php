@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    // ─── Sorting helper ──────────────────────────────────────────────────────────
     private function applySorting($query, Request $request)
     {
         switch ($request->get('sort')) {
@@ -22,104 +21,53 @@ class ProductController extends Controller
         return $query;
     }
 
-    // ─── Men's Shoes ──────────────────────────────────────────────────────────────
-
     public function menShoes(Request $request)
     {
-        $products = Product::query()
-            ->forGender('men')
-            ->ofType('shoes');
-
+        $products = Product::query()->forGender('men')->ofType('shoes');
         $this->applySorting($products, $request);
-
-        return view('shop.men.shoes', [
-            'products' => $products->get(),
-            'gender'   => 'men',
-            'category' => null,
-        ]);
+        return view('shop.men.shoes', ['products' => $products->get(), 'gender' => 'men', 'category' => null]);
     }
 
     public function menShoesByCategory(Request $request, $category)
     {
-        $products = Product::query()
-            ->forGender('men')
-            ->ofType('shoes');
-
+        $products = Product::query()->forGender('men')->ofType('shoes');
         $this->applySorting($products, $request);
-
-        return view('shop.men.shoes', [
-            'products' => $products->get(),
-            'gender'   => 'men',
-            'category' => $category,
-        ]);
+        return view('shop.men.shoes', ['products' => $products->get(), 'gender' => 'men', 'category' => $category]);
     }
-
-    // ─── Women's Shoes ────────────────────────────────────────────────────────────
 
     public function womenShoes(Request $request)
     {
-        $products = Product::query()
-            ->forGender('women')
-            ->ofType('shoes');
-
+        $products = Product::query()->forGender('women')->ofType('shoes');
         $this->applySorting($products, $request);
-
-        return view('shop.women.shoes', [
-            'products' => $products->get(),
-            'gender'   => 'women',
-            'category' => null,
-        ]);
+        return view('shop.women.shoes', ['products' => $products->get(), 'gender' => 'women', 'category' => null]);
     }
 
     public function womenShoesByCategory(Request $request, $category)
     {
-        $products = Product::query()
-            ->forGender('women')
-            ->ofType('shoes');
-
+        $products = Product::query()->forGender('women')->ofType('shoes');
         $this->applySorting($products, $request);
-
-        return view('shop.women.shoes', [
-            'products' => $products->get(),
-            'gender'   => 'women',
-            'category' => $category,
-        ]);
+        return view('shop.women.shoes', ['products' => $products->get(), 'gender' => 'women', 'category' => $category]);
     }
 
-    // ─── Generic (kept for /products route) ──────────────────────────────────────
     public function index(Request $request, $gender = null, $category = null)
     {
         $products = Product::query();
-
         if ($gender)   $products->forGender($gender);
         if ($category) $products->ofCategory($category);
-
         $this->applySorting($products, $request);
-
-        return view('products.index', [
-            'products' => $products->get(),
-            'category' => $category,
-            'gender'   => $gender,
-        ]);
+        return view('products.index', ['products' => $products->get(), 'category' => $category, 'gender' => $gender]);
     }
 
-    // ─── Single Product Detail ────────────────────────────────────────────────────
     public function show($id)
     {
         $product = Product::findOrFail($id);
-
         $relatedProducts = Product::query()
             ->forGender($product->gender)
             ->ofType($product->type)
             ->where('id', '!=', $product->id)
-            ->latest()
-            ->take(6)
-            ->get();
-
+            ->latest()->take(6)->get();
         return view('shop.men.detailshoes', compact('product', 'relatedProducts'));
     }
-
-    // ─── Admin CRUD ───────────────────────────────────────────────────────────────
 
     public function create()
     {
@@ -132,6 +80,8 @@ class ProductController extends Controller
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
             'image'       => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image_2'     => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image_3'     => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'category'    => 'required|string',
             'type'        => 'required|in:shoes,socks,apparel,accessories',
             'gender'      => 'required|in:men,women,unisex',
@@ -139,15 +89,38 @@ class ProductController extends Controller
             'color_hex'   => 'nullable|string',
             'price'       => 'required|numeric|min:0',
             'on_sale'     => 'nullable|boolean',
-            'sale_price'  => 'nullable|numeric|min:0|lt:price',
+            'sale_price'  => 'nullable|numeric|min:0',
             'is_new'      => 'nullable|boolean',
             'is_featured' => 'nullable|boolean',
             'sizes'       => 'nullable|array',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'public');
+        $validated['image'] = $request->file('image')->store('products', 'public');
+
+        if ($request->hasFile('image_2')) {
+            $validated['image_2'] = $request->file('image_2')->store('products', 'public');
         }
+
+        if ($request->hasFile('image_3')) {
+            $validated['image_3'] = $request->file('image_3')->store('products', 'public');
+        }
+
+        $variants = [];
+        if ($request->has('variants')) {
+            foreach ($request->variants as $i => $variant) {
+                if (empty($variant['color_name'])) continue;
+                $v = [
+                    'color_name' => $variant['color_name'],
+                    'color_hex'  => $variant['color_hex'] ?? '#000000',
+                    'image'      => null,
+                ];
+                if ($request->hasFile("variants.{$i}.image")) {
+                    $v['image'] = $request->file("variants.{$i}.image")->store('products', 'public');
+                }
+                $variants[] = $v;
+            }
+        }
+        $validated['color_variants'] = $variants;
 
         $validated['is_new']      = $request->has('is_new');
         $validated['is_featured'] = $request->has('is_featured');
@@ -170,6 +143,8 @@ class ProductController extends Controller
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
             'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image_2'     => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image_3'     => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'category'    => 'required|string',
             'type'        => 'required|in:shoes,socks,apparel,accessories',
             'gender'      => 'required|in:men,women,unisex',
@@ -177,18 +152,43 @@ class ProductController extends Controller
             'color_hex'   => 'nullable|string',
             'price'       => 'required|numeric|min:0',
             'on_sale'     => 'nullable|boolean',
-            'sale_price'  => 'nullable|numeric|min:0|lt:price',
+            'sale_price'  => 'nullable|numeric|min:0',
             'is_new'      => 'nullable|boolean',
             'is_featured' => 'nullable|boolean',
             'sizes'       => 'nullable|array',
         ]);
 
         if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
+            if ($product->image) Storage::disk('public')->delete($product->image);
             $validated['image'] = $request->file('image')->store('products', 'public');
         }
+
+        if ($request->hasFile('image_2')) {
+            if ($product->image_2) Storage::disk('public')->delete($product->image_2);
+            $validated['image_2'] = $request->file('image_2')->store('products', 'public');
+        }
+
+        if ($request->hasFile('image_3')) {
+            if ($product->image_3) Storage::disk('public')->delete($product->image_3);
+            $validated['image_3'] = $request->file('image_3')->store('products', 'public');
+        }
+
+        $variants = [];
+        if ($request->has('variants')) {
+            foreach ($request->variants as $i => $variant) {
+                if (empty($variant['color_name'])) continue;
+                $v = [
+                    'color_name' => $variant['color_name'],
+                    'color_hex'  => $variant['color_hex'] ?? '#000000',
+                    'image'      => null,
+                ];
+                if ($request->hasFile("variants.{$i}.image")) {
+                    $v['image'] = $request->file("variants.{$i}.image")->store('products', 'public');
+                }
+                $variants[] = $v;
+            }
+        }
+        $validated['color_variants'] = $variants;
 
         $validated['is_new']      = $request->has('is_new');
         $validated['is_featured'] = $request->has('is_featured');
@@ -202,9 +202,9 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if ($product->image) {
-            Storage::disk('public')->delete($product->image);
-        }
+        if ($product->image)   Storage::disk('public')->delete($product->image);
+        if ($product->image_2) Storage::disk('public')->delete($product->image_2);
+        if ($product->image_3) Storage::disk('public')->delete($product->image_3);
 
         $product->delete();
 
