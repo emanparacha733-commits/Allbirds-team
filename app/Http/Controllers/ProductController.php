@@ -121,10 +121,11 @@ class ProductController extends Controller
 
     // ─── Admin CRUD ───────────────────────────────────────────────────────────────
 
-    public function create()
-    {
-        return view('layouts.admin.products.create');
-    }
+   public function create()
+{
+    return view('admin.products.create');
+}
+
 
     public function store(Request $request)
     {

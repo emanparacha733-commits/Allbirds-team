@@ -126,14 +126,7 @@
         </li>
 
         <!-- View Product Detail -->
-        <li>
-          <a href="{{ route('admin.products.show', 1) }}"
-             class="block px-4 py-2 rounded-lg text-sm transition-all duration-200
-             {{ request()->routeIs('admin.products.show') ? 'bg-gray-200 font-semibold text-black' : 'text-gray-600 hover:bg-gray-100' }}">
-            View Detail of Product
-          </a>
-        </li>
-
+        
       </ul>
     </div>
 

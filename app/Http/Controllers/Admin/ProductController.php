@@ -5,109 +5,95 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
-    // 🔹 Show all products in admin dashboard
+    // Dashboard
+    public function dashboard()
+    {
+        return view('admin.dashboard', [
+            'totalProducts' => Product::count(),
+            'totalOrders' => 0, // Update with Order model count if exists
+            'totalUsers' => 0   // Update with User model count if exists
+        ]);
+    }
+
+    // List all products
     public function index()
     {
-        $products = Product::latest()->get();
+        $products = Product::orderBy('created_at', 'desc')->get();
         return view('admin.products.index', compact('products'));
     }
 
-    // 🔹 Show create form
+    // Show create form
     public function create()
     {
-        return view('admin.products.create');
+        $categories = Category::all();
+        return view('admin.products.create', compact('categories'));
     }
 
-    // 🔹 Store new product
+    // Store product
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'category' => 'required|string',
-            'type' => 'required|in:shoes,socks,apparel,accessories',
-            'gender' => 'required|in:men,women,unisex',
-            'color_name' => 'nullable|string',
-            'color_hex' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'sale_price' => 'nullable|numeric|min:0|lt:price',
-            'is_new' => 'nullable|boolean',
-            'is_featured' => 'nullable|boolean',
-            'on_sale' => 'nullable|boolean',
+            'price' => 'required|numeric',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif',
+            'category_id' => 'required|exists:categories,id'
         ]);
 
-        // Image upload
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'public');
-        }
+        $imagePath = $request->file('image')->store('products', 'public');
 
-        // Checkbox conversion
-        $validated['is_new'] = $request->has('is_new');
-        $validated['is_featured'] = $request->has('is_featured');
-        $validated['on_sale'] = $request->has('on_sale');
+        Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'image' => $imagePath,
+            'category_id' => $request->category_id
+        ]);
 
-        Product::create($validated);
-
-        return redirect()->route('admin.products.index')->with('success', 'Product added successfully!');
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
 
-    // 🔹 Show edit form
+    // Show edit form
     public function edit(Product $product)
     {
-        return view('admin.products.edit', compact('product'));
+        $categories = Category::all();
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    // 🔹 Update product
+    // Update product
     public function update(Request $request, Product $product)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'category' => 'required|string',
-            'type' => 'required|in:shoes,socks,apparel,accessories',
-            'gender' => 'required|in:men,women,unisex',
-            'color_name' => 'nullable|string',
-            'color_hex' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'sale_price' => 'nullable|numeric|min:0|lt:price',
-            'is_new' => 'nullable|boolean',
-            'is_featured' => 'nullable|boolean',
-            'on_sale' => 'nullable|boolean',
+            'price' => 'required|numeric',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif',
+            'category_id' => 'required|exists:categories,id'
         ]);
 
-        // Image update
         if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $validated['image'] = $request->file('image')->store('products', 'public');
+            // Delete old image if needed
+            \Storage::disk('public')->delete($product->image);
+            $imagePath = $request->file('image')->store('products', 'public');
+            $product->image = $imagePath;
         }
 
-        // Checkbox conversion
-        $validated['is_new'] = $request->has('is_new');
-        $validated['is_featured'] = $request->has('is_featured');
-        $validated['on_sale'] = $request->has('on_sale');
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->category_id = $request->category_id;
+        $product->save();
 
-        $product->update($validated);
-
-        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
 
-    // 🔹 Delete product
+    // Delete product
     public function destroy(Product $product)
     {
-        if ($product->image) {
-            Storage::disk('public')->delete($product->image);
-        }
-
+        \Storage::disk('public')->delete($product->image);
         $product->delete();
-
-        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully!');
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }

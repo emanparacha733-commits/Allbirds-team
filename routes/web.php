@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+
 use App\Http\Controllers\MenController;
 use App\Http\Controllers\WomenController;
 use App\Http\Controllers\SaleController;
@@ -9,6 +9,8 @@ use App\Http\Controllers\AccessoriesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\ProductController;
+
 use App\Http\Controllers\AdminController;
 
 // ─── Home ────────────────────────────────────────────────────────────────────
@@ -108,20 +110,20 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/products',      [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
-// ─── Admin (using /manage prefix to avoid WAMP's reserved /admin path) ────────
-Route::prefix('manage')->name('admin.')->group(function () {
-    Route::get('/',          [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/orders',    [AdminController::class, 'orders'])->name('orders.index');
-    Route::get('/customers', [AdminController::class, 'customers'])->name('customers.index');
-    Route::resource('products', ProductController::class);
+
+
+
+// Admin dashboard home (optional)
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+})->name('admin.dashboard');
+
+// Product routes
+Route::prefix('admin/products')->name('admin.products.')->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('index');            // List products
+    Route::get('/create', [ProductController::class, 'create'])->name('create');    // Show create form
+    Route::post('/store', [ProductController::class, 'store'])->name('store');      // Store new product
+    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('edit'); // Edit product
+    Route::put('/{product}', [ProductController::class, 'update'])->name('update'); // Update product
+    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy'); // Delete product
 });
-
-
-Route::prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-        Route::get('dashboard', [\App\Http\Controllers\Admin\ProductController::class, 'index'])
-            ->name('dashboard');
-
-        Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
-    });
