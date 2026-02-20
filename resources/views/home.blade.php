@@ -372,6 +372,7 @@
             </div>
         </div>
     </section>
+    
 
     <style>
         /* =============================================
@@ -500,6 +501,11 @@
             display: flex;
             gap: 14px;
         }
+        .s4-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;  /* changed from cover */
+    
         @media (max-width: 768px) {
             .s4-image-grid {
                 grid-template-columns: 1fr;

@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
   @endphp
 
   @forelse($apparelProducts as $product)
-  <div class="relative z-30 group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2 hover:z-50 overflow-visible">
+  <div class="relative z-30 group w-full block bg-white p-6 pt-10 h-[520px] rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-out hover:h-[620px] hover:-translate-y-2 hover:z-50 overflow-visible">
 
     @if($product->is_new)
     <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">

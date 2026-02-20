@@ -9,34 +9,36 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'description',
-        'image',
-        'color_name',
-        'color_hex',
-        'category',
-        'type',
-        'gender',
-        'price',
-        'on_sale',
-        'sale_price',
-        'is_new',
-        'is_featured',
-        'sales_count',
-        'sizes',
-    ];
-
+  protected $fillable = [
+    'name',
+    'description',
+    'image',
+    'image_2',
+    'image_3',
+    'color_name',
+    'color_hex',
+    'color_variants',
+    'category',
+    'type',
+    'gender',
+    'price',
+    'on_sale',
+    'sale_price',
+    'is_new',
+    'is_featured',
+    'sales_count',
+    'sizes',
+];
     protected $casts = [
-        'is_new' => 'boolean',
-        'is_featured' => 'boolean',
-        'on_sale' => 'boolean',
-        'price' => 'decimal:2',
-        'sale_price' => 'decimal:2',
-        'sizes' => 'array',
-        'sales_count' => 'integer',
-    ];
-
+    'is_new'         => 'boolean',
+    'is_featured'    => 'boolean',
+    'on_sale'        => 'boolean',
+    'price'          => 'decimal:2',
+    'sale_price'     => 'decimal:2',
+    'sizes'          => 'array',
+    'color_variants' => 'array',
+    'sales_count'    => 'integer',
+];
     /**
      * Accessors
      */

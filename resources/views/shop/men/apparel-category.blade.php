@@ -66,8 +66,8 @@
         @if($products->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 @foreach($products as $product)
-                    <div class="relative group w-full block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer
-                               transition-all duration-300 ease-out hover:h-[520px] hover:-translate-y-2">
+                    <div class="relative group w-full block bg-white p-6 pt-10 h-[520px] rounded-2xl shadow-2xl overflow-hidden cursor-pointer
+           transition-all duration-300 ease-out hover:h-[620px] hover:-translate-y-2">
 
                         @if($product->is_new)
                         <span class="absolute top-4 left-4 bg-orange-100 text-black text-xs px-3 py-1 rounded-full z-10">

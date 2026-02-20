@@ -1,4 +1,16 @@
 <x-layouts>
+
+{{-- Safe decode color_variants regardless of DB format --}}
+@php
+    $colorVariants = $product->color_variants;
+    if (is_string($colorVariants)) {
+        $colorVariants = json_decode($colorVariants, true) ?? [];
+    }
+    if (!is_array($colorVariants)) {
+        $colorVariants = [];
+    }
+@endphp
+
 <div class="max-w-8xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-8 items-start">
 
   <!-- LEFT SIDE (Images) -->
@@ -11,41 +23,54 @@
 
       <!-- Main Large Image -->
       <img id="mainImage" src="{{ $product->image_url }}"
-           class="w-full h-[650px] object-cover rounded-xl block">
+           class="w-full h-[650px] object-contain rounded-xl block bg-gray-50">
 
-      <!-- Thumbnail Row 1 — shown if product has extra_images -->
-      @if(!empty($product->extra_images) && count($product->extra_images) >= 2)
-      <div class="grid grid-cols-2 gap-1 -mt-1">
-        <img class="w-full h-[150px] object-cover rounded-lg cursor-pointer hover:opacity-80 transition"
-             src="{{ $product->extra_images[0] }}" onclick="swapMain(this)">
-        <img class="w-full h-[150px] object-cover rounded-lg cursor-pointer hover:opacity-80 transition"
-             src="{{ $product->extra_images[1] }}" onclick="swapMain(this)">
-      </div>
-      @else
-      {{-- Fallback thumbnails using same main image --}}
-      <div class="grid grid-cols-2 gap-1 -mt-1">
-        <img class="w-full h-[150px] object-cover rounded-lg opacity-70"
-             src="{{ $product->image_url }}">
-        <img class="w-full h-[150px] object-cover rounded-lg opacity-70"
-             src="{{ $product->image_url }}">
-      </div>
-      @endif
+      <!-- Thumbnails -->
+      <div class="grid grid-cols-3 gap-2 mt-2">
 
-      <br><br>
+        {{-- Thumb 1: main image --}}
+        <img class="w-full h-[120px] object-contain rounded-lg cursor-pointer border-2 border-black bg-gray-50"
+             src="{{ $product->image_url }}"
+             onclick="setMain(this)">
 
-      @if(!empty($product->extra_images) && count($product->extra_images) >= 4)
-      <div class="grid grid-cols-2 gap-1 -mt-1">
-        <img class="w-full h-[150px] object-cover rounded-lg cursor-pointer hover:opacity-80 transition"
-             src="{{ $product->extra_images[2] }}" onclick="swapMain(this)">
-        <img class="w-full h-[150px] object-cover rounded-lg cursor-pointer hover:opacity-80 transition"
-             src="{{ $product->extra_images[3] }}" onclick="swapMain(this)">
+        {{-- Thumb 2 --}}
+        @if($product->image_2)
+          <img class="w-full h-[120px] object-contain rounded-lg cursor-pointer border-2 border-transparent hover:border-black bg-gray-50 transition"
+               src="{{ asset('storage/' . $product->image_2) }}"
+               onclick="setMain(this)">
+        @else
+          <div class="w-full h-[120px] rounded-lg bg-gray-100 flex items-center justify-center text-xs text-gray-400">No image</div>
+        @endif
+
+        {{-- Thumb 3 --}}
+        @if($product->image_3)
+          <img class="w-full h-[120px] object-contain rounded-lg cursor-pointer border-2 border-transparent hover:border-black bg-gray-50 transition"
+               src="{{ asset('storage/' . $product->image_3) }}"
+               onclick="setMain(this)">
+        @else
+          <div class="w-full h-[120px] rounded-lg bg-gray-100 flex items-center justify-center text-xs text-gray-400">No image</div>
+        @endif
+
       </div>
-      @else
-      <div class="grid grid-cols-2 gap-1 -mt-1">
-        <img class="w-full h-[150px] object-cover rounded-lg opacity-70"
-             src="{{ $product->image_url }}">
-        <img class="w-full h-[150px] object-cover rounded-lg opacity-70"
-             src="{{ $product->image_url }}">
+
+      {{-- Color Variant Images --}}
+      @if(!empty($colorVariants))
+      <div class="mt-4">
+        <p class="text-xs text-gray-500 mb-2 uppercase tracking-wider">More Colors</p>
+        <div class="flex gap-3 flex-wrap">
+          @foreach($colorVariants as $variant)
+            @if(!empty($variant['image']))
+            <div class="flex flex-col items-center gap-1 cursor-pointer"
+                 onclick="setMainSrc('{{ asset('storage/' . $variant['image']) }}')">
+              <img src="{{ asset('storage/' . $variant['image']) }}"
+                   class="w-16 h-16 object-contain rounded-lg border-2 border-transparent hover:border-black transition bg-gray-50">
+              <div class="w-5 h-5 rounded-full border border-gray-300"
+                   style="background-color: {{ $variant['color_hex'] ?? '#000' }}"></div>
+              <span class="text-xs text-gray-500">{{ $variant['color_name'] ?? '' }}</span>
+            </div>
+            @endif
+          @endforeach
+        </div>
       </div>
       @endif
 
@@ -84,19 +109,31 @@
       <span class="tab cursor-pointer text-gray-500" data-tab="classic">CLASSIC</span>
     </div>
 
-    <!-- Color -->
-    @if($product->color_name)
-    <p class="text-sm mb-1">{{ $product->color_name }}</p>
-    @endif
-
-    @if($product->color_hex)
-    <div class="flex items-center gap-3">
-      <div class="p-[3px] rounded-full border border-black cursor-pointer">
-        <div class="w-8 h-8 rounded-full border border-gray-300"
-             style="background-color: {{ $product->color_hex }}"></div>
-      </div>
+    <!-- Color Swatches -->
+    <p class="text-sm mb-1" id="colorLabel">
+      @if(!empty($colorVariants))
+        {{ $colorVariants[0]['color_name'] ?? $product->color_name ?? '' }}
+      @else
+        {{ $product->color_name ?? '' }}
+      @endif
+    </p>
+    <div class="flex items-center gap-3 flex-wrap">
+      @if(!empty($colorVariants))
+        @foreach($colorVariants as $variant)
+        <div class="p-[3px] rounded-full border border-black cursor-pointer hover:scale-110 transition"
+             onclick="selectColor('{{ $variant['color_name'] ?? '' }}', '{{ !empty($variant['image']) ? asset('storage/'.$variant['image']) : '' }}')"
+             title="{{ $variant['color_name'] ?? '' }}">
+          <div class="w-8 h-8 rounded-full border border-gray-300"
+               style="background-color: {{ $variant['color_hex'] ?? '#000' }}"></div>
+        </div>
+        @endforeach
+      @elseif($product->color_hex)
+        <div class="p-[3px] rounded-full border border-black cursor-pointer">
+          <div class="w-8 h-8 rounded-full border border-gray-300"
+               style="background-color: {{ $product->color_hex }}"></div>
+        </div>
+      @endif
     </div>
-    @endif
 
     <!-- Sizes -->
     <div class="flex gap-6 text-sm mt-4">
@@ -139,12 +176,25 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  /* ── Thumbnail swap ── */
-  window.swapMain = function(thumb) {
-    const main = document.getElementById('mainImage');
-    const tmp  = main.src;
-    main.src   = thumb.src;
-    thumb.src  = tmp;
+  /* ── Image Gallery ── */
+  window.setMain = function(thumb) {
+    document.getElementById('mainImage').src = thumb.src;
+    document.querySelectorAll('[onclick^="setMain"]').forEach(t => {
+      t.classList.remove('border-black');
+      t.classList.add('border-transparent');
+    });
+    thumb.classList.add('border-black');
+    thumb.classList.remove('border-transparent');
+  };
+
+  window.setMainSrc = function(src) {
+    document.getElementById('mainImage').src = src;
+  };
+
+  /* ── Color ── */
+  window.selectColor = function(name, imgSrc) {
+    document.getElementById('colorLabel').textContent = name;
+    if (imgSrc) setMainSrc(imgSrc);
   };
 
   /* ── Tabs ── */
@@ -451,7 +501,6 @@ document.addEventListener("DOMContentLoaded", function () {
         </a>
       </div>
       @empty
-      {{-- Fallback static slides if no related products --}}
       @foreach(range(1,4) as $i)
       <div class="swiper-slide shadow-2xl z-30">
         <a href="{{ url('/men/shoes') }}" class="relative group block bg-white p-6 pt-10 h-[420px] rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:-translate-y-2">
