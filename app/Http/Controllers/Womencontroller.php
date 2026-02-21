@@ -42,17 +42,7 @@ class WomenController extends Controller
 
     public function product($slug)
     {
-        $product = Product::findOrFail($slug);
-
-        $relatedProducts = Product::query()
-            ->forGender('women')
-            ->ofType($product->type)
-            ->where('id', '!=', $product->id)
-            ->latest()
-            ->take(6)
-            ->get();
-
-        return view('shop.women.detailshoes', compact('product', 'relatedProducts'));
+        return view('shop.women.product', compact('slug'));
     }
 
     public function apparelNew()

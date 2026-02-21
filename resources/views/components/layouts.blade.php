@@ -187,7 +187,7 @@
     </style>
 </head>
 
-<body class="antialiased bg-white">
+<body class="antialiased bg-whiteoverflow-x-hidden"></body">
 
 <header class="w-full">
     <!-- Announcement bar -->

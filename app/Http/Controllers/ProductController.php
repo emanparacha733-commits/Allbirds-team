@@ -69,20 +69,10 @@ class ProductController extends Controller
         return view('shop.men.detailshoes', compact('product', 'relatedProducts'));
     }
 
-<<<<<<< HEAD
-    // ─── Admin CRUD ───────────────────────────────────────────────────────────────
-
-   public function create()
-{
-    return view('admin.products.create');
-}
-
-=======
     public function create()
     {
         return view('layouts.admin.products.create');
     }
->>>>>>> 2dfb1acd4684193dddcc66709102106e76bc3f8d
 
     public function store(Request $request)
     {

@@ -408,5 +408,59 @@ function addVariant() {
             updateCategories();
         }
     });
+
+
+    // Update default main image variant when user uploads main image
+document.querySelector('input[name="image"]').addEventListener('change', function(e){
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(ev){
+        // Update preview
+        const preview = document.getElementById('prev1');
+        preview.src = ev.target.result;
+        preview.classList.remove('hidden');
+
+        // Update hidden default variant
+        document.getElementById('defaultMainVariantImage').value = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+});
+
+// Include first main image as color variant in the selectColor logic
+window.selectColor = function(name, images) {
+    const mainVariantImage = document.getElementById('defaultMainVariantImage').value;
+    const allImages = [mainVariantImage, ...images]; // first main image + other color images
+
+    const validImages = allImages.filter(src => src && src.length > 0);
+    if (!validImages.length) return;
+
+    // Update main image
+    const main = document.getElementById('mainImage');
+    main.src = validImages[0];
+
+    // Clear thumbnails container
+    const thumbsContainer = document.getElementById('thumbnails');
+    thumbsContainer.innerHTML = '';
+
+    // Add thumbnails dynamically
+    validImages.forEach((src, index) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'thumb-img w-full h-[120px] object-contain rounded-lg cursor-pointer bg-gray-50 border-transparent transition';
+        if (index === 0) img.classList.add('border-black'); // active
+        img.addEventListener('click', () => setMain(img));
+        thumbsContainer.appendChild(img);
+    });
+
+    // Update color label
+    const colorLabel = document.getElementById('colorLabel');
+    if (colorLabel) colorLabel.textContent = name;
+};
+
+
 </script>
+
+
 @endsection

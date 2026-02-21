@@ -561,7 +561,7 @@
     </div>
 
     <nav class="bg-white border border-gray-100 mx-4 mt-2 rounded-2xl shadow-sm">
-   <div class="max-w-[1400px] mx-auto px-6 h-16 grid grid-cols-3 items-center">
+    <div class="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
 
             <!-- Logo -->
             <div class="flex-1">
@@ -571,7 +571,7 @@
             </div>
 
             <!-- Nav items -->
-           <div class="flex items-center h-full relative justify-center" id="nav-wrapper">
+            <div class="flex items-center h-full relative flex-1 justify-center" id="nav-wrapper">
 
                 <!-- ── MEN ── -->
                 <div class="nav-item" id="nav-men">
@@ -761,9 +761,9 @@
                                         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Women's Shoes</h3>
                                         <ul class="text-[13px] space-y-2 text-gray-700 font-normal">
                                             <li><a href="{{ route('women.shoes') }}" class="hover:underline italic">Shop All</a></li>
-                                            <li><a href="{{ route('women.shoes.category', 'sneakers') }}" class="hover:underline">Sneakers</a></li>
-                                            <li><a href="{{ route('women.shoes.category', 'slip-ons') }}" class="hover:underline">Slip Ons</a></li>
-                                            <li><a href="{{ route('women.shoes.category', 'flats') }}" class="hover:underline">Flats</a></li>
+                                            <li><a href="{{ route('women.shoes', 'sneakers') }}" class="hover:underline">Sneakers</a></li>
+                                            <li><a href="{{ route('women.shoes', 'slip-ons') }}" class="hover:underline">Slip Ons</a></li>
+                                            <li><a href="{{ route('women.shoes', 'flats') }}" class="hover:underline">Flats</a></li>
                                         </ul>
                                     </div>
                                     <div class="space-y-3">
@@ -1047,7 +1047,7 @@
             <!-- end nav-wrapper -->
 
             <!-- Right icons -->
-            <div class="flex items-center justify-end space-x-5 text-gray-800">
+            <div class="flex-1 flex items-center justify-end space-x-5 text-gray-800">
                 <a href="#" class="text-[12px] font-bold hover:underline">About</a>
                <a href="{{ url()->current() }}" class="text-[12px] font-bold hover:underline">ReRun</a>
                <a href="{{ route('search') }}" class="block">
