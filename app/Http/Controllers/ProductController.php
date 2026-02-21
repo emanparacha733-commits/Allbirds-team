@@ -66,7 +66,12 @@ class ProductController extends Controller
             ->ofType($product->type)
             ->where('id', '!=', $product->id)
             ->latest()->take(6)->get();
-        return view('shop.men.detailshoes', compact('product', 'relatedProducts'));
+
+        $view = in_array($product->type, ['socks', 'apparel'])
+            ? 'shop.men.detailsocks'
+            : 'shop.men.detailshoes';
+
+        return view($view, compact('product', 'relatedProducts'));
     }
 
     public function create()
