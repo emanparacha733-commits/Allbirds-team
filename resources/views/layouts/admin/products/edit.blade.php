@@ -210,6 +210,7 @@ const shoeSizes = {
 const currentCategory = "{{ old('category', $product->category) }}";
 const currentSizes    = @json($product->sizes ?? []);
 
+
 const typeSelect     = document.getElementById('typeSelect');
 const genderSelect   = document.getElementById('genderSelect');
 const categorySelect = document.getElementById('categorySelect');
@@ -243,21 +244,40 @@ function updateCategories() {
 function updateSizes() {
     const type   = typeSelect.value;
     const gender = genderSelect.value;
+
     sizesGrid.innerHTML = '';
+
+    // Socks sizes
+    const sockSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
     if (type === 'shoes' && gender && shoeSizes[gender]) {
         sizesSection.classList.remove('hidden');
         shoeSizes[gender].forEach(size => {
-            const existing = currentSizes[size] ?? 0;
+            const existing = (typeof currentSizes !== 'undefined') ? (currentSizes[size] ?? 0) : 0;
             const div = document.createElement('div');
             div.className = 'flex flex-col items-center gap-1';
             div.innerHTML = `
                 <label class="text-xs font-semibold text-gray-600">US ${size}</label>
                 <input type="number" name="sizes[${size}]" min="0" value="${existing}"
-                       class="w-full text-center px-2 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+                       class="w-full text-center px-2 py-1.5 border border-gray-300 rounded-lg text-sm">
             `;
             sizesGrid.appendChild(div);
         });
+
+    } else if (type === 'socks' || type === 'apparel') {
+        sizesSection.classList.remove('hidden');
+        sockSizes.forEach(size => {
+            const existing = (typeof currentSizes !== 'undefined') ? (currentSizes[size] ?? 0) : 0;
+            const div = document.createElement('div');
+            div.className = 'flex flex-col items-center gap-1';
+            div.innerHTML = `
+                <label class="text-xs font-semibold text-gray-600">${size}</label>
+                <input type="number" name="sizes[${size}]" min="0" value="${existing}"
+                       class="w-full text-center px-2 py-1.5 border border-gray-300 rounded-lg text-sm">
+            `;
+            sizesGrid.appendChild(div);
+        });
+
     } else {
         sizesSection.classList.add('hidden');
     }

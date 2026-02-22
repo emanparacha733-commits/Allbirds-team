@@ -321,29 +321,47 @@
 
         updateSizes();
     }
+function updateSizes() {
+    const type   = typeSelect.value;
+    const gender = genderSelect.value;
 
-    function updateSizes() {
-        const type   = typeSelect.value;
-        const gender = genderSelect.value;
+    sizesGrid.innerHTML = '';
 
-        sizesGrid.innerHTML = '';
+    // Socks sizes
+    const sockSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
-        if (type === 'shoes' && gender && shoeSizes[gender]) {
-            sizesSection.classList.remove('hidden');
-            shoeSizes[gender].forEach(size => {
-                const div = document.createElement('div');
-                div.className = 'flex flex-col items-center gap-1';
-                div.innerHTML = `
-                    <label class="text-xs font-semibold text-gray-600">US ${size}</label>
-                    <input type="number" name="sizes[${size}]" min="0" value="0"
-                           class="w-full text-center px-2 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                `;
-                sizesGrid.appendChild(div);
-            });
-        } else {
-            sizesSection.classList.add('hidden');
-        }
+    if (type === 'shoes' && gender && shoeSizes[gender]) {
+        sizesSection.classList.remove('hidden');
+        shoeSizes[gender].forEach(size => {
+            const existing = (typeof currentSizes !== 'undefined') ? (currentSizes[size] ?? 0) : 0;
+            const div = document.createElement('div');
+            div.className = 'flex flex-col items-center gap-1';
+            div.innerHTML = `
+                <label class="text-xs font-semibold text-gray-600">US ${size}</label>
+                <input type="number" name="sizes[${size}]" min="0" value="${existing}"
+                       class="w-full text-center px-2 py-1.5 border border-gray-300 rounded-lg text-sm">
+            `;
+            sizesGrid.appendChild(div);
+        });
+
+    } else if (type === 'socks' || type === 'apparel') {
+        sizesSection.classList.remove('hidden');
+        sockSizes.forEach(size => {
+            const existing = (typeof currentSizes !== 'undefined') ? (currentSizes[size] ?? 0) : 0;
+            const div = document.createElement('div');
+            div.className = 'flex flex-col items-center gap-1';
+            div.innerHTML = `
+                <label class="text-xs font-semibold text-gray-600">${size}</label>
+                <input type="number" name="sizes[${size}]" min="0" value="${existing}"
+                       class="w-full text-center px-2 py-1.5 border border-gray-300 rounded-lg text-sm">
+            `;
+            sizesGrid.appendChild(div);
+        });
+
+    } else {
+        sizesSection.classList.add('hidden');
     }
+}
 
     typeSelect.addEventListener('change', updateCategories);
     genderSelect.addEventListener('change', updateCategories);

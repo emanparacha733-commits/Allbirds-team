@@ -14,13 +14,12 @@ use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SigninUserController;
 
 
-// ─── Home ────────────────────────────────────────────────────────────────────
+// ─── Home ─────────────────────────────────────────────
 Route::get('/', fn() => view('home'))->name('home');
 
-// ─── Men ─────────────────────────────────────────────────────────────────────
+// ─── Men ──────────────────────────────────────────────
 Route::prefix('men')->name('men.')->group(function () {
-    Route::get('/', fn() => view('shop.men.shoes'))->name('index');
-
+    Route::get('/',                           fn() => view('shop.men.shoes'))->name('index');
     Route::get('/collection/{slug}',          [MenController::class, 'collection'])->name('collection');
     Route::get('/new-arrivals',               [MenController::class, 'newArrivals'])->name('new-arrivals');
     Route::get('/bestsellers',                [MenController::class, 'bestsellers'])->name('bestsellers');
@@ -30,7 +29,7 @@ Route::prefix('men')->name('men.')->group(function () {
 
     Route::get('/product/{slug}',             [MenController::class, 'product'])->name('product');
 
-    Route::get('/apparel',                    fn() => view('shop.men.apparel'))->name('apparel');
+    Route::get('/apparel',                    [MenController::class, 'apparel'])->name('apparel');
     Route::get('/apparel/new',                [MenController::class, 'apparelNew'])->name('apparel.new');
     Route::get('/apparel/collection/{slug}',  [MenController::class, 'apparelCollection'])->name('apparel.collection');
     Route::get('/apparel/{category}',         [MenController::class, 'apparelCategory'])->name('apparel.category');
@@ -39,10 +38,9 @@ Route::prefix('men')->name('men.')->group(function () {
     Route::get('/socks/{category}',           [MenController::class, 'socksCategory'])->name('socks.category');
 });
 
-// ─── Women ───────────────────────────────────────────────────────────────────
+// ─── Women ────────────────────────────────────────────
 Route::prefix('women')->name('women.')->group(function () {
-    Route::get('/', fn() => view('shop.women.index'))->name('index');
-
+    Route::get('/',                           fn() => view('shop.women.index'))->name('index');
     Route::get('/collection/{slug}',          [WomenController::class, 'collection'])->name('collection');
     Route::get('/new-arrivals',               [WomenController::class, 'newArrivals'])->name('new-arrivals');
     Route::get('/bestsellers',                [WomenController::class, 'bestsellers'])->name('bestsellers');
@@ -52,7 +50,7 @@ Route::prefix('women')->name('women.')->group(function () {
 
     Route::get('/product/{slug}',             [WomenController::class, 'product'])->name('product');
 
-    Route::get('/apparel',                    fn() => view('shop.women.apparel'))->name('apparel');
+    Route::get('/apparel',                    [WomenController::class, 'apparel'])->name('apparel');
     Route::get('/apparel/new',                [WomenController::class, 'apparelNew'])->name('apparel.new');
     Route::get('/apparel/collection/{slug}',  [WomenController::class, 'apparelCollection'])->name('apparel.collection');
     Route::get('/apparel/{category}',         [WomenController::class, 'apparelCategory'])->name('apparel.category');
@@ -61,7 +59,7 @@ Route::prefix('women')->name('women.')->group(function () {
     Route::get('/socks/{category}',           [WomenController::class, 'socksCategory'])->name('socks.category');
 });
 
-// ─── Sale ─────────────────────────────────────────────────────────────────────
+// ─── Sale ─────────────────────────────────────────────
 Route::prefix('sale')->name('sale.')->group(function () {
     Route::get('/',                           [SaleController::class, 'index'])->name('index');
 
@@ -89,14 +87,14 @@ Route::prefix('sale')->name('sale.')->group(function () {
     Route::get('/{category}',                 [SaleController::class, 'category'])->name('category');
 });
 
-// ─── Accessories ──────────────────────────────────────────────────────────────
+// ─── Accessories ──────────────────────────────────────
 Route::get('/accessories',            [AccessoriesController::class, 'index'])->name('accessories');
 Route::get('/accessories/{category}', [AccessoriesController::class, 'category'])->name('accessories.category');
 
-// ─── Gift Cards ───────────────────────────────────────────────────────────────
+// ─── Gift Cards ───────────────────────────────────────
 Route::get('/gift-cards', fn() => view('gift-cards.index'))->name('gift-cards');
 
-// ─── Cart & Checkout ──────────────────────────────────────────────────────────
+// ─── Cart & Checkout ──────────────────────────────────
 Route::post('/cart/add',             [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/remove',          [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update');
@@ -104,12 +102,13 @@ Route::get('/checkout',              [CartController::class, 'index'])->name('ch
 Route::post('/checkout/place',       [OrderController::class, 'place'])->name('checkout.place');
 Route::get('/order/success',         [OrderController::class, 'success'])->name('order.success');
 
-// ─── Search ───────────────────────────────────────────────────────────────────
+// ─── Search ───────────────────────────────────────────
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
-// ─── Products ─────────────────────────────────────────────────────────────────
+// ─── Products ─────────────────────────────────────────
 Route::get('/products',      [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
 
 // ─── User Registration ───────────────────────────────────────────────────────
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
@@ -124,12 +123,17 @@ Route::post('/signin', [SigninUserController::class, 'store']);
 
 // ─── Admin Routes (using /manage prefix to avoid WAMP's reserved /admin path) ───
 Route::prefix('manage')->name('admin.')->middleware('auth:admin')->group(function () {
+
+// ─── Admin ────────────────────────────────────────────
+Route::prefix('manage')->name('admin.')->group(function () {
+
     Route::get('/',          [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/orders',    [AdminController::class, 'orders'])->name('orders.index');
     Route::get('/customers', [AdminController::class, 'customers'])->name('customers.index');
 
     // Resource routes for products
     Route::resource('products', ProductController::class);
+
 });
 
 // ─── Admin Login / Logout ───
@@ -145,3 +149,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::get('/admin/email', [AdminController::class, 'showEmails'])->name('admin.email');
+
+});
+

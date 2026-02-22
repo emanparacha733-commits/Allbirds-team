@@ -4,22 +4,16 @@
 <div class="bg-[#f5f2ed] min-h-screen">
 
     {{-- Hero Section --}}
-    <section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl" 
-             style="background-image: url('/images/socks-hero.webp');">
-        <div class="relative z-10 max-w-7xl mx-auto h-full flex flex-col justify-between md:px-8 text-white">
-            
-            {{-- Breadcrumb --}}
-            <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
-                <a href="{{ url('/') }}" class="hover:underline">Home/</a>
-                <a href="{{ url('/men') }}" class="hover:underline">Men/</a>
-                <a href="#" class="hover:underline">{{ ucfirst($category) }} Socks</a>
-            </div>
-
-            {{-- Title --}}
-            <p class="max-w-xl text-3xl md:text-2xl font-medium font-serif lg:mb-8 leading-tight mb-12 md:mb-16 sm:text-sm">
-                Men's {{ ucfirst($category) }} Socks
-            </p>
+    <section class="w-full pt-6 pb-10 px-4 text-center">
+        <div class="flex gap-2 text-sm font-light font-serif tracking-wide text-gray-500 mb-6 justify-start max-w-7xl mx-auto px-4">
+            <a href="{{ url('/') }}" class="hover:underline">Home /</a>
+            <a href="{{ url('/men') }}" class="hover:underline">Men /</a>
+            <span class="text-black">{{ ucfirst($category) }} Socks</span>
         </div>
+        <h1 class="text-3xl font-serif font-light text-black">Men's {{ ucfirst($category) }} Socks</h1>
+        <p class="mt-3 text-sm text-gray-600 max-w-lg mx-auto leading-relaxed">
+            Our Trino™ Socks are made from the best materials nature has to offer, like wool and trees. Pair them with our shoes for unbeatable comfort that's even better together.
+        </p>
     </section>
 
     {{-- Filter Bar --}}
@@ -76,40 +70,53 @@
         </div>
     </div>
 
-    {{-- Product Grid Using ProductCard Component --}}
+    {{-- Product Grid --}}
     <section class="max-w-full px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
         @forelse($products as $product)
-            <x-product-card 
-                :image="asset('storage/' . $product->image)" 
-                :title="$product->name" 
-                :subtitle="$product->color_name ?? 'Various Colors'" 
-                :price="$product->on_sale ? $product->sale_price : $product->price" 
-                :link="url('/product/' . $product->slug)"
-                :isNew="$product->is_new">
-                
+            <x-product-card-socks
+                :image="asset('storage/' . $product->image)"
+                :title="$product->name"
+                :subtitle="$product->color_name ?? 'Various Colors'"
+                :price="$product->on_sale ? $product->sale_price : $product->price"
+               :link="route('products.show', $product->id)"
+                :isNew="$product->is_new"
+                :onSale="$product->on_sale ?? false"
+                :salePrice="$product->sale_price ?? null"
+                :colors="$product->color_swatches ?? []">
+
                 {{-- Sizes --}}
-                <div class="grid grid-cols-5 gap-2">
-                    @php
-                        $sockSizes = ['S','M','L','XL'];
-                    @endphp
-                    @foreach($sockSizes as $size)
-                        @if($product->sizes && isset($product->sizes[$size]) && $product->sizes[$size] <= 0)
-                            <div class="relative h-10 border border-gray-300 rounded-md flex items-center justify-center text-gray-400 text-xs">
-                                {{ $size }}
-                                <span class="absolute w-4/5 h-[1px] bg-gray-300 rotate-[-15deg]"></span>
-                            </div>
-                        @else
-                            <button class="h-10 border border-gray-300 rounded-md flex items-center justify-center text-black hover:bg-gray-100 transition text-xs">
-                                {{ $size }}
-                            </button>
-                        @endif
-                    @endforeach
-                </div>
-            </x-product-card>
+                @php
+                    $sockSizes = [
+                        'S'  => 'W5-7',
+                        'M'  => 'W8-10 / M8',
+                        'L'  => 'W11 / M9-12',
+                        'XL' => 'M13-14',
+                    ];
+                @endphp
+                @foreach($sockSizes as $size => $range)
+                    @if($product->sizes && isset($product->sizes[$size]) && $product->sizes[$size] <= 0)
+                        <div class="relative h-14 border border-gray-200 rounded-lg flex flex-col items-center justify-center text-gray-300 text-xs select-none overflow-hidden">
+                            <span class="font-medium">{{ $size }}</span>
+                            <span class="text-[10px]">{{ $range }}</span>
+                            <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                                <line x1="10%" y1="90%" x2="90%" y2="10%" stroke="#D1D5DB" stroke-width="1" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    @else
+                        <button class="h-14 border border-gray-200 rounded-lg flex flex-col items-center justify-center
+                                       text-black hover:border-black transition-colors duration-150 text-xs font-medium
+                                       focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1">
+                            <span class="font-semibold text-[13px]">{{ $size }}</span>
+                            <span class="text-[10px] text-gray-400">{{ $range }}</span>
+                        </button>
+                    @endif
+                @endforeach
+
+            </x-product-card-socks>
         @empty
             <div class="col-span-full text-center py-20">
                 <p class="text-gray-500 text-lg">No products found in this category.</p>
-                <a href="{{ url('/admin/products/create') }}" 
+                <a href="{{ url('/admin/products/create') }}"
                    class="inline-block mt-4 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
                     Add Products
                 </a>
