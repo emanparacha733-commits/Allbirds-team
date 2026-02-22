@@ -10,6 +10,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SigninUserController;
+
 
 // ─── Home ────────────────────────────────────────────────────────────────────
 Route::get('/', fn() => view('home'))->name('home');
@@ -108,17 +111,37 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/products',      [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
-// ─── Admin (using /manage prefix to avoid WAMP's reserved /admin path) ────────
-Route::prefix('manage')->name('admin.')->group(function () {
+// ─── User Registration ───────────────────────────────────────────────────────
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
+Route::get('/signin', [SigninUserController::class, 'create'])->name('signin');
+Route::post('/signin', [SigninUserController::class, 'store']);
+
+
+
+
+
+// ─── Admin Routes (using /manage prefix to avoid WAMP's reserved /admin path) ───
+Route::prefix('manage')->name('admin.')->middleware('auth:admin')->group(function () {
     Route::get('/',          [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/orders',    [AdminController::class, 'orders'])->name('orders.index');
     Route::get('/customers', [AdminController::class, 'customers'])->name('customers.index');
+
+    // Resource routes for products
     Route::resource('products', ProductController::class);
 });
 
-
-
-
+// ─── Admin Login / Logout ───
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('products', ProductController::class);
+    // Show login form
+    Route::get('/login', [AdminController::class, 'showLoginForm'])->name('login');
+
+    // Handle login
+    Route::post('/login', [AdminController::class, 'login'])->name('login.submit');
+
+    // Logout (requires admin authentication)
+    Route::post('/logout', [AdminController::class, 'logout'])->name('logout')->middleware('auth:admin');
 });
+
+Route::get('/admin/email', [AdminController::class, 'showEmails'])->name('admin.email');

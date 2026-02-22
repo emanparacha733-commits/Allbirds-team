@@ -1,11 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.admin.layout')
 @section('title', 'Dashboard')
 
 @section('content')
-
-{{-- Stats Row --}}
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-
+    <!-- Stats cards -->
     <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
         <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">Total Products</p>
         <p class="text-3xl font-bold text-black">{{ $totalProducts }}</p>
@@ -23,10 +21,9 @@
         <p class="text-3xl font-bold text-black">${{ number_format($totalRevenue, 0) }}</p>
         <p class="text-xs text-gray-400 mt-1">All time</p>
     </div>
-
 </div>
 
-{{-- Recent Products --}}
+<!-- Recent Products Table -->
 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
     <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
         <h2 class="text-sm font-semibold text-gray-800">Recent Products</h2>
@@ -69,12 +66,10 @@
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-2">
-                        {{-- Edit --}}
                         <a href="{{ route('admin.products.edit', $product) }}"
                            class="text-xs text-gray-500 hover:text-black border border-gray-200 px-3 py-1.5 rounded-lg hover:border-black transition">
                             Edit
                         </a>
-                        {{-- Delete --}}
                         <form action="{{ route('admin.products.destroy', $product) }}" method="POST"
                               onsubmit="return confirm('Delete {{ $product->name }}? This cannot be undone.')">
                             @csrf
@@ -91,5 +86,4 @@
         </tbody>
     </table>
 </div>
-
 @endsection
