@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="bg-[#f5f2ed] min-h-screen overflow-visible">
@@ -126,9 +127,9 @@
         @endphp
         @foreach($categories as $cat)
         <div class="relative rounded-2xl overflow-hidden shadow-lg w-full mx-auto cursor-pointer group">
-            <img src="{{ asset('images/' . $cat['image']) }}"
-                 class="w-full h-[400px] sm:h-[300px] md:h-[350px] lg:h-auto object-cover rounded-2xl
-                        transition-transform duration-1000 ease-out group-hover:scale-105" />
+           <img src="{{ asset('images/' . $cat['image']) }}"
+     class="w-full h-[400px] sm:h-[300px] md:h-[350px] lg:h-auto object-contain rounded-2xl
+            transition-transform duration-1000 ease-out group-hover:scale-105" />
             <h1 class="absolute inset-0 flex items-center justify-center
                        text-white text-4xl bg-black/10 font-light font-serif pointer-events-none">
                 {{ $cat['title'] }}

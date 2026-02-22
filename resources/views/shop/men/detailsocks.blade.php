@@ -1,5 +1,7 @@
 <x-layouts>
 
+
+
 {{-- Safe decode color_variants regardless of DB format --}}
 @php
     $colorVariants = $product->color_variants;
@@ -45,14 +47,14 @@
   }
   .img-top-row img, .img-top-row .img-placeholder {
     width: 100%; 
-    height: auto; 
-    aspect-ratio: 4 / 5; /* Professional portrait crop */
-    object-fit: cover;
+    max-height: auto;  /* shorter height */
+    height: auto;        /* maintain proportion */
+    object-fit: contain; /* show full image, no cropping */
     border-radius: 16px; 
     background: #dedad4; 
     display: block;
     transition: transform 0.4s ease;
-  }
+}
   .img-top-row img:hover {
     transform: scale(1.01); /* Subtle zoom for engagement */
   }

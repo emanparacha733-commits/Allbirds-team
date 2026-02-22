@@ -1,4 +1,6 @@
 <x-layouts>
+ 
+
 
 <div class="bg-[#ece9e2] min-h-screen">
 

@@ -1,4 +1,5 @@
 <x-layouts>
+@extends('layouts.app')
 
 {{-- Safe decode color_variants regardless of DB format --}}
 @php
@@ -22,7 +23,7 @@
 <div class="max-w-8xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-8 items-start">
 
   <!-- LEFT SIDE (Images) -->
-  <div class="relative w-full flex flex-col gap-0 h-[150vh]">
+  <div class="relative w-full flex flex-col gap-0 h-[150vh] bg-transparent">
     <div class="relative w-full flex flex-col gap-0">
 
       <span class="absolute top-0 left-0 bg-gray-200 text-xs mt-30 px-3 py-1 rounded-full z-10">
@@ -287,7 +288,21 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-
+<section class="max-w-full px-6 py-8 mx-auto grid
+                grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4 justify-start">
+        <p class="text-xl text-black">Wear All Day Comfort</p>
+        <p class="text-gray-600 text-sm">Lightweight, bouncy, and wildly comfortable, our shoes make any outing feel effortless.</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4 justify-start">
+        <p class="text-xl text-black">Sustainability In Every Step</p>
+        <p class="text-gray-600 text-sm">From materials to transport, we're working to reduce our carbon footprint to near zero.</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-xl p-6 w-full flex flex-col gap-4 justify-start">
+        <p class="text-xl text-black">Materials From The Earth</p>
+        <p class="text-gray-600 text-sm">We replace petroleum-based synthetics with natural alternatives wherever we can.</p>
+    </div>
+</section>
 <!-- ── Product Details ── -->
 <div class="w-full mx-auto lg:px-16 px-4 py-8 bg-white rounded-xl shadow-md grid mt-20 lg:grid-cols-3 gap-8 items-center">
 

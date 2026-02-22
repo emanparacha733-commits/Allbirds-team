@@ -121,34 +121,47 @@ Route::post('/signin', [SigninUserController::class, 'store']);
 
 
 
-// ─── Admin Routes (using /manage prefix to avoid WAMP's reserved /admin path) ───
-Route::prefix('manage')->name('admin.')->middleware('auth:admin')->group(function () {
+/*
+|--------------------------------------------------------------------------
+| Admin Login Routes (Public)
+|--------------------------------------------------------------------------
+*/
 
-// ─── Admin ────────────────────────────────────────────
-Route::prefix('manage')->name('admin.')->group(function () {
-
-    Route::get('/',          [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/orders',    [AdminController::class, 'orders'])->name('orders.index');
-    Route::get('/customers', [AdminController::class, 'customers'])->name('customers.index');
-
-    // Resource routes for products
-    Route::resource('products', ProductController::class);
-
-});
-
-// ─── Admin Login / Logout ───
 Route::prefix('admin')->name('admin.')->group(function () {
-    // Show login form
-    Route::get('/login', [AdminController::class, 'showLoginForm'])->name('login');
 
-    // Handle login
-    Route::post('/login', [AdminController::class, 'login'])->name('login.submit');
+    Route::get('/login', [AdminController::class, 'showLoginForm'])
+        ->name('login');
 
-    // Logout (requires admin authentication)
-    Route::post('/logout', [AdminController::class, 'logout'])->name('logout')->middleware('auth:admin');
+    Route::post('/login', [AdminController::class, 'login'])
+        ->name('login.submit');
 });
 
-Route::get('/admin/email', [AdminController::class, 'showEmails'])->name('admin.email');
 
-});
+/*
+|--------------------------------------------------------------------------
+| Admin Panel Routes (Protected)
+|--------------------------------------------------------------------------
+*/
 
+Route::prefix('manage')
+    ->name('admin.')
+    ->middleware('auth:admin') // 🔐 PROTECTION HERE
+    ->group(function () {
+
+        Route::get('/', [AdminController::class, 'dashboard'])
+            ->name('dashboard');
+
+        Route::get('/orders', [AdminController::class, 'orders'])
+            ->name('orders.index');
+
+        Route::get('/customers', [AdminController::class, 'customers'])
+            ->name('customers.index');
+
+        Route::get('/email', [AdminController::class, 'showEmails'])
+            ->name('email');
+
+        Route::resource('products', ProductController::class);
+
+        Route::post('/logout', [AdminController::class, 'logout'])
+            ->name('logout');
+    });

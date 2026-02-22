@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@extends('layouts.app')
+
 
 @section('content')
 <div class="bg-[#f5f2ed] min-h-screen">

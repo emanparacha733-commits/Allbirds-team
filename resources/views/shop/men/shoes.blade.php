@@ -1,4 +1,6 @@
 <x-layouts>
+  @extends('layouts.app')
+
 
 <section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl" style="background-image: url('/images/hero1.jpeg');">
     <div class="relative z-10 max-w-7xl mx-auto h-full flex flex-col justify-between md:px-8 text-white">
@@ -113,8 +115,19 @@
                 transition-transform duration-1000 ease-out group-hover:scale-105" />
     <h1 class="absolute inset-0 flex items-center justify-center text-white text-4xl bg-black/10 font-light font-serif pointer-events-none">Shoes</h1>
     <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
-      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg flex items-center justify-center w-40 h-[5vh] hover:bg-white hover:text-black transition">Shop Men</button>
-      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg flex items-center justify-center w-40 h-[5vh] hover:bg-white hover:text-black transition">Shop Women</button>
+      <a href="{{ route('men.shoes') }}"
+   class="bg-transparent border border-white text-white rounded-2xl shadow-lg 
+          flex items-center justify-center w-40 h-[5vh] 
+          hover:bg-white hover:text-black transition">
+   Shop Men
+</a>
+
+<a href="{{ route('women.shoes') }}"
+   class="bg-transparent border border-white text-white rounded-2xl shadow-lg 
+          flex items-center justify-center w-40 h-[5vh] 
+          hover:bg-white hover:text-black transition">
+   Shop Women
+</a>
     </div>
   </div>
 
@@ -124,8 +137,19 @@
                 transition-transform duration-1000 ease-out group-hover:scale-105" />
     <h1 class="absolute inset-0 flex items-center justify-center text-white text-4xl font-light font-serif bg-black/10 pointer-events-none">Apparel</h1>
     <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
-      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg flex items-center justify-center w-40 h-[5vh] hover:bg-white hover:text-black transition">Shop Men</button>
-      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg flex items-center justify-center w-40 h-[5vh] hover:bg-white hover:text-black transition">Shop Women</button>
+  <a href="{{ route('men.apparel') }}"
+   class="bg-transparent border border-white text-white rounded-2xl shadow-lg 
+          flex items-center justify-center w-40 h-[5vh] 
+          hover:bg-white hover:text-black transition">
+   Shop Men
+</a>
+
+<a href="{{ route('women.apparel') }}"
+   class="bg-transparent border border-white text-white rounded-2xl shadow-lg 
+          flex items-center justify-center w-40 h-[5vh] 
+          hover:bg-white hover:text-black transition">
+   Shop Women
+</a>
     </div>
   </div>
 
@@ -135,8 +159,19 @@
                 transition-transform duration-1000 ease-out group-hover:scale-105" />
     <h1 class="absolute inset-0 flex items-center justify-center text-white text-4xl font-light font-serif bg-black/10 pointer-events-none">Accessories</h1>
     <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
-      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg flex items-center justify-center w-40 h-[5vh] hover:bg-white hover:text-black transition">Shop Men</button>
-      <button class="bg-transparent border border-white text-white rounded-2xl shadow-lg flex items-center justify-center w-40 h-[5vh] hover:bg-white hover:text-black transition">Shop Women</button>
+     <a href="{{ route('men.shoes') }}"
+   class="bg-transparent border border-white text-white rounded-2xl shadow-lg 
+          flex items-center justify-center w-40 h-[5vh] 
+          hover:bg-white hover:text-black transition">
+   Shop Men
+</a>
+
+<a href="{{ route('women.shoes') }}"
+   class="bg-transparent border border-white text-white rounded-2xl shadow-lg 
+          flex items-center justify-center w-40 h-[5vh] 
+          hover:bg-white hover:text-black transition">
+   Shop Women
+</a>
     </div>
   </div>
 
