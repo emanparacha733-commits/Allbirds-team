@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') | Admin Dashboard</title>
-    @vite('resources/css/app.css') <!-- Tailwind CSS -->
+    @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-100 font-sans antialiased">
 
@@ -16,23 +16,21 @@
             Admin Panel
         </div>
         <nav class="flex-1 px-4 space-y-2">
-            <a href="#" class="block py-2 px-4 rounded hover:bg-gray-100">
+            <a href="{{ route('admin.dashboard') }}" class="block py-2 px-4 rounded hover:bg-gray-100">
                 Dashboard
             </a>
-            <a href="#" class="block py-2 px-4 rounded hover:bg-gray-100">
+            <a href="{{ route('admin.products.index') }}" class="block py-2 px-4 rounded hover:bg-gray-100">
                 Products
             </a>
-            <a href="#" class="block py-2 px-4 rounded hover:bg-gray-100">
+            <a href="{{ route('admin.orders.index') }}" class="block py-2 px-4 rounded hover:bg-gray-100">
                 Orders
             </a>
             <a href="#" class="block py-2 px-4 rounded hover:bg-gray-100">
                 Reports
             </a>
-             <a href="{{ route('admin.email') }}" class="block py-2 px-4 rounded hover:bg-gray-100">
+            <a href="{{ route('admin.email') }}" class="block py-2 px-4 rounded hover:bg-gray-100">
                 Registered Users
             </a>
-
-           
         </nav>
     </aside>
 
@@ -56,7 +54,6 @@
             @yield('content')
         </main>
 
-        
     </div>
 
 </div>

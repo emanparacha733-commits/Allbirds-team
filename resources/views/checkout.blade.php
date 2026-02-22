@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,149 +38,168 @@
 </div>
 @endif
 
-<!-- Main Checkout Content - ALWAYS shows the form -->
+<!-- Error Message -->
+@if(session('error'))
+<div class="max-w-7xl mx-auto px-6 pt-4">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        {{ session('error') }}
+    </div>
+</div>
+@endif
+
+<!-- Main Checkout Content -->
 <div class="max-w-7xl mx-auto px-6 py-8">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-        <!-- LEFT: Checkout Form -->
+        <!-- LEFT: Checkout Form — THE ENTIRE FORM WRAPS EVERYTHING -->
         <div class="order-2 lg:order-1">
+            <form action="{{ route('checkout.place') }}" method="POST">
+                @csrf
 
-            <!-- Express Checkout -->
-            <div class="mb-8 bg-white p-6 rounded-lg shadow-sm">
-                <h3 class="text-gray-600 mb-4 text-center">Express checkout</h3>
-                <div class="grid grid-cols-2 gap-3">
-                    <button class="bg-[#5a31f4] text-white py-4 rounded flex items-center justify-center font-semibold hover:bg-[#4a21d4] transition">
-                        <span>shop pay</span>
-                    </button>
-                    <button class="bg-[#ffc439] text-black py-4 rounded flex items-center justify-center font-semibold hover:bg-[#edb329] transition">
-                        PayPal
-                    </button>
-                </div>
-                <div class="flex items-center gap-3 my-4">
-                    <div class="flex-1 h-px bg-gray-200"></div>
-                    <span class="text-gray-400 text-sm">OR</span>
-                    <div class="flex-1 h-px bg-gray-200"></div>
-                </div>
-            </div>
-
-            <!-- Contact -->
-            <div class="mb-6 bg-white p-6 rounded-lg shadow-sm">
-                <div class="flex justify-between items-center mb-3">
-                    <h2 class="text-xl font-semibold">Contact</h2>
-                    <a href="#" class="text-sm text-gray-600 hover:text-black">Sign in</a>
-                </div>
-                <input type="email" placeholder="Email"
-                    class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                <label class="flex items-center mt-3 text-sm">
-                    <input type="checkbox" class="mr-2 w-4 h-4" checked>
-                    <span>Email me with news and offers</span>
-                </label>
-            </div>
-
-            <!-- Delivery -->
-            <div class="mb-6 bg-white p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold mb-4">Delivery</h2>
-
-                <div class="mb-4">
-                    <select class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                        <option>United States</option>
-                    </select>
-                    <div class="text-xs text-gray-500 mt-1">Country/Region</div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <input type="text" placeholder="First name"
-                        class="border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                    <input type="text" placeholder="Last name"
-                        class="border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                </div>
-
-                <div class="mb-4">
-                    <input type="text" placeholder="Company (optional)"
-                        class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                </div>
-
-                <div class="mb-4">
-                    <input type="text" placeholder="Address"
-                        class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                </div>
-
-                <div class="grid grid-cols-3 gap-4 mb-4">
-                    <input type="text" placeholder="City"
-                        class="border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                    <select class="border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                        <option>State</option>
-                    </select>
-                    <input type="text" placeholder="ZIP code"
-                        class="border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                </div>
-
-                <div class="mb-4">
-                    <input type="tel" placeholder="Phone"
-                        class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                </div>
-
-                <label class="flex items-center text-sm">
-                    <input type="checkbox" class="mr-2 w-4 h-4">
-                    <span>Save this information for next time</span>
-                </label>
-            </div>
-
-            <!-- Payment -->
-            <div class="mb-6 bg-white p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold mb-4">Payment</h2>
-
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Card number</label>
-                        <input type="text" placeholder="1234 1234 1234 1234"
-                            class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                <!-- Express Checkout -->
+                <div class="mb-8 bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-gray-600 mb-4 text-center">Express checkout</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" class="bg-[#5a31f4] text-white py-4 rounded flex items-center justify-center font-semibold hover:bg-[#4a21d4] transition">
+                            <span>shop pay</span>
+                        </button>
+                        <button type="button" class="bg-[#ffc439] text-black py-4 rounded flex items-center justify-center font-semibold hover:bg-[#edb329] transition">
+                            PayPal
+                        </button>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Expiration date (MM / YY)</label>
-                            <input type="text" placeholder="MM / YY"
-                                class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Security code</label>
-                            <input type="text" placeholder="CVV"
-                                class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
-                        </div>
+                    <div class="flex items-center gap-3 my-4">
+                        <div class="flex-1 h-px bg-gray-200"></div>
+                        <span class="text-gray-400 text-sm">OR</span>
+                        <div class="flex-1 h-px bg-gray-200"></div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Name on card</label>
-                        <input type="text" placeholder="Full name"
-                            class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                </div>
+
+                <!-- Contact -->
+                <div class="mb-6 bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex justify-between items-center mb-3">
+                        <h2 class="text-xl font-semibold">Contact</h2>
+                        <a href="#" class="text-sm text-gray-600 hover:text-black">Sign in</a>
                     </div>
-                    <label class="flex items-center text-sm">
-                        <input type="checkbox" class="mr-2 w-4 h-4" checked>
-                        <span>Use shipping address as billing address</span>
+                    <input type="email" name="email" placeholder="Email"
+                        class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                    <label class="flex items-center mt-3 text-sm">
+                        <input type="checkbox" name="email_offers" class="mr-2 w-4 h-4" checked>
+                        <span>Email me with news and offers</span>
                     </label>
                 </div>
 
-                <div class="mt-6 pt-4 border-t border-gray-200">
-                    <p class="text-sm text-gray-500 mb-2">Other payment methods</p>
-                    <div class="flex flex-wrap gap-2">
-                        <button class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Shop Pay</button>
-                        <button class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">PayPal</button>
-                        <button class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Afterpay</button>
+                <!-- Delivery -->
+                <div class="mb-6 bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-semibold mb-4">Delivery</h2>
+
+                    <div class="mb-4">
+                        <select name="country" class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                            <option>United States</option>
+                        </select>
+                        <div class="text-xs text-gray-500 mt-1">Country/Region</div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <input type="text" name="first_name" placeholder="First name"
+                            class="border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                        <input type="text" name="last_name" placeholder="Last name"
+                            class="border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+
+                    <div class="mb-4">
+                        <input type="text" name="company" placeholder="Company (optional)"
+                            class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+
+                    <div class="mb-4">
+                        <input type="text" name="address" placeholder="Address"
+                            class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <input type="text" name="city" placeholder="City"
+                            class="border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                        <select name="state" class="border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                            <option>State</option>
+                        </select>
+                        <input type="text" name="zip" placeholder="ZIP code"
+                            class="border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+
+                    <div class="mb-4">
+                        <input type="tel" name="phone" placeholder="Phone"
+                            class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+
+                    <label class="flex items-center text-sm">
+                        <input type="checkbox" name="save_info" class="mr-2 w-4 h-4">
+                        <span>Save this information for next time</span>
+                    </label>
+                </div>
+
+                <!-- Payment -->
+                <div class="mb-6 bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-semibold mb-4">Payment</h2>
+
+                    <!-- ✅ TEST CARD BANNER -->
+                    <div class="bg-blue-50 border border-blue-200 text-blue-700 text-sm px-4 py-3 rounded mb-4">
+                        <strong>🧪 Test Mode:</strong> Use card <strong>4242 4242 4242 4242</strong>, any future expiry (e.g. 12/26), and any CVV (e.g. 123).
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Card number</label>
+                            <input type="text" name="card_number" placeholder="1234 1234 1234 1234"
+                                value="4242 4242 4242 4242"
+                                class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Expiration date (MM / YY)</label>
+                                <input type="text" name="card_expiry" placeholder="MM / YY"
+                                    value="12 / 26"
+                                    class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Security code</label>
+                                <input type="text" name="card_cvv" placeholder="CVV"
+                                    value="123"
+                                    class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Name on card</label>
+                            <input type="text" name="card_name" placeholder="Full name"
+                                class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black">
+                        </div>
+                        <label class="flex items-center text-sm">
+                            <input type="checkbox" name="billing_same" class="mr-2 w-4 h-4" checked>
+                            <span>Use shipping address as billing address</span>
+                        </label>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <p class="text-sm text-gray-500 mb-2">Other payment methods</p>
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Shop Pay</button>
+                            <button type="button" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">PayPal</button>
+                            <button type="button" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Afterpay</button>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex gap-2 text-xs text-gray-400">
+                        <span>Visa</span><span>AMEX</span><span>Mastercard</span><span>+5</span>
                     </div>
                 </div>
 
-                <div class="mt-4 flex gap-2 text-xs text-gray-400">
-                    <span>Visa</span><span>AMEX</span><span>Mastercard</span><span>+5</span>
-                </div>
-            </div>
-
-            <!-- Place Order -->
-            <form action="{{ route('checkout.place') }}" method="POST">
-                @csrf
+                <!-- Place Order Button -->
                 <button type="submit"
                     class="w-full bg-black text-white py-4 rounded font-semibold hover:bg-gray-800 transition text-lg">
                     Place Order
                 </button>
+
             </form>
+            <!-- END FORM -->
         </div>
 
         <!-- RIGHT: Order Summary -->
@@ -277,7 +294,7 @@
                     <div class="flex gap-2">
                         <input type="text" placeholder="Discount code or gift card"
                             class="flex-1 border border-gray-300 rounded px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
-                        <button class="bg-gray-200 text-gray-700 px-6 py-3 rounded text-sm font-semibold hover:bg-gray-300">
+                        <button type="button" class="bg-gray-200 text-gray-700 px-6 py-3 rounded text-sm font-semibold hover:bg-gray-300">
                             Apply
                         </button>
                     </div>

@@ -14,7 +14,7 @@ use App\Models\User;
 class AdminController extends Controller
 {
 
- // Show login form
+    // Show login form
     public function showLoginForm()
     {
         return view('layouts.admin.auth.login');
@@ -27,7 +27,7 @@ class AdminController extends Controller
             'password' => 'required',
         ]);
 
-          // Assuming only one admin
+        // Assuming only one admin
         $admin = Admin::first();
 
         if (!$admin || !Hash::check($request->password, $admin->password)) {
@@ -37,25 +37,22 @@ class AdminController extends Controller
         Auth::guard('admin')->login($admin);
 
         return redirect()->route('admin.dashboard');
-
-    
     }
 
-         public function logout(Request $request)
+    public function logout(Request $request)
     {
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('admin.login');
     }
-    
-      public function showEmails()
+
+    public function showEmails()
     {
-        $emails = User::select('email')->get(); // sirf emails
+        $emails = User::select('email')->get();
         return view('layouts.admin.email', compact('emails'));
     }
 
-    
     public function dashboard()
     {
         return view('layouts.admin.dashboard', [
@@ -63,26 +60,17 @@ class AdminController extends Controller
             'totalOrders'    => Order::count(),
             'totalRevenue'   => Order::sum('total'),
             'recentProducts' => Product::latest()->take(5)->get(),
-
         ]);
-
-        $emails = User::select('email')->get();
-
-        return view('admin.emails', compact('emails'));
-       
     }
 
     public function orders()
     {
         $orders = Order::latest()->get();
-        return view('layouts.admin.orders.index', compact('orders'));
+        return view('layouts.admin.orders', compact('orders'));
     }
 
     public function customers()
     {
         return view('layouts.admin.customers.index', ['customers' => collect()]);
     }
-
-  
-  
 }

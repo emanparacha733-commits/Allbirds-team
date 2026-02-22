@@ -566,7 +566,7 @@
             <!-- Logo -->
             <div class="flex-1">
                 <a href="/">
-                    <img src="{{ asset('images/logo-seo.jpeg') }}" alt="allbirds" class="h-15 w-auto">
+                    <img src="{{ asset('images/logo-seo.jpeg') }}" alt="allbirds" class="h-8 w-auto">
                 </a>
             </div>
 

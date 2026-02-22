@@ -24,10 +24,7 @@ class SaleController extends Controller
 
     public function category($category)
     {
-        $products = Product::where('on_sale', true)
-                           ->where('category', $category)
-                           ->latest()->get();
-        return view('shop.sale.category', compact('products', 'category'));
+        return redirect()->route('sale.index');
     }
 
     // ── Men ───────────────────────────────────────────────
@@ -68,13 +65,7 @@ class SaleController extends Controller
 
     public function menShoesCategory(Request $request, $category)
     {
-        $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'men')
-                        ->where('type', 'shoes')
-                        ->where('category', $category)
-                        ->where('on_sale', true);
-        $query = $this->applySorting($query, $sort);
-        return view('shop.sale.men-shoes-category', ['products' => $query->get(), 'category' => $category]);
+        return redirect()->route('sale.men.shoes');
     }
 
     // Men — Apparel
@@ -90,13 +81,7 @@ class SaleController extends Controller
 
     public function menApparelCategory(Request $request, $category)
     {
-        $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'men')
-                        ->where('type', 'apparel')
-                        ->where('category', $category)
-                        ->where('on_sale', true);
-        $query = $this->applySorting($query, $sort);
-        return view('shop.sale.men-apparel-category', ['products' => $query->get(), 'category' => $category]);
+        return redirect()->route('sale.men.apparel');
     }
 
     // Men — Socks
@@ -112,13 +97,7 @@ class SaleController extends Controller
 
     public function menSocksCategory(Request $request, $category)
     {
-        $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'men')
-                        ->where('type', 'socks')
-                        ->where('category', $category)
-                        ->where('on_sale', true);
-        $query = $this->applySorting($query, $sort);
-        return view('shop.sale.men-socks-category', ['products' => $query->get(), 'category' => $category]);
+        return redirect()->route('sale.men.socks');
     }
 
     // ── Women ─────────────────────────────────────────────
@@ -159,13 +138,7 @@ class SaleController extends Controller
 
     public function womenShoesCategory(Request $request, $category)
     {
-        $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'women')
-                        ->where('type', 'shoes')
-                        ->where('category', $category)
-                        ->where('on_sale', true);
-        $query = $this->applySorting($query, $sort);
-        return view('shop.sale.women-shoes-category', ['products' => $query->get(), 'category' => $category]);
+        return redirect()->route('sale.women.shoes');
     }
 
     // Women — Apparel
@@ -181,13 +154,7 @@ class SaleController extends Controller
 
     public function womenApparelCategory(Request $request, $category)
     {
-        $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'women')
-                        ->where('type', 'apparel')
-                        ->where('category', $category)
-                        ->where('on_sale', true);
-        $query = $this->applySorting($query, $sort);
-        return view('shop.sale.women-apparel-category', ['products' => $query->get(), 'category' => $category]);
+        return redirect()->route('sale.women.apparel');
     }
 
     // Women — Socks
@@ -203,13 +170,7 @@ class SaleController extends Controller
 
     public function womenSocksCategory(Request $request, $category)
     {
-        $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'women')
-                        ->where('type', 'socks')
-                        ->where('category', $category)
-                        ->where('on_sale', true);
-        $query = $this->applySorting($query, $sort);
-        return view('shop.sale.women-socks-category', ['products' => $query->get(), 'category' => $category]);
+        return redirect()->route('sale.women.socks');
     }
 
     // ── Sorting ───────────────────────────────────────────
