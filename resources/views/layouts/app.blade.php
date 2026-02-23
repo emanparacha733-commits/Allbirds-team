@@ -560,15 +560,16 @@
         <a href="/women" class="underline hover:no-underline">Shop Women</a>
     </div>
 
-    <nav class="bg-white border border-gray-100 mx-4 mt-2 rounded-2xl shadow-sm">
-    <div class="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
+    <nav class="bg-white border border-gray-100 mx-2 sm:mx-4 mt-2 rounded-2xl shadow-sm">
+    <div class="max-w-[1400px] mx-auto px-3 sm:px-6 h-16 flex items-center justify-between">
 
             <!-- Logo -->
-            <div class="flex-1">
-                <a href="/">
-                <img src="{{ asset('images/logo.png') }}" alt="allbirds" 
-     class="w-12 sm:w-10 md:w-18 lg:w-26 xl:w-34 h-auto">
-            </div>
+            <div style="width:220px; flex-shrink:0;">
+    <a href="/">
+    <img src="{{ asset('images/logo.png') }}" alt="allbirds" 
+         class="w-10 sm:w-12 md:w-20 lg:w-28 xl:w-36 h-auto">
+    </a>
+</div>
 
             <!-- Nav items -->
             <div class="flex items-center h-full relative flex-1 justify-center" id="nav-wrapper">
@@ -1047,7 +1048,7 @@
             <!-- end nav-wrapper -->
 
             <!-- Right icons -->
-            <div class="flex-1 flex items-center justify-end space-x-5 text-gray-800">
+           <div style="width:220px; flex-shrink:0; display:flex; align-items:center; justify-content:flex-end; gap:16px;" class="text-gray-800">
                 <a href="#" class="text-[12px] font-bold hover:underline">About</a>
                <a href="{{ url()->current() }}" class="text-[12px] font-bold hover:underline">ReRun</a>
                <a href="{{ route('search') }}" class="block">
