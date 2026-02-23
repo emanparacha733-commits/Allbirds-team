@@ -28,71 +28,62 @@
         </div>
         @endif
 
-        {{-- Form --}}
         <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data"
               class="bg-white shadow-lg rounded-xl p-8 space-y-6">
             @csrf
 
-            {{-- Basic Info Section --}}
+            {{-- ── Basic Info ── --}}
             <div class="space-y-6">
                 <h2 class="text-xl font-semibold text-gray-900 pb-2 border-b">Basic Information</h2>
 
-                {{-- Product Name --}}
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                        Product Name <span class="text-red-500">*</span>
-                    </label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Product Name <span class="text-red-500">*</span></label>
                     <input type="text" name="name" value="{{ old('name') }}" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                            placeholder="e.g., Men's Dasher NZ">
                 </div>
 
-                {{-- Description --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
                     <textarea name="description" rows="3"
-                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                               placeholder="Product description...">{{ old('description') }}</textarea>
                 </div>
 
-                {{-- Product Image --}}
-               {{-- Product Images --}}
-<div class="space-y-4">
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Main Image <span class="text-red-500">*</span></label>
-        <input type="file" name="image" accept="image/*" required
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg"
-               onchange="previewImage(event,'prev1')">
-        <img id="prev1" class="mt-2 rounded-lg max-h-40 hidden">
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Extra Image 2</label>
-        <input type="file" name="image_2" accept="image/*"
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg"
-               onchange="previewImage(event,'prev2')">
-        <img id="prev2" class="mt-2 rounded-lg max-h-40 hidden">
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Extra Image 3</label>
-        <input type="file" name="image_3" accept="image/*"
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg"
-               onchange="previewImage(event,'prev3')">
-        <img id="prev3" class="mt-2 rounded-lg max-h-40 hidden">
-    </div>
-</div>
+                {{-- Default fallback images --}}
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Main Image <span class="text-red-500">*</span></label>
+                        <input type="file" name="image" accept="image/*" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                               onchange="previewImage(event,'prev1')">
+                        <img id="prev1" class="mt-2 rounded-lg max-h-40 hidden">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Extra Image 2</label>
+                        <input type="file" name="image_2" accept="image/*"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                               onchange="previewImage(event,'prev2')">
+                        <img id="prev2" class="mt-2 rounded-lg max-h-40 hidden">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Extra Image 3</label>
+                        <input type="file" name="image_3" accept="image/*"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                               onchange="previewImage(event,'prev3')">
+                        <img id="prev3" class="mt-2 rounded-lg max-h-40 hidden">
+                    </div>
+                </div>
+            </div>
 
-            {{-- Category & Type Section --}}
+            {{-- ── Category & Type ── --}}
             <div class="space-y-6">
                 <h2 class="text-xl font-semibold text-gray-900 pb-2 border-b">Category & Type</h2>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {{-- Type --}}
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Type <span class="text-red-500">*</span>
-                        </label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Type <span class="text-red-500">*</span></label>
                         <select name="type" id="typeSelect" required
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                             <option value="">Select Type</option>
                             <option value="shoes"       {{ old('type') == 'shoes'       ? 'selected' : '' }}>Shoes</option>
                             <option value="socks"       {{ old('type') == 'socks'       ? 'selected' : '' }}>Socks</option>
@@ -100,28 +91,20 @@
                             <option value="accessories" {{ old('type') == 'accessories' ? 'selected' : '' }}>Accessories</option>
                         </select>
                     </div>
-
-                    {{-- Gender --}}
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Gender <span class="text-red-500">*</span>
-                        </label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Gender <span class="text-red-500">*</span></label>
                         <select name="gender" id="genderSelect" required
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                             <option value="">Select Gender</option>
                             <option value="men"    {{ old('gender') == 'men'    ? 'selected' : '' }}>Men</option>
                             <option value="women"  {{ old('gender') == 'women'  ? 'selected' : '' }}>Women</option>
                             <option value="unisex" {{ old('gender') == 'unisex' ? 'selected' : '' }}>Unisex</option>
                         </select>
                     </div>
-
-                    {{-- Category (dynamic) --}}
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Category <span class="text-red-500">*</span>
-                        </label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Category <span class="text-red-500">*</span></label>
                         <select name="category" id="categorySelect" required
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                             <option value="">Select Type & Gender First</option>
                         </select>
                         <p id="categoryHint" class="mt-1 text-xs text-gray-400">Choose a type and gender to see options</p>
@@ -129,109 +112,97 @@
                 </div>
             </div>
 
-            {{-- Sizes Section (shown only for shoes) --}}
+            {{-- ── Sizes ── --}}
             <div id="sizesSection" class="space-y-6 hidden">
                 <h2 class="text-xl font-semibold text-gray-900 pb-2 border-b">Sizes & Stock</h2>
                 <p class="text-sm text-gray-500">Enter the stock quantity for each size. Leave blank or 0 for unavailable sizes.</p>
-                <div id="sizesGrid" class="grid grid-cols-4 sm:grid-cols-6 gap-3">
-                    {{-- Dynamically populated by JS --}}
-                </div>
+                <div id="sizesGrid" class="grid grid-cols-4 sm:grid-cols-6 gap-3"></div>
             </div>
 
-            {{-- Color Section --}}
+            {{-- ── Color Variants — 2 images each ── --}}
             <div class="space-y-4">
-    <h2 class="text-xl font-semibold text-gray-900 pb-2 border-b">Color Variants</h2>
-    <p class="text-sm text-gray-500">Add up to 4 color options. Each can have its own image.</p>
+                <h2 class="text-xl font-semibold text-gray-900 pb-2 border-b">Color Variants</h2>
+                <p class="text-sm text-gray-500">Add up to 4 color options. Each color has 2 image slots: main view + side view.</p>
 
-    <div id="colorVariants" class="space-y-3">
-        <div class="grid grid-cols-3 gap-3 p-4 border border-gray-200 rounded-lg">
-            <div>
-                <label class="text-xs font-medium text-gray-600">Color Name</label>
-                <input type="text" name="variants[0][color_name]"
-                       class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg text-sm"
-                       placeholder="e.g. Natural White">
-            </div>
-            <div>
-                <label class="text-xs font-medium text-gray-600">Color Code</label>
-                <input type="color" name="variants[0][color_hex]" value="#000000"
-                       class="w-full mt-1 h-10 border border-gray-300 rounded-lg cursor-pointer">
-            </div>
-            <div>
-                <label class="text-xs font-medium text-gray-600">Color Image</label>
-                <input type="file" name="variants[0][image]" accept="image/*"
-                       class="w-full mt-1 text-sm">
-            </div>
-        </div>
-    </div>
-
-    <button type="button" onclick="addVariant()"
-            class="text-sm text-blue-600 underline hover:text-blue-800">
-        + Add Another Color (max 4)
-    </button>
-</div>
-
-                    {{-- Color Hex --}}
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Color Code</label>
-                        <div class="flex gap-2">
-                            <input type="color" name="color_hex" id="colorPicker" value="{{ old('color_hex', '#000000') }}"
-                                   class="h-10 w-20 border border-gray-300 rounded-lg cursor-pointer">
-                            <input type="text" id="colorHexText" value="{{ old('color_hex', '#000000') }}"
-                                   class="flex-1 px-4 py-2 border border-gray-300 rounded-lg"
-                                   placeholder="#000000" readonly>
+                <div id="colorVariants" class="space-y-4">
+                    {{-- First variant row --}}
+                    <div class="variant-row border border-gray-200 rounded-xl p-4 relative" data-index="0">
+                        <p class="text-xs font-semibold text-gray-500 mb-3">VARIANT 1</p>
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div>
+                                <label class="text-xs font-medium text-gray-600">Color Name</label>
+                                <input type="text" name="variants[0][color_name]"
+                                       class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                                       placeholder="e.g. Natural White">
+                            </div>
+                            <div>
+                                <label class="text-xs font-medium text-gray-600">Color Code</label>
+                                <input type="color" name="variants[0][color_hex]" value="#000000"
+                                       class="w-full mt-1 h-10 border border-gray-300 rounded-lg cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-xs font-medium text-gray-600">Image 1 — Main View</label>
+                                <img id="variantPreview_0_1" class="mt-1 h-28 w-full object-cover rounded-lg border border-gray-200 mb-2 hidden">
+                                <input type="file" name="variants[0][image]" accept="image/*"
+                                       class="w-full mt-1 text-sm" onchange="previewVariantImage(event,0,1)">
+                            </div>
+                            <div>
+                                <label class="text-xs font-medium text-gray-600">Image 2 — Side View</label>
+                                <img id="variantPreview_0_2" class="mt-1 h-28 w-full object-cover rounded-lg border border-gray-200 mb-2 hidden">
+                                <input type="file" name="variants[0][image_2]" accept="image/*"
+                                       class="w-full mt-1 text-sm" onchange="previewVariantImage(event,0,2)">
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <button type="button" onclick="addVariant()"
+                        class="text-sm text-blue-600 underline hover:text-blue-800">
+                    + Add Another Color (max 4)
+                </button>
             </div>
 
-            {{-- Pricing Section --}}
+            {{-- ── Pricing ── --}}
             <div class="space-y-6">
                 <h2 class="text-xl font-semibold text-gray-900 pb-2 border-b">Pricing</h2>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {{-- Regular Price --}}
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Regular Price <span class="text-red-500">*</span>
-                        </label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Regular Price <span class="text-red-500">*</span></label>
                         <div class="relative">
                             <span class="absolute left-4 top-2 text-gray-500">$</span>
                             <input type="number" name="price" value="{{ old('price') }}" step="0.01" required
-                                   class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                   class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                                    placeholder="0.00">
                         </div>
                     </div>
-
-                    {{-- Sale Price --}}
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Sale Price (Optional)</label>
                         <div class="relative">
                             <span class="absolute left-4 top-2 text-gray-500">$</span>
                             <input type="number" name="sale_price" value="{{ old('sale_price') }}" step="0.01"
-                                   class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                   class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                                    placeholder="0.00">
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Product Flags --}}
+            {{-- ── Product Flags ── --}}
             <div class="space-y-6">
                 <h2 class="text-xl font-semibold text-gray-900 pb-2 border-b">Product Flags</h2>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <label class="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                         <input type="checkbox" name="is_new" value="1" {{ old('is_new') ? 'checked' : '' }}
                                class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                         <span class="text-sm font-medium text-gray-700">Mark as New Arrival</span>
                     </label>
-
                     <label class="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                         <input type="checkbox" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}
                                class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                         <span class="text-sm font-medium text-gray-700">Featured Product</span>
                     </label>
-
                     <label class="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                         <input type="checkbox" name="on_sale" value="1" {{ old('on_sale') ? 'checked' : '' }}
                                class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
@@ -240,13 +211,13 @@
                 </div>
             </div>
 
-            {{-- Submit Buttons --}}
+            {{-- ── Submit ── --}}
             <div class="flex gap-4 pt-6 border-t">
                 <button type="submit"
                         class="flex-1 bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition">
                     Add Product
                 </button>
-                <a href="{{ route('products.index') }}"
+                <a href="{{ route('admin.products.index') }}"
                    class="px-6 py-3 border border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition">
                     Cancel
                 </a>
@@ -257,228 +228,169 @@
 </div>
 
 <script>
-    // ─── Category data ───────────────────────────────────────────────────────────
-    const categoryData = {
-        shoes: {
-            men:    ['Sneakers', 'Slip-Ons', 'Slippers', 'All Weather', 'Sandals'],
-            women:  ['Sneakers', 'Slip-Ons', 'Flats', 'Sandals', 'Slippers'],
-            unisex: ['Sneakers', 'Slip-Ons', 'Sandals', 'Slippers', 'All Weather'],
-        },
-        socks: {
-            men:    ['Ankle', 'Crew', 'No-Show', 'Knee High', 'Quarter'],
-            women:  ['Ankle', 'Crew', 'No-Show', 'Knee High', 'Quarter'],
-            unisex: ['Ankle', 'Crew', 'No-Show', 'Knee High'],
-        },
-        apparel: {
-            men:    ['T-Shirts', 'Shorts', 'Jackets', 'Hoodies', 'Pants'],
-            women:  ['T-Shirts', 'Leggings', 'Jackets', 'Hoodies', 'Shorts'],
-            unisex: ['T-Shirts', 'Jackets', 'Hoodies'],
-        },
-        accessories: {
-            men:    ['Hats', 'Bags', 'Insoles', 'Laces', 'Socks'],
-            women:  ['Hats', 'Bags', 'Insoles', 'Laces'],
-            unisex: ['Hats', 'Bags', 'Insoles', 'Laces'],
-        },
-    };
+// ── Category data ─────────────────────────────────────────────────────────────
+const categoryData = {
+    shoes:       { men: ['Sneakers','Slip-Ons','Slippers','All Weather','Sandals'], women: ['Sneakers','Slip-Ons','Flats','Sandals','Slippers'], unisex: ['Sneakers','Slip-Ons','Sandals','Slippers','All Weather'] },
+    socks:       { men: ['Ankle','Crew','No-Show','Knee High','Quarter'], women: ['Ankle','Crew','No-Show','Knee High','Quarter'], unisex: ['Ankle','Crew','No-Show','Knee High'] },
+    apparel:     { men: ['T-Shirts','Shorts','Jackets','Hoodies','Pants'], women: ['T-Shirts','Leggings','Jackets','Hoodies','Shorts'], unisex: ['T-Shirts','Jackets','Hoodies'] },
+    accessories: { men: ['Hats','Bags','Insoles','Laces','Socks'], women: ['Hats','Bags','Insoles','Laces'], unisex: ['Hats','Bags','Insoles','Laces'] },
+};
+const shoeSizes = {
+    men:    ['7','7.5','8','8.5','9','9.5','10','10.5','11','11.5','12','13'],
+    women:  ['5','5.5','6','6.5','7','7.5','8','8.5','9','9.5','10','11'],
+    unisex: ['5','5.5','6','6.5','7','7.5','8','8.5','9','9.5','10','10.5','11','12'],
+};
+const sockSizes   = ['XS','S','M','L','XL','XXL'];
+const oldCategory = "{{ old('category') }}";
+const oldGender   = "{{ old('gender') }}";
+const oldType     = "{{ old('type') }}";
 
-    // ─── Shoe sizes ───────────────────────────────────────────────────────────────
-    const shoeSizes = {
-        men:    ['7','7.5','8','8.5','9','9.5','10','10.5','11','11.5','12','13'],
-        women:  ['5','5.5','6','6.5','7','7.5','8','8.5','9','9.5','10','11'],
-        unisex: ['5','5.5','6','6.5','7','7.5','8','8.5','9','9.5','10','10.5','11','12'],
-    };
+const typeSelect     = document.getElementById('typeSelect');
+const genderSelect   = document.getElementById('genderSelect');
+const categorySelect = document.getElementById('categorySelect');
+const sizesSection   = document.getElementById('sizesSection');
+const sizesGrid      = document.getElementById('sizesGrid');
+const categoryHint   = document.getElementById('categoryHint');
 
-    const oldCategory = "{{ old('category') }}";
-    const oldGender   = "{{ old('gender') }}";
-    const oldType     = "{{ old('type') }}";
-
-    const typeSelect     = document.getElementById('typeSelect');
-    const genderSelect   = document.getElementById('genderSelect');
-    const categorySelect = document.getElementById('categorySelect');
-    const sizesSection   = document.getElementById('sizesSection');
-    const sizesGrid      = document.getElementById('sizesGrid');
-    const categoryHint   = document.getElementById('categoryHint');
-
-    function updateCategories() {
-        const type   = typeSelect.value;
-        const gender = genderSelect.value;
-
-        categorySelect.innerHTML = '<option value="">Select Category</option>';
-
-        if (type && gender && categoryData[type]?.[gender]) {
-            categoryData[type][gender].forEach(cat => {
-                const val = cat.toLowerCase().replace(/ /g, '-');
-                const opt = document.createElement('option');
-                opt.value       = val;
-                opt.textContent = cat;
-                if (oldCategory && val === oldCategory) opt.selected = true;
-                categorySelect.appendChild(opt);
-            });
-            categoryHint.textContent = `${categoryData[type][gender].length} categories available`;
-        } else {
-            categoryHint.textContent = 'Choose a type and gender to see options';
-        }
-
-        updateSizes();
+function updateCategories() {
+    const type = typeSelect.value, gender = genderSelect.value;
+    categorySelect.innerHTML = '<option value="">Select Category</option>';
+    if (type && gender && categoryData[type]?.[gender]) {
+        categoryData[type][gender].forEach(cat => {
+            const val = cat.toLowerCase().replace(/ /g, '-');
+            const opt = document.createElement('option');
+            opt.value = val; opt.textContent = cat;
+            if (oldCategory && val === oldCategory) opt.selected = true;
+            categorySelect.appendChild(opt);
+        });
+        categoryHint.textContent = `${categoryData[type][gender].length} categories available`;
+    } else {
+        categoryHint.textContent = 'Choose a type and gender to see options';
     }
+    updateSizes();
+}
+
 function updateSizes() {
-    const type   = typeSelect.value;
-    const gender = genderSelect.value;
-
+    const type = typeSelect.value, gender = genderSelect.value;
     sizesGrid.innerHTML = '';
-
-    // Socks sizes
-    const sockSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-
     if (type === 'shoes' && gender && shoeSizes[gender]) {
         sizesSection.classList.remove('hidden');
         shoeSizes[gender].forEach(size => {
-            const existing = (typeof currentSizes !== 'undefined') ? (currentSizes[size] ?? 0) : 0;
-            const div = document.createElement('div');
-            div.className = 'flex flex-col items-center gap-1';
-            div.innerHTML = `
-                <label class="text-xs font-semibold text-gray-600">US ${size}</label>
-                <input type="number" name="sizes[${size}]" min="0" value="${existing}"
-                       class="w-full text-center px-2 py-1.5 border border-gray-300 rounded-lg text-sm">
-            `;
-            sizesGrid.appendChild(div);
+            sizesGrid.appendChild(makeSizeInput(`US ${size}`, size, 0));
         });
-
     } else if (type === 'socks' || type === 'apparel') {
         sizesSection.classList.remove('hidden');
-        sockSizes.forEach(size => {
-            const existing = (typeof currentSizes !== 'undefined') ? (currentSizes[size] ?? 0) : 0;
-            const div = document.createElement('div');
-            div.className = 'flex flex-col items-center gap-1';
-            div.innerHTML = `
-                <label class="text-xs font-semibold text-gray-600">${size}</label>
-                <input type="number" name="sizes[${size}]" min="0" value="${existing}"
-                       class="w-full text-center px-2 py-1.5 border border-gray-300 rounded-lg text-sm">
-            `;
-            sizesGrid.appendChild(div);
-        });
-
+        sockSizes.forEach(size => sizesGrid.appendChild(makeSizeInput(size, size, 0)));
     } else {
         sizesSection.classList.add('hidden');
     }
 }
 
-    typeSelect.addEventListener('change', updateCategories);
-    genderSelect.addEventListener('change', updateCategories);
+function makeSizeInput(label, name, val) {
+    const d = document.createElement('div');
+    d.className = 'flex flex-col items-center gap-1';
+    d.innerHTML = `<label class="text-xs font-semibold text-gray-600">${label}</label>
+        <input type="number" name="sizes[${name}]" min="0" value="${val}"
+               class="w-full text-center px-2 py-1.5 border border-gray-300 rounded-lg text-sm">`;
+    return d;
+}
 
-    // Color picker sync
-    document.getElementById('colorPicker').addEventListener('input', function () {
-        document.getElementById('colorHexText').value = this.value;
-    });
+typeSelect.addEventListener('change', updateCategories);
+genderSelect.addEventListener('change', updateCategories);
 
-    // Image preview
-   function previewImage(event, previewId) {
+// ── Image previews ────────────────────────────────────────────────────────────
+function previewImage(event, previewId) {
     const preview = document.getElementById(previewId);
     const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-            preview.src = e.target.result;
-            preview.classList.remove('hidden');
-        };
-        reader.readAsDataURL(file);
-    }
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => { preview.src = e.target.result; preview.classList.remove('hidden'); };
+    reader.readAsDataURL(file);
 }
 
-let variantCount = 1;
+// slot = 1 (main view) or 2 (side view)
+function previewVariantImage(event, index, slot) {
+    const el = document.getElementById(`variantPreview_${index}_${slot}`);
+    if (!el) return;
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => { el.src = e.target.result; el.classList.remove('hidden'); };
+    reader.readAsDataURL(file);
+}
+
+// ── Add / Remove variant rows ─────────────────────────────────────────────────
 function addVariant() {
-    if (variantCount >= 4) {
-        alert('Maximum 4 color variants allowed.');
-        return;
-    }
+    const rows = document.querySelectorAll('.variant-row');
+    if (rows.length >= 4) { alert('Maximum 4 color variants allowed.'); return; }
+    const idx = rows.length;
     const container = document.getElementById('colorVariants');
     const div = document.createElement('div');
-    div.className = 'grid grid-cols-3 gap-3 p-4 border border-gray-200 rounded-lg';
+    div.className = 'variant-row border border-gray-200 rounded-xl p-4 relative';
+    div.dataset.index = idx;
     div.innerHTML = `
-        <div>
-            <label class="text-xs font-medium text-gray-600">Color Name</label>
-            <input type="text" name="variants[${variantCount}][color_name]"
-                   class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg text-sm"
-                   placeholder="e.g. Storm Blue">
+        <p class="text-xs font-semibold text-gray-500 mb-3">VARIANT ${idx + 1}</p>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+            <div>
+                <label class="text-xs font-medium text-gray-600">Color Name</label>
+                <input type="text" name="variants[${idx}][color_name]"
+                       class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                       placeholder="e.g. Storm Blue">
+            </div>
+            <div>
+                <label class="text-xs font-medium text-gray-600">Color Code</label>
+                <input type="color" name="variants[${idx}][color_hex]" value="#000000"
+                       class="w-full mt-1 h-10 border border-gray-300 rounded-lg cursor-pointer">
+            </div>
         </div>
-        <div>
-            <label class="text-xs font-medium text-gray-600">Color Code</label>
-            <input type="color" name="variants[${variantCount}][color_hex]" value="#000000"
-                   class="w-full mt-1 h-10 border border-gray-300 rounded-lg cursor-pointer">
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="text-xs font-medium text-gray-600">Image 1 — Main View</label>
+                <img id="variantPreview_${idx}_1" class="mt-1 h-28 w-full object-cover rounded-lg border border-gray-200 mb-2 hidden">
+                <input type="file" name="variants[${idx}][image]" accept="image/*"
+                       class="w-full mt-1 text-sm" onchange="previewVariantImage(event,${idx},1)">
+            </div>
+            <div>
+                <label class="text-xs font-medium text-gray-600">Image 2 — Side View</label>
+                <img id="variantPreview_${idx}_2" class="mt-1 h-28 w-full object-cover rounded-lg border border-gray-200 mb-2 hidden">
+                <input type="file" name="variants[${idx}][image_2]" accept="image/*"
+                       class="w-full mt-1 text-sm" onchange="previewVariantImage(event,${idx},2)">
+            </div>
         </div>
-        <div>
-            <label class="text-xs font-medium text-gray-600">Color Image</label>
-            <input type="file" name="variants[${variantCount}][image]" accept="image/*"
-                   class="w-full mt-1 text-sm">
-        </div>
+        <button type="button" onclick="removeVariant(this)"
+                class="absolute top-3 right-3 text-red-400 hover:text-red-600 text-xs font-medium">✕ Remove</button>
     `;
     container.appendChild(div);
-    variantCount++;
 }
 
-    // Restore old() values on validation error
-    window.addEventListener('DOMContentLoaded', () => {
-        if (oldType) {
-            typeSelect.value = oldType;
-            if (oldGender) {
-                genderSelect.value = oldGender;
-            }
-            updateCategories();
-        }
+function removeVariant(btn) {
+    btn.closest('.variant-row').remove();
+    document.querySelectorAll('.variant-row').forEach((row, i) => {
+        row.dataset.index = i;
+        row.querySelector('p').textContent = `VARIANT ${i + 1}`;
+        row.querySelectorAll('[name]').forEach(el => {
+            el.name = el.name.replace(/variants\[\d+\]/, `variants[${i}]`);
+        });
+        row.querySelectorAll('[id^="variantPreview_"]').forEach(img => {
+            const slot = img.id.split('_').pop();
+            img.id = `variantPreview_${i}_${slot}`;
+        });
+        row.querySelectorAll('input[type="file"]').forEach((f, fi) => {
+            f.setAttribute('onchange', `previewVariantImage(event,${i},${fi + 1})`);
+        });
+        const removeBtn = row.querySelector('button[onclick^="removeVariant"]');
+        if (removeBtn) removeBtn.style.display = i === 0 ? 'none' : '';
     });
+}
 
-
-    // Update default main image variant when user uploads main image
-document.querySelector('input[name="image"]').addEventListener('change', function(e){
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(ev){
-        // Update preview
-        const preview = document.getElementById('prev1');
-        preview.src = ev.target.result;
-        preview.classList.remove('hidden');
-
-        // Update hidden default variant
-        document.getElementById('defaultMainVariantImage').value = ev.target.result;
-    };
-    reader.readAsDataURL(file);
+// ── Restore old() on validation error ────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+    if (oldType) {
+        typeSelect.value = oldType;
+        if (oldGender) genderSelect.value = oldGender;
+        updateCategories();
+    }
 });
-
-// Include first main image as color variant in the selectColor logic
-window.selectColor = function(name, images) {
-    const mainVariantImage = document.getElementById('defaultMainVariantImage').value;
-    const allImages = [mainVariantImage, ...images]; // first main image + other color images
-
-    const validImages = allImages.filter(src => src && src.length > 0);
-    if (!validImages.length) return;
-
-    // Update main image
-    const main = document.getElementById('mainImage');
-    main.src = validImages[0];
-
-    // Clear thumbnails container
-    const thumbsContainer = document.getElementById('thumbnails');
-    thumbsContainer.innerHTML = '';
-
-    // Add thumbnails dynamically
-    validImages.forEach((src, index) => {
-        const img = document.createElement('img');
-        img.src = src;
-        img.className = 'thumb-img w-full h-[120px] object-contain rounded-lg cursor-pointer bg-gray-50 border-transparent transition';
-        if (index === 0) img.classList.add('border-black'); // active
-        img.addEventListener('click', () => setMain(img));
-        thumbsContainer.appendChild(img);
-    });
-
-    // Update color label
-    const colorLabel = document.getElementById('colorLabel');
-    if (colorLabel) colorLabel.textContent = name;
-};
-
-
 </script>
-
 
 @endsection

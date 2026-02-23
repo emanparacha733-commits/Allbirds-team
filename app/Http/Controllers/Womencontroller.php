@@ -50,7 +50,7 @@ class WomenController extends Controller
 
     public function apparelCategory(Request $request, $category)
     {
-        $query = Product::where('gender', 'women')->where('type', 'apparel');
+        Product::forGender('women')->where('type', 'apparel');
 
         if ($category !== 'all-apparel') {
             $query->where('category', $category);
@@ -67,7 +67,7 @@ class WomenController extends Controller
     public function socks(Request $request)
     {
         $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'women')->where('type', 'socks');
+        $query = Product::forGender('women')->where('type', 'socks');
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
@@ -77,7 +77,7 @@ class WomenController extends Controller
     public function socksCategory(Request $request, $category)
     {
         $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'women')
+        forGender('women')
                         ->where('type', 'socks')
                         ->where('category', $category);
         $query = $this->applySorting($query, $sort);

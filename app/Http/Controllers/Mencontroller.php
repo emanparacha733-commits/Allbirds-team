@@ -31,7 +31,7 @@ class MenController extends Controller
     public function apparel(Request $request)
     {
         $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'men')->where('type', 'apparel');
+        $query = Product::where('men')->where('type', 'apparel');
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
@@ -50,7 +50,7 @@ class MenController extends Controller
 
     public function apparelCategory(Request $request, $category)
     {
-        $query = Product::where('gender', 'men')->where('type', 'apparel');
+        $query = Product::where('men')->where('type', 'apparel');
 
         if ($category !== 'all-apparel') {
             $query->where('category', $category);
@@ -67,7 +67,7 @@ class MenController extends Controller
     public function socks(Request $request)
     {
         $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'men')->where('type', 'socks');
+        $query = Product::where( 'men')->where('type', 'socks');
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
@@ -77,7 +77,7 @@ class MenController extends Controller
     public function socksCategory(Request $request, $category)
     {
         $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'men')
+        $query = Product::where( 'men')
                         ->where('type', 'socks')
                         ->where('category', $category);
         $query = $this->applySorting($query, $sort);

@@ -30,7 +30,12 @@
                     <p class="font-medium text-gray-900">{{ $order->customer_name ?? 'Guest' }}</p>
                     <p class="text-xs text-gray-400">{{ $order->customer_email ?? '' }}</p>
                 </td>
-                <td class="px-6 py-4 text-gray-500">{{ $order->items_count ?? '—' }} items</td>
+               <td class="px-6 py-4 text-gray-500">
+    {{ $order->items->count() }} items
+    <div class="text-xs text-gray-400">
+        {{ $order->items->map(fn($i) => $i->product->name ?? 'Unknown')->join(', ') }}
+    </div>
+</td>
                 <td class="px-6 py-4 font-medium">${{ number_format($order->total ?? 0, 0) }}</td>
                 <td class="px-6 py-4">
                     <span class="text-xs px-2 py-1 rounded-full

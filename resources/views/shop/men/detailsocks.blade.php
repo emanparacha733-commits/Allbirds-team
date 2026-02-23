@@ -213,15 +213,17 @@
     <div class="img-top-row">
       <img id="mainImage" src="{{ $product->image_url }}" alt="{{ $product->name }}">
 
-      {{-- FIX: Only show image_2 if it exists AND is a valid sock image (not a shoe/other product) --}}
-      @if($product->image_2 && $product->image_2 !== $product->image)
-        <img src="{{ asset('storage/' . $product->image_2) }}" alt="{{ $product->name }} view 2"
-             onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'>No second image available</div>'">
-      @else
-        <div class="img-placeholder">
-          <img src="{{ $product->image_url }}" alt="{{ $product->name }} alternate view" style="opacity:0.6;">
-        </div>
-      @endif
+      {{-- FIX: wrapped in secondImageSlot so JS can replace contents on color switch --}}
+      <div id="secondImageSlot">
+        @if($product->image_2 && $product->image_2 !== $product->image)
+          <img id="secondImage" src="{{ asset('storage/' . $product->image_2) }}" alt="{{ $product->name }} view 2"
+               onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'>No second image available</div>'">
+        @else
+          <div class="img-placeholder">
+            <img id="secondImage" src="{{ $product->image_url }}" alt="{{ $product->name }} alternate view" style="opacity:0.6;">
+          </div>
+        @endif
+      </div>
     </div>
   </div>
 
@@ -256,19 +258,22 @@
       @if(!empty($colorVariants))
         @foreach($colorVariants as $i => $variant)
           @php
-            $imgUrl    = !empty($variant['image']) ? asset('storage/'.$variant['image']) : '';
-            $colorName = $variant['color_name'] ?? '';
-            $colorHex  = $variant['color_hex'] ?? '#000';
+            $img1 = !empty($variant['image'])   ? asset('storage/'.$variant['image'])   : '';
+            $img2 = !empty($variant['image_2']) ? asset('storage/'.$variant['image_2']) : '';
           @endphp
           <div class="swatch-outer {{ $i === 0 ? 'active' : '' }}"
-               data-color-name="{{ $colorName }}"
-               data-img-src="{{ $imgUrl }}"
-               title="{{ $colorName }}">
-            <span class="swatch-inner" style="background-color: {{ $colorHex }};"></span>
+               data-color-name="{{ $variant['color_name'] ?? '' }}"
+               data-img1="{{ $img1 }}"
+data-img2="{{ $img2 }}"
+               title="{{ $variant['color_name'] ?? '' }}">
+            <span class="swatch-inner" style="background-color: {{ $variant['color_hex'] ?? '#000' }};"></span>
           </div>
         @endforeach
       @elseif($product->color_hex)
-        <div class="swatch-outer active" data-color-name="{{ $product->color_name ?? '' }}" data-img-src="">
+        <div class="swatch-outer active"
+             data-color-name="{{ $product->color_name ?? '' }}"
+             data-img-1="{{ $product->image_url }}"
+             data-img-2="{{ $product->image_2 ? asset('storage/'.$product->image_2) : $product->image_url }}">
           <span class="swatch-inner" style="background-color: {{ $product->color_hex }};"></span>
         </div>
       @endif
@@ -597,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function () {
     label.textContent  = hidden ? 'Hide technical details' : 'View technical details';
   };
 
-  /* Color swatches — updates mainImage AND whyCircleImg */
+  /* Swatch click — updates both main image and second image slot */
   const swatchesRow = document.getElementById('swatchesRow');
   if (swatchesRow) {
     swatchesRow.addEventListener('click', function(e) {
@@ -605,16 +610,27 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!outer) return;
       swatchesRow.querySelectorAll('.swatch-outer').forEach(s => s.classList.remove('active'));
       outer.classList.add('active');
-      const name   = outer.dataset.colorName || '';
-      const imgSrc = outer.dataset.imgSrc    || '';
+
+      const name = outer.dataset.colorName || '';
+      const img1 = outer.dataset.img1 || '';
+      const img2 = outer.dataset.img2 || '';
+
       document.getElementById('colorLabel').textContent = name;
-      if (imgSrc) {
-        document.getElementById('mainImage').src = imgSrc;
+
+      if (img1) {
+        document.getElementById('mainImage').src = img1;
         const circleImg = document.getElementById('whyCircleImg');
         if (circleImg) {
           circleImg.style.opacity = '0';
-          setTimeout(() => { circleImg.src = imgSrc; circleImg.style.opacity = '1'; }, 220);
+          setTimeout(() => { circleImg.src = img1; circleImg.style.opacity = '1'; }, 220);
         }
+      }
+
+      /* FIX: replace entire slot so placeholder div never blocks the image */
+      const slot = document.getElementById('secondImageSlot');
+      if (slot) {
+        const src = img2 || img1;
+        slot.innerHTML = `<img id="secondImage" src="${src}" alt="${name}" style="width:100%;height:100%;min-height:480px;object-fit:contain;border-radius:16px;background:#dedad4;display:block;">`;
       }
     });
   }
@@ -652,12 +668,13 @@ document.addEventListener("DOMContentLoaded", function () {
       selectBtn.textContent = `ADD TO CART - $${{ $displayPriceFormatted }}`;
     });
   }
+  if (selectBtn) {
   selectBtn.addEventListener('click', function() {
     if (!selectedSize) return;
     document.getElementById('formSize').value = selectedSize;
     document.getElementById('addToCartForm').submit();
   });
-
+}
   /* Fit Guide Modal */
   const openBtn = document.getElementById('openFitGuide');
   const closeBtn = document.getElementById('closeFitGuide');
@@ -698,7 +715,6 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener('load', placeBalls);
   window.addEventListener('resize', placeBalls);
 
-});
-</script>
+});</script>
 
 </x-layouts>

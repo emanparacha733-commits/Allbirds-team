@@ -148,9 +148,12 @@ class Product extends Model
     }
 
     public function scopeForGender($query, $gender)
-    {
-        return $query->where('gender', $gender);
-    }
+{
+    return $query->where(function ($q) use ($gender) {
+        $q->where('gender', $gender)
+          ->orWhere('gender', 'unisex');
+    });
+}
 
     public function scopeFeatured($query)
     {

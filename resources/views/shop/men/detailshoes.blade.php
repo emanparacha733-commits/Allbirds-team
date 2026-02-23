@@ -120,7 +120,12 @@
       @if(!empty($colorVariants))
         @foreach($colorVariants as $variant)
         <div class="p-[3px] rounded-full border border-black cursor-pointer hover:scale-110 transition"
-             onclick="selectColor('{{ $variant['color_name'] ?? '' }}', '{{ !empty($variant['image']) ? asset('storage/'.$variant['image']) : '' }}')"
+            onclick="selectColor(
+    '{{ $variant['color_name'] ?? '' }}',
+    '{{ !empty($variant['image']) ? asset('storage/'.$variant['image']) : '' }}',
+    '{{ !empty($variant['image_2']) ? asset('storage/'.$variant['image_2']) : '' }}',
+    '{{ !empty($variant['image_3']) ? asset('storage/'.$variant['image_3']) : '' }}'
+)" onclick="selectColor('{{ $variant['color_name'] ?? '' }}', '{{ !empty($variant['image']) ? asset('storage/'.$variant['image']) : '' }}')"
              title="{{ $variant['color_name'] ?? '' }}">
           <div class="w-8 h-8 rounded-full border border-gray-300"
                style="background-color: {{ $variant['color_hex'] ?? '#000' }}"></div>
@@ -192,10 +197,26 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   /* ── Color ── */
-  window.selectColor = function(name, imgSrc) {
+window.selectColor = function(name, img1, img2, img3) {
+
     document.getElementById('colorLabel').textContent = name;
-    if (imgSrc) setMainSrc(imgSrc);
-  };
+
+    const images = [img1, img2, img3].filter(Boolean);
+
+    const mainImage = document.getElementById('mainImage');
+    const thumbs = document.querySelectorAll('.product-dynamic-img');
+
+    if (images.length > 0) {
+        mainImage.src = images[0];
+
+        thumbs.forEach((img, index) => {
+            if (images[index]) {
+                img.src = images[index];
+            }
+        });
+    }
+
+};
 
   /* ── Tabs ── */
   const tabs        = document.querySelectorAll('.tab');

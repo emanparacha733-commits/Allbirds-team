@@ -65,7 +65,7 @@ class AdminController extends Controller
 
     public function orders()
     {
-        $orders = Order::latest()->get();
+        $orders = Order::with('items.product')->latest()->get(); // ✅ fixed
         return view('layouts.admin.orders', compact('orders'));
     }
 

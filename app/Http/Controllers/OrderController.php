@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\OrderItem;
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        $orders = Order::with('items.product')->latest()->get();
+        return view('admin.orders', compact('orders'));
+    }
+
     public function place(Request $request)
     {
         $cart = session('cart', []);
@@ -18,13 +25,23 @@ class OrderController extends Controller
         $subtotal = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
         $total = $subtotal >= 150 ? $subtotal * 0.7 : $subtotal;
 
-        Order::create([
+        // ✅ Create the order
+        $order = Order::create([
             'customer_name'  => $request->first_name . ' ' . $request->last_name,
             'customer_email' => $request->email,
-            'items_count'    => collect($cart)->sum('quantity'),
             'total'          => $total,
             'status'         => 'pending',
         ]);
+
+        // ✅ Save each cart item linked to the order
+        foreach ($cart as $productId => $item) {
+            OrderItem::create([
+                'order_id'   => $order->id,
+                'product_id' => $productId,
+                'quantity'   => $item['quantity'],
+                'price'      => $item['price'],
+            ]);
+        }
 
         session()->forget('cart');
         session()->save();
