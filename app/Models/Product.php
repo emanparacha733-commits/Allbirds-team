@@ -30,13 +30,13 @@ class Product extends Model
     'sizes',
 ];
     protected $casts = [
+      'color_variants' => 'array', 
     'is_new'         => 'boolean',
     'is_featured'    => 'boolean',
     'on_sale'        => 'boolean',
     'price'          => 'decimal:2',
     'sale_price'     => 'decimal:2',
     'sizes'          => 'array',
-    'color_variants' => 'array',
     'sales_count'    => 'integer',
 ];
     /**

@@ -566,8 +566,8 @@
             <!-- Logo -->
             <div class="flex-1">
                 <a href="/">
-                    <img src="{{ asset('images/logo-seo.jpeg') }}" alt="allbirds" class="h-8 w-auto">
-                </a>
+                <img src="{{ asset('images/logo.png') }}" alt="allbirds" 
+     class="w-12 sm:w-10 md:w-18 lg:w-26 xl:w-34 h-auto">
             </div>
 
             <!-- Nav items -->

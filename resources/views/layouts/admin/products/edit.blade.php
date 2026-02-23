@@ -35,6 +35,40 @@
         {{-- Basic Info --}}
         <div class="space-y-6">
             <h2 class="text-lg font-semibold text-gray-900 pb-2 border-b">Basic Information</h2>
+            {{-- Product Images --}}
+<div class="space-y-4">
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Main Image</label>
+        <img src="{{ $product->image_url }}" class="w-32 h-32 object-cover rounded-xl border border-gray-200 mb-3">
+
+        <input type="file" name="image" accept="image/*"
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+               onchange="previewImage(event,'prev1')">
+        <img id="prev1" class="mt-2 rounded-lg max-h-40 hidden">
+    </div>
+
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Extra Image 2</label>
+        @if($product->image_2_url)
+            <img src="{{ $product->image_2_url }}" class="w-24 h-24 object-cover rounded mb-2">
+        @endif
+        <input type="file" name="image_2" accept="image/*"
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+               onchange="previewImage(event,'prev2')">
+        <img id="prev2" class="mt-2 rounded-lg max-h-40 hidden">
+    </div>
+
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Extra Image 3</label>
+        @if($product->image_3_url)
+            <img src="{{ $product->image_3_url }}" class="w-24 h-24 object-cover rounded mb-2">
+        @endif
+        <input type="file" name="image_3" accept="image/*"
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+               onchange="previewImage(event,'prev3')">
+        <img id="prev3" class="mt-2 rounded-lg max-h-40 hidden">
+    </div>
+</div>
 
             {{-- Product Name --}}
             <div>
@@ -51,15 +85,7 @@
             </div>
 
             {{-- Current Image --}}
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Current Image</label>
-                <img src="{{ $product->image_url }}" class="w-32 h-32 object-cover rounded-xl border border-gray-200 mb-3">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Replace Image (optional)</label>
-                <input type="file" name="image" accept="image/*"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                       onchange="previewImage(event)">
-                <img id="imagePreview" class="mt-4 rounded-lg max-h-48 hidden" alt="Preview">
-            </div>
+         
         </div>
 
         {{-- Category & Type --}}
@@ -114,26 +140,54 @@
         </div>
 
         {{-- Color --}}
-        <div class="space-y-6">
-            <h2 class="text-lg font-semibold text-gray-900 pb-2 border-b">Color Information</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Color Name</label>
-                    <input type="text" name="color_name" value="{{ old('color_name', $product->color_name) }}"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="e.g., Natural White">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Color Code</label>
-                    <div class="flex gap-2">
-                        <input type="color" name="color_hex" id="colorPicker" value="{{ old('color_hex', $product->color_hex ?? '#000000') }}"
-                               class="h-10 w-20 border border-gray-300 rounded-lg cursor-pointer">
-                        <input type="text" id="colorHexText" value="{{ old('color_hex', $product->color_hex ?? '#000000') }}"
-                               class="flex-1 px-4 py-2 border border-gray-300 rounded-lg" readonly>
-                    </div>
-                </div>
-            </div>
-        </div>
+     {{-- Color Variants --}}
+<div class="space-y-4">
+    <h2 class="text-lg font-semibold text-gray-900 pb-2 border-b">Color Variants</h2>
 
+    <div id="colorVariants" class="space-y-3">
+    @php $variants = old('variants', $product->color_variants ?? []); @endphp
+
+@foreach($variants as $index => $variant)
+<div class="grid grid-cols-3 gap-3 p-4 border border-gray-200 rounded-lg">
+
+    {{-- Color Name --}}
+    <div>
+        <label class="text-xs font-medium text-gray-600">Color Name</label>
+        <input type="text" name="variants[{{ $index }}][color_name]"
+               value="{{ $variant['color_name'] ?? '' }}"
+               class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg text-sm">
+    </div>
+
+    {{-- Color Code --}}
+    <div>
+        <label class="text-xs font-medium text-gray-600">Color Code</label>
+        <input type="color" name="variants[{{ $index }}][color_hex]"
+               value="{{ $variant['color_hex'] ?? '#000000' }}"
+               class="w-full mt-1 h-10 border border-gray-300 rounded-lg cursor-pointer">
+    </div>
+
+    {{-- Color Image --}}
+    <div>
+        <label class="text-xs font-medium text-gray-600">Color Image</label>
+
+        {{-- Show existing image --}}
+        @if(!empty($variant['image']))
+            <img src="{{ asset('storage/' . $variant['image']) }}" class="w-16 h-16 object-cover rounded mb-2">
+        @endif
+
+        {{-- File input --}}
+        <input type="file" name="variants[{{ $index }}][new_image]" accept="image/*"
+               class="w-full mt-1 text-sm">
+    </div>
+</div>
+@endforeach
+    </div>
+
+    <button type="button" onclick="addVariant()"
+            class="text-sm text-blue-600 underline hover:text-blue-800">
+        + Add Another Color (max 4)
+    </button>
+</div> 
         {{-- Pricing --}}
         <div class="space-y-6">
             <h2 class="text-lg font-semibold text-gray-900 pb-2 border-b">Pricing</h2>
@@ -192,7 +246,7 @@
         </div>
     </form>
 </div>
-
+{{-- AFTER all your HTML (forms, images, variants, sizes) --}}
 <script>
 const categoryData = {
     shoes:       { men: ['Sneakers','Slip-Ons','Slippers','All Weather','Sandals'], women: ['Sneakers','Slip-Ons','Flats','Sandals','Slippers'], unisex: ['Sneakers','Slip-Ons','Sandals','Slippers','All Weather'] },
@@ -209,7 +263,6 @@ const shoeSizes = {
 
 const currentCategory = "{{ old('category', $product->category) }}";
 const currentSizes    = @json($product->sizes ?? []);
-
 
 const typeSelect     = document.getElementById('typeSelect');
 const genderSelect   = document.getElementById('genderSelect');
@@ -247,7 +300,6 @@ function updateSizes() {
 
     sizesGrid.innerHTML = '';
 
-    // Socks sizes
     const sockSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
     if (type === 'shoes' && gender && shoeSizes[gender]) {
@@ -286,18 +338,47 @@ function updateSizes() {
 typeSelect.addEventListener('change', updateCategories);
 genderSelect.addEventListener('change', updateCategories);
 
-document.getElementById('colorPicker').addEventListener('input', function () {
-    document.getElementById('colorHexText').value = this.value;
-});
-
-function previewImage(event) {
-    const preview = document.getElementById('imagePreview');
+function previewImage(event, previewId = 'imagePreview') {
+    const preview = document.getElementById(previewId);
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = e => { preview.src = e.target.result; preview.classList.remove('hidden'); };
         reader.readAsDataURL(file);
     }
+}
+
+// Color Variants JS
+let variantCount = document.querySelectorAll('#colorVariants > div').length;
+
+function addVariant() {
+    if (variantCount >= 4) {
+        alert('Maximum 4 color variants allowed.');
+        return;
+    }
+
+    const container = document.getElementById('colorVariants');
+    const div = document.createElement('div');
+    div.className = 'grid grid-cols-3 gap-3 p-4 border border-gray-200 rounded-lg';
+    div.innerHTML = `
+        <div>
+            <label class="text-xs font-medium text-gray-600">Color Name</label>
+            <input type="text" name="variants[${variantCount}][color_name]"
+                   class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg text-sm">
+        </div>
+        <div>
+            <label class="text-xs font-medium text-gray-600">Color Code</label>
+            <input type="color" name="variants[${variantCount}][color_hex]" value="#000000"
+                   class="w-full mt-1 h-10 border border-gray-300 rounded-lg cursor-pointer">
+        </div>
+        <div>
+            <label class="text-xs font-medium text-gray-600">Color Image</label>
+            <input type="file" name="variants[${variantCount}][image]" accept="image/*"
+                   class="w-full mt-1 text-sm" onchange="previewImage(event)">
+        </div>
+    `;
+    container.appendChild(div);
+    variantCount++;
 }
 
 window.addEventListener('DOMContentLoaded', () => {

@@ -142,69 +142,75 @@ class ProductController extends Controller
         return view('layouts.admin.products.edit', compact('product'));
     }
 
-    public function update(Request $request, Product $product)
-    {
-        $validated = $request->validate([
-            'name'        => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'image_2'     => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'image_3'     => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'category'    => 'required|string',
-            'type'        => 'required|in:shoes,socks,apparel,accessories',
-            'gender'      => 'required|in:men,women,unisex',
-            'color_name'  => 'nullable|string',
-            'color_hex'   => 'nullable|string',
-            'price'       => 'required|numeric|min:0',
-            'on_sale'     => 'nullable|boolean',
-            'sale_price'  => 'nullable|numeric|min:0',
-            'is_new'      => 'nullable|boolean',
-            'is_featured' => 'nullable|boolean',
-            'sizes'       => 'nullable|array',
-        ]);
+  public function update(Request $request, Product $product)
+{
+    $validated = $request->validate([
+        'name'            => 'required|string|max:255',
+        'description'     => 'nullable|string',
+        'image'           => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        'image_2'         => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        'image_3'         => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        'category'        => 'required|string',
+        'type'            => 'required|in:shoes,socks,apparel,accessories',
+        'gender'          => 'required|in:men,women,unisex',
+        'price'           => 'required|numeric|min:0',
+        'on_sale'         => 'nullable|boolean',
+        'sale_price'      => 'nullable|numeric|min:0',
+        'is_new'          => 'nullable|boolean',
+        'is_featured'     => 'nullable|boolean',
+        'sizes'           => 'nullable|array',
+        'color_variants'  => 'nullable|array',
+    ]);
 
-        if ($request->hasFile('image')) {
-            if ($product->image) Storage::disk('public')->delete($product->image);
-            $validated['image'] = $request->file('image')->store('products', 'public');
+    // ─── Handle main images ─────────────────────────────
+    foreach (['image','image_2','image_3'] as $imgField) {
+        if ($request->hasFile($imgField)) {
+            if ($product->$imgField) Storage::disk('public')->delete($product->$imgField);
+            $validated[$imgField] = $request->file($imgField)->store('products', 'public');
         }
+    }
+// ─── Handle color variants ──────────────────────────
 
-        if ($request->hasFile('image_2')) {
-            if ($product->image_2) Storage::disk('public')->delete($product->image_2);
-            $validated['image_2'] = $request->file('image_2')->store('products', 'public');
-        }
 
-        if ($request->hasFile('image_3')) {
-            if ($product->image_3) Storage::disk('public')->delete($product->image_3);
-            $validated['image_3'] = $request->file('image_3')->store('products', 'public');
-        }
+$existingVariants = $product->color_variants ?? [];
+$newVariants = $request->input('variants', []);
 
-        $variants = [];
-        if ($request->has('variants')) {
-            foreach ($request->variants as $i => $variant) {
-                if (empty($variant['color_name'])) continue;
-                $v = [
-                    'color_name' => $variant['color_name'],
-                    'color_hex'  => $variant['color_hex'] ?? '#000000',
-                    'image'      => null,
-                ];
-                if ($request->hasFile("variants.{$i}.image")) {
-                    $v['image'] = $request->file("variants.{$i}.image")->store('products', 'public');
-                }
-                $variants[] = $v;
-            }
-        }
-        $validated['color_variants'] = $variants;
+foreach ($newVariants as $index => $variant) {
+    if (empty($variant['color_name'])) continue;
 
-        $validated['is_new']      = $request->has('is_new');
-        $validated['is_featured'] = $request->has('is_featured');
-        $validated['on_sale']     = $request->has('on_sale');
-        $validated['sizes']       = $request->input('sizes', []);
-
-        $product->update($validated);
-
-        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+    // Agar user nayi image upload ki ho
+    if ($request->hasFile("variants.$index.new_image")) {
+        $path = $request->file("variants.$index.new_image")->store('products', 'public');
+        $variant['image'] = $path;
+    } elseif (isset($existingVariants[$index]['image'])) {
+        // Purani image preserve
+        $variant['image'] = $existingVariants[$index]['image'];
+    } else {
+        $variant['image'] = null;
     }
 
+    // Update / add variant
+    $existingVariants[$index] = [
+        'color_name' => $variant['color_name'],
+        'color_hex'  => $variant['color_hex'] ?? '#000000',
+        'image'      => $variant['image'],
+    ];
+}
+
+$validated['color_variants'] = $existingVariants;
+
+
+    // ─── Flags & Sizes ────────────────────────────────
+    $validated['is_new']      = $request->has('is_new');
+    $validated['is_featured'] = $request->has('is_featured');
+    $validated['on_sale']     = $request->has('on_sale');
+    $validated['sizes']       = $request->input('sizes', []);
+
+    // ─── Save to database ─────────────────────────────
+    $product->update($validated);
+
+    return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+}
     public function destroy(Product $product)
     {
         if ($product->image)   Storage::disk('public')->delete($product->image);
