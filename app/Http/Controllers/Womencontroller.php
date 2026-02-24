@@ -24,14 +24,20 @@ class WomenController extends Controller
 
     public function product($slug)
     {
-        return view('shop.women.product', compact('slug'));
+        $product = Product::where('slug', $slug)->firstOrFail();
+
+        return match($product->type) {
+            'shoes'            => view('shop.women.detailshoes', compact('product')),
+            'socks', 'apparel' => view('shop.women.detailsocks', compact('product')),
+            default            => view('shop.women.detailsocks', compact('product')),
+        };
     }
 
     // ── Apparel ──────────────────────────────────────────
     public function apparel(Request $request)
     {
         $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'women')->where('type', 'apparel');
+        $query = Product::whereIn('gender', ['women', 'unisex'])->where('type', 'apparel');
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
@@ -50,7 +56,7 @@ class WomenController extends Controller
 
     public function apparelCategory(Request $request, $category)
     {
-        Product::forGender('women')->where('type', 'apparel');
+        $query = Product::whereIn('gender', ['women', 'unisex'])->where('type', 'apparel');
 
         if ($category !== 'all-apparel') {
             $query->where('category', $category);
@@ -60,14 +66,14 @@ class WomenController extends Controller
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
-        return view('shop.women.apparel-category', compact('products', 'category'));
+        return view('shop.women.detailsocks', compact('products', 'category'));
     }
 
     // ── Socks ─────────────────────────────────────────────
     public function socks(Request $request)
     {
         $sort = $request->get('sort', 'featured');
-        $query = Product::forGender('women')->where('type', 'socks');
+        $query = Product::whereIn('gender', ['women', 'unisex'])->where('type', 'socks');
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
@@ -77,26 +83,26 @@ class WomenController extends Controller
     public function socksCategory(Request $request, $category)
     {
         $sort = $request->get('sort', 'featured');
-        forGender('women')
+        $query = Product::whereIn('gender', ['women', 'unisex'])
                         ->where('type', 'socks')
                         ->where('category', $category);
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
-        return view('shop.women.socks-category', compact('products', 'category'));
+        return view('shop.women.detailsocks', compact('products', 'category'));
     }
 
     // ── Shoes ─────────────────────────────────────────────
     public function shoesCategory(Request $request, $category)
     {
         $sort = $request->get('sort', 'featured');
-        $query = Product::where('gender', 'women')
+        $query = Product::whereIn('gender', ['women', 'unisex'])
                         ->where('type', 'shoes')
                         ->where('category', $category);
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
-        return view('shop.women.shoes-category', compact('products', 'category'));
+        return view('shop.women.detailshoes', compact('products', 'category'));
     }
 
     // ── Sorting ───────────────────────────────────────────

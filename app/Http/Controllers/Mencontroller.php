@@ -24,7 +24,13 @@ class MenController extends Controller
 
     public function product($slug)
     {
-        return view('shop.men.product', compact('slug'));
+        $product = Product::where('slug', $slug)->firstOrFail();
+
+        return match($product->type) {
+            'shoes'            => view('shop.men.detailshoes', compact('product')),
+            'socks', 'apparel' => view('shop.men.detailsocks', compact('product')),
+            default            => view('shop.men.detailsocks', compact('product')),
+        };
     }
 
     // ── Apparel ──────────────────────────────────────────
@@ -60,7 +66,7 @@ class MenController extends Controller
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
-        return view('shop.men.apparel-category', compact('products', 'category'));
+        return view('shop.men.detailsocks', compact('products', 'category'));
     }
 
     // ── Socks ─────────────────────────────────────────────
@@ -83,7 +89,7 @@ class MenController extends Controller
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
-        return view('shop.men.socks-category', compact('products', 'category'));
+        return view('shop.men.detailsocks', compact('products', 'category'));
     }
 
     // ── Shoes ─────────────────────────────────────────────
@@ -96,7 +102,7 @@ class MenController extends Controller
         $query = $this->applySorting($query, $sort);
         $products = $query->get();
 
-        return view('shop.men.shoes-category', compact('products', 'category'));
+        return view('shop.men.detailshoes', compact('products', 'category'));
     }
 
     // ── Sorting ───────────────────────────────────────────
