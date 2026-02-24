@@ -78,7 +78,7 @@
                 :title="$product->name"
                 :subtitle="$product->color_name ?? 'Various Colors'"
                 :price="$product->on_sale ? $product->sale_price : $product->price"
-                :link="url('/product/' . $product->slug)"
+               :link="$product->slug ? route('women.product', $product->slug) : '#'"
                 :isNew="$product->is_new"
                 :onSale="$product->on_sale ?? false"
                 :salePrice="$product->sale_price ?? null"
