@@ -31,6 +31,9 @@
             <a href="{{ route('admin.email') }}" class="block py-2 px-4 rounded hover:bg-gray-100">
                 Registered Users
             </a>
+            <a href="{{ route('admin.homepage') }}" class="block py-2 px-4 rounded hover:bg-gray-100">
+              Homepage Editor
+              </a>
         </nav>
     </aside>
 

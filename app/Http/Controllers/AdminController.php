@@ -9,6 +9,7 @@ use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\HomeSection;
 
 
 class AdminController extends Controller
@@ -27,7 +28,6 @@ class AdminController extends Controller
             'password' => 'required',
         ]);
 
-        // Assuming only one admin
         $admin = Admin::first();
 
         if (!$admin || !Hash::check($request->password, $admin->password)) {
@@ -65,7 +65,7 @@ class AdminController extends Controller
 
     public function orders()
     {
-        $orders = Order::with('items.product')->latest()->get(); // ✅ fixed
+        $orders = Order::with('items.product')->latest()->get();
         return view('layouts.admin.orders', compact('orders'));
     }
 
@@ -73,4 +73,56 @@ class AdminController extends Controller
     {
         return view('layouts.admin.customers.index', ['customers' => collect()]);
     }
+
+    // ── Homepage Editor ───────────────────────────────────────────────
+    public function homepageEditor()
+    {
+        $s = HomeSection::allAsArray();
+        return view('layouts.admin.homepage-editor', compact('s'));
+    }
+
+    public function homepageUpdate(Request $request)
+    {
+        // ── HERO ──────────────────────────────────────────────────────
+        if ($request->hasFile('hero_image')) {
+            $path = $request->file('hero_image')->store('home', 'public');
+            HomeSection::setValue('hero', 'image', 'storage/' . $path);
+        }
+        HomeSection::setValue('hero', 'tagline',    $request->input('hero_tagline', ''));
+        HomeSection::setValue('hero', 'heading',    $request->input('hero_heading', ''));
+        HomeSection::setValue('hero', 'collection', $request->input('hero_collection', ''));
+
+        // ── SECTION 2 — 4 cards ───────────────────────────────────────
+        foreach (['s2_card_1', 's2_card_2', 's2_card_3', 's2_card_4'] as $card) {
+            if ($request->hasFile("{$card}_image")) {
+                $path = $request->file("{$card}_image")->store('home', 'public');
+                HomeSection::setValue($card, 'image', 'storage/' . $path);
+            }
+            HomeSection::setValue($card, 'label', $request->input("{$card}_label", ''));
+            HomeSection::setValue($card, 'link',  $request->input("{$card}_link", ''));
+        }
+
+        // ── SECTION 4 — header + 3 cards ─────────────────────────────
+        HomeSection::setValue('s4_header', 'name', $request->input('s4_header_name', ''));
+        HomeSection::setValue('s4_header', 'sub',  $request->input('s4_header_sub', ''));
+
+        foreach (['s4_card_1', 's4_card_2', 's4_card_3'] as $card) {
+            if ($request->hasFile("{$card}_image")) {
+                $path = $request->file("{$card}_image")->store('home', 'public');
+                HomeSection::setValue($card, 'image', 'storage/' . $path);
+            }
+            HomeSection::setValue($card, 'title',      $request->input("{$card}_title", ''));
+            HomeSection::setValue($card, 'link_men',   $request->input("{$card}_link_men", '/men/shoes'));
+            HomeSection::setValue($card, 'link_women', $request->input("{$card}_link_women", '/women/shoes'));
+        }
+
+        // ── SECTION 6 — 3 info cards ─────────────────────────────────
+        foreach (['s6_card_1', 's6_card_2', 's6_card_3'] as $card) {
+            HomeSection::setValue($card, 'title', $request->input("{$card}_title", ''));
+            HomeSection::setValue($card, 'text',  $request->input("{$card}_text", ''));
+        }
+
+        return redirect()->route('admin.homepage')->with('success', 'Homepage updated successfully!');
+    }
+
 }

@@ -164,4 +164,7 @@ Route::prefix('manage')
 
         Route::post('/logout', [AdminController::class, 'logout'])
             ->name('logout');
+
+        Route::get('/homepage',  [AdminController::class, 'homepageEditor'])->name('homepage');
+         Route::put('/homepage',  [AdminController::class, 'homepageUpdate'])->name('homepage.update');    
     });
