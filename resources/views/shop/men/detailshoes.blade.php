@@ -20,7 +20,8 @@
   }
 </style>
 
-<div class="max-w-8xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-8 items-start">
+
+<div class="mt-8 max-w-8xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-8 items-start">
 
   <!-- LEFT SIDE (Images) -->
   <div class="relative w-full flex flex-col gap-0 h-[150vh] bg-transparent">

@@ -27,10 +27,19 @@ class OrderController extends Controller
 
         // ✅ Create the order
         $order = Order::create([
-            'customer_name'  => $request->first_name . ' ' . $request->last_name,
-            'customer_email' => $request->email,
-            'total'          => $total,
-            'status'         => 'pending',
+
+          'first_name'     => $request->first_name,
+    'last_name'      => $request->last_name,
+    'customer_name'  => $request->first_name . ' ' . $request->last_name,
+    'customer_email' => $request->email,
+    'total'          => $total,
+    'status'         => 'pending',
+    'address'        => $request->address,   // Add this
+    'city'           => $request->city,      // Add this
+    'state'          => $request->state,     // Add this
+    'zip'            => $request->zip,       // Add this
+    'phone'          => $request->phone,     // Add this
+   
         ]);
 
         // ✅ Save each cart item linked to the order

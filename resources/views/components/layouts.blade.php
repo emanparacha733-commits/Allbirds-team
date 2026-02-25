@@ -571,8 +571,8 @@
         <a href="/women" class="underline hover:no-underline">Shop Women</a>
     </div>
 
-    <nav class="bg-white border border-gray-100 mx-4 mt-2 rounded-2xl shadow-sm">
-    <div class="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
+    <nav class="bg-white border border-gray-100 mx-4 mt-4 rounded-2xl shadow-sm">
+    <div class="max-w-[1100px] mx-auto px-6 h-16 flex items-center justify-between">
 
             <!-- Logo -->
             <div class="flex-1">

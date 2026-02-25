@@ -64,9 +64,9 @@ class MenController extends Controller
 
         $sort = $request->get('sort', 'featured');
         $query = $this->applySorting($query, $sort);
-        $products = $query->get();
+        $product = $query->firstOrFail(); // ✅ FIXED: was ->get() into $products
 
-        return view('shop.men.detailsocks', compact('products', 'category'));
+        return view('shop.men.detailsocks', compact('product', 'category')); // ✅ FIXED
     }
 
     // ── Socks ─────────────────────────────────────────────
@@ -87,9 +87,9 @@ class MenController extends Controller
                         ->where('type', 'socks')
                         ->where('category', $category);
         $query = $this->applySorting($query, $sort);
-        $products = $query->get();
+        $product = $query->firstOrFail(); // ✅ FIXED: was ->get() into $products
 
-        return view('shop.men.detailsocks', compact('products', 'category'));
+        return view('shop.men.detailsocks', compact('product', 'category')); // ✅ FIXED
     }
 
     // ── Shoes ─────────────────────────────────────────────

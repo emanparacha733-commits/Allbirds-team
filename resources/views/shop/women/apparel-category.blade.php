@@ -4,6 +4,7 @@
 <div class="bg-[#ece9e2] min-h-screen">
 
     {{-- Hero Section --}}
+    <div class="pt-6 px-2">
     <section class="w-full pt-6 pb-10 px-4 text-center">
         <div class="flex gap-2 text-sm font-light font-serif tracking-wide text-gray-500 mb-6 justify-start max-w-7xl mx-auto px-4">
             <a href="{{ url('/') }}" class="hover:underline">Home /</a>
@@ -16,6 +17,7 @@
             Crafted from soft, airy, natural materials like organic cotton and our breathable Tree Knit, these pieces offer exceptional comfort.
         </p>
     </section>
+    </div>
 
     {{-- Filter Bar --}}
     <div class="w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between bg-[#E6DDD0] rounded-[40px] mt-4">

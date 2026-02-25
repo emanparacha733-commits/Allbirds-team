@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @extends('layouts.app')
 
-
+<div class="pt-6 px-2">
 @section('content')
 <div class="bg-[#f5f2ed] min-h-screen">
 
@@ -17,6 +17,7 @@
             Our Trino™ Socks are made from the best materials nature has to offer, like wool and trees. Pair them with our shoes for unbeatable comfort that's even better together.
         </p>
     </section>
+    </div>
 
     {{-- Filter Bar --}}
     <div class="w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between bg-[#E6DDD0] rounded-[40px] mt-4">

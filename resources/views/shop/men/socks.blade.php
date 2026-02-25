@@ -5,6 +5,7 @@
 <div class="bg-[#f5f2ed] min-h-screen overflow-visible">
 
     {{-- Hero Section --}}
+    <div class="pt-6 px-2">
     <section class="w-full pt-6 pb-10 px-4 text-center">
         <div class="flex gap-2 text-sm font-light font-serif tracking-wide text-gray-500 mb-6 justify-start max-w-7xl mx-auto px-4">
             <a href="{{ url('/') }}" class="hover:underline">Home /</a>
@@ -16,6 +17,7 @@
             Our Trino™ Socks are made from the best materials nature has to offer, like wool and trees. Pair them with our shoes for unbeatable comfort that's even better together.
         </p>
     </section>
+    </div>
 
     {{-- Filter Bar --}}
     <div class="w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between bg-[#E6DDD0] rounded-[40px] mt-4">

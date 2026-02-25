@@ -4,6 +4,7 @@
 <div class="bg-[#f5f2ed] min-h-screen overflow-visible">
 
     {{-- Hero Section --}}
+    <div class="pt-6 px-2">
     <section class="w-full pt-6 pb-10 px-4 text-center">
         <div class="flex gap-2 text-sm font-light font-serif tracking-wide text-gray-500 mb-6 justify-start max-w-7xl mx-auto px-4">
             <a href="{{ url('/') }}" class="hover:underline">Home /</a>
@@ -15,6 +16,7 @@
             Our Trino™ Socks are made from the best materials nature has to offer, like wool and trees. Pair them with our shoes for unbeatable comfort that's even better together.
         </p>
     </section>
+    </div>
 
     {{-- Filter Bar --}}
     <div class="w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between bg-[#E6DDD0] rounded-[40px] mt-4">
@@ -64,14 +66,14 @@
     </div>
 
     {{-- ↓ ONLY CHANGE: section → div --}}
-    <div class="relative max-w-full px-4 pt-6 pb-32 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 items-start overflow-visible">
+   <div class="relative max-w-full px-4 pt-6 pb-32 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 items-start overflow-visible">
         @forelse($products as $product)
             <x-product-card-socks
                 :image="asset('storage/' . $product->image)"
                 :title="$product->name"
                 :subtitle="$product->color_name ?? 'Various Colors'"
                 :price="$product->on_sale ? $product->sale_price : $product->price"
-                :link="route('women.product', $product->slug)"
+                :link="route('products.show', $product->id)"
                 :isNew="$product->is_new"
                 :onSale="$product->on_sale ?? false"
                 :salePrice="$product->sale_price ?? null"
@@ -111,7 +113,6 @@
             </div>
         @endforelse
     </div>
-    {{-- ↑ ONLY CHANGE: /section → /div --}}
 
     {{-- Bottom Category Cards --}}
     <section class="w-full px-2 sm:px-4 lg:px-6 py-6 grid

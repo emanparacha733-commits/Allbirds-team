@@ -49,8 +49,7 @@
   }
   .img-top-row img, .img-top-row .img-placeholder {
     width: 100%; 
-    height: 100%;                 /* fill full row height */
-    min-height: 480px;            /* tall images */
+    height: auto;           /* tall images */
     object-fit: contain;
     border-radius: 16px; 
     background: #dedad4; 
@@ -66,8 +65,8 @@
     justify-content: center; 
     color: #999; 
     font-size: 0.9rem; 
-    min-height: 480px;            /* matches image height */
-    height: 100%;
+            
+    height: auto;
     border-radius: 16px;
     background: #dedad4;
   }
@@ -533,40 +532,25 @@ data-img2="{{ $img2 }}"
   </div>
 </section>
 
-<section style="width:100%;margin:3rem 0 0;padding:0 2rem;">
-  <div style="position:relative;width:100%;height:70vh;background:url('/images/animalbg.webp') center/cover no-repeat;border-radius:20px;overflow:hidden;">
-    <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;padding:2rem;">
-      <div id="circlesWrapper" style="position:absolute;width:min(90%,560px);aspect-ratio:550/420;display:flex;justify-content:center;align-items:center;">
-        <div style="position:absolute;width:100%;height:100%;border:1px solid rgba(255,255,255,0.6);border-radius:50%;"></div>
-        <div style="position:absolute;width:94%;height:90%;border:1px solid rgba(255,255,255,0.4);border-radius:50%;"></div>
-        <div style="position:absolute;width:87%;height:80%;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.05);border-radius:50%;"></div>
-        <div id="ballsContainer" style="position:absolute;width:100%;height:100%;top:0;left:0;"></div>
-        <span style="position:absolute;top:0;left:0;transform:translate(-50%,-50%);border:1px solid #fff;font-size:0.7rem;padding:4px 10px;border-radius:999px;white-space:nowrap;">RENEWABLE MATERIALS</span>
-        <span style="position:absolute;top:0;right:0;transform:translate(50%,-50%);border:1px solid #fff;font-size:0.7rem;padding:4px 10px;border-radius:999px;white-space:nowrap;">RESPONSIBLE ENERGY</span>
-        <span style="position:absolute;bottom:0;right:0;transform:translate(50%,50%);border:1px solid #fff;font-size:0.7rem;padding:4px 10px;border-radius:999px;white-space:nowrap;">REGENERATIVE AGRICULTURE</span>
-      </div>
-      <h1 style="font-size:1.2rem;font-weight:600;margin-bottom:0.5rem;position:relative;z-index:1;">Better Things in a Better Way</h1>
-      <h2 style="font-size:0.9rem;font-family:Georgia,serif;margin-bottom:1.5rem;position:relative;z-index:1;">Looking to the world's greatest innovator - Nature</h2>
-      <a href="#" style="background:#fff;color:#111;padding:0.7rem 1.8rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:0.85rem;position:relative;z-index:1;">Learn More</a>
+
+<section class="relative w-full h-[60vh] md:h-[80vh] bg-cover bg-center rounded-2xl overflow-hidden mt-8"
+         style="background-image: url('/images/animalbg.webp');">
+  <div class="relative w-full h-full flex flex-col justify-center items-center text-center px-4 text-white">
+    <div id="circlesWrapper" class="absolute w-[90%] max-w-[600px] aspect-[550/420] md:w-[600px] md:h-[420px] flex justify-center items-center">
+      <div class="absolute border border-white rounded-full w-full h-full"></div>
+      <div class="absolute border border-white rounded-full w-[94%] h-[90%]"></div>
+      <div class="absolute border border-white bg-white/10 rounded-full w-[87%] h-[80%]"></div>
+      <div id="ballsContainer" class="absolute w-full h-full top-0 left-0 z-20"></div>
+      <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 border border-white text-white text-xs px-2 py-1 rounded-full">RENEWABLE MATERIALS</span>
+      <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 border border-white text-white text-xs px-2 py-1 rounded-full">RESPONSIBLE ENERGY</span>
+      <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 border border-white text-white text-xs px-2 py-1 rounded-full">REGENERATIVE AGRICULTURE</span>
     </div>
+    <h4 class="text-lg md:text-xl mb-2 font-semibold">Better Things in a Better Way</h4>
+    <p class="text-xs md:text-sm mb-4 font-serif">Looking to the world's greatest innovator - Nature</p>
+    <a href="#" class="bg-white text-black px-4 md:px-6 py-2 md:py-3 rounded-full hover:bg-gray-200 transition">Learn More</a>
   </div>
 </section>
 
-
-<section style="width:100%;margin:2rem 0;padding:0 2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
-  <div style="background:#fff;border-radius:18px;box-shadow:0 4px 16px rgba(0,0,0,0.07);padding:1.75rem;">
-    <h1 style="font-size:1.1rem;color:#111;font-weight:500;margin-bottom:0.5rem;font-family:Georgia,serif;">Wear All Day Comfort</h1>
-    <h2 style="color:#666;font-size:0.88rem;line-height:1.6;font-weight:400;">Lightweight, bouncy, and wildly comfortable, Allbirds shoes make any outing feel effortless.</h2>
-  </div>
-  <div style="background:#fff;border-radius:18px;box-shadow:0 4px 16px rgba(0,0,0,0.07);padding:1.75rem;">
-    <h1 style="font-size:1.1rem;color:#111;font-weight:500;margin-bottom:0.5rem;font-family:Georgia,serif;">Sustainability In Every Step</h1>
-    <h2 style="color:#666;font-size:0.88rem;line-height:1.6;font-weight:400;">From materials to transport, we're working to reduce our carbon footprint to near zero.</h2>
-  </div>
-  <div style="background:#fff;border-radius:18px;box-shadow:0 4px 16px rgba(0,0,0,0.07);padding:1.75rem;">
-    <h1 style="font-size:1.1rem;color:#111;font-weight:500;margin-bottom:0.5rem;font-family:Georgia,serif;">Materials From The Earth</h1>
-    <h2 style="color:#666;font-size:0.88rem;line-height:1.6;font-weight:400;">We replace petroleum-based synthetics with natural alternatives wherever we can.</h2>
-  </div>
-</section>
 
 
 <form id="addToCartForm" action="{{ route('cart.add') }}" method="POST" style="display:none;">
@@ -694,26 +678,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  /* Nature circles */
-  function placeBalls() {
-    const container = document.getElementById('ballsContainer');
-    const wrapper   = document.getElementById('circlesWrapper');
-    if (!container || !wrapper) return;
-    container.innerHTML = '';
-    const rect = wrapper.getBoundingClientRect();
-    const cx = rect.width / 2, cy = rect.height / 2;
-    const scaleX = rect.width / 550, scaleY = rect.height / 420;
-    for (let i = 0; i < 3; i++) {
-      const angle = Math.random() * 2 * Math.PI;
-      const x = cx + 275 * Math.cos(angle) * scaleX - 5;
-      const y = cy + 210 * Math.sin(angle) * scaleY - 5;
-      const ball = document.createElement('div');
-      ball.style.cssText = `width:10px;height:10px;background:#fff;border-radius:50%;position:absolute;left:${x}px;top:${y}px;`;
-      container.appendChild(ball);
-    }
+function placeBalls() {
+  const container = document.getElementById('ballsContainer');
+  const wrapper   = document.getElementById('circlesWrapper');
+  if (!container || !wrapper) return;
+  container.innerHTML = '';
+  const rect   = wrapper.getBoundingClientRect();
+  const cx     = rect.width / 2;
+  const cy     = rect.height / 2;
+  const scaleX = rect.width / 550;
+  const scaleY = rect.height / 420;
+  for (let i = 0; i < 3; i++) {
+    const angle = Math.random() * 2 * Math.PI;
+    const x = cx + 275 * Math.cos(angle) * scaleX - 5;
+    const y = cy + 210 * Math.sin(angle) * scaleY - 5;
+    const ball = document.createElement('div');
+    ball.className = 'w-3 h-3 bg-white rounded-full absolute';
+    ball.style.left = `${x}px`;
+    ball.style.top  = `${y}px`;
+    container.appendChild(ball);
   }
-  window.addEventListener('load', placeBalls);
-  window.addEventListener('resize', placeBalls);
+}
+window.addEventListener('load', placeBalls);
+window.addEventListener('resize', placeBalls);
 
 });</script>
 

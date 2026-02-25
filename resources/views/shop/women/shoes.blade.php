@@ -1,6 +1,6 @@
 <x-layouts>
-
-<section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl" style="background-image: url('/images/women.webp');">
+<div class="pt-6 px-2">
+<section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl" style="background-image: url('/images/newbgwomen.jpg');">
     <div class="relative z-10 max-w-7xl mx-auto h-full flex flex-col justify-between md:px-8 text-white">
         <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
             <a href='/' class="hover:underline">Home/</a>
@@ -12,9 +12,9 @@
         </p>
     </div>
 </section>
-
+</div>
 {{-- Filter / Sort Bar --}}
-<div class="relative z-50 w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between bg-[#E6DDD0] rounded-[40px] mt-4">
+<div class=" z-50 w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between bg-[#E6DDD0] rounded-[40px] mt-4">
 
   <div class="flex items-center gap-4">
     <button class="flex items-center gap-2 text-black text-sm font-medium hover:opacity-70 transition">
