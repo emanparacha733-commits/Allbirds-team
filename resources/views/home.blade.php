@@ -33,6 +33,39 @@
         ['key'=>'s6_card_2','default_title'=>'Sustainability In Every Step', 'default_text'=>"From materials to transport, we're working to reduce our carbon footprint to near zero."],
         ['key'=>'s6_card_3','default_title'=>'Materials From The Earth',     'default_text'=>'We replace petroleum-based synthetics with natural alternatives like wool and tree fiber.'],
     ];
+
+    // Section 3 — Scrolling shoes
+    $s3Heading = $s['s3']['heading'] ?? 'NEW ARRIVALS';
+    $s3Link    = $s['s3']['link']    ?? route('men.shoes');
+    $s3Shoes   = [];
+    for ($i = 1; $i <= 5; $i++) {
+        $key = "s3_shoe_{$i}";
+        $defaults = [
+            1 => 'images/whitemain.webp',
+            2 => 'images/gray1.webp',
+            3 => 'images/red1.webp',
+            4 => 'images/green1.png',
+            5 => 'images/black1.webp',
+        ];
+        $s3Shoes[] = !empty($s[$key]['image']) ? asset($s[$key]['image']) : asset($defaults[$i]);
+    }
+
+    // Section 5 — New Arrivals slider
+    $s5Heading = $s['s5']['heading'] ?? 'New Arrivals';
+    $s5Link    = $s['s5']['link']    ?? route('men.shoes');
+    $s5Slides  = [];
+    for ($i = 1; $i <= 10; $i++) {
+        $key = "s5_slide_{$i}";
+        $s5Slides[] = [
+            'image'    => !empty($s[$key]['image'])    ? asset($s[$key]['image'])    : asset("images/{$i}.jpg"),
+            'title'    => $s[$key]['title']    ?? "Product Title {$i}",
+            'subtitle' => $s[$key]['subtitle'] ?? 'Limited Edition Color',
+            'price'    => $s[$key]['price']    ?? '$125',
+            'link'     => $s[$key]['link']     ?? route('men.shoes'),
+            'new'      => $s[$key]['new']      ?? true,
+            'colors'   => !empty($s[$key]['colors']) ? array_filter(array_map('trim', explode(',', $s[$key]['colors']))) : ['#1a1a1a'],
+        ];
+    }
 @endphp
 
     {{-- HERO --}}
@@ -97,12 +130,12 @@
         </div>
     </section>
 
-    {{-- SECTION 3 — scrolling shoes (static/generated, not editable) --}}
+    {{-- SECTION 3 — scrolling shoes (dynamic) --}}
     <section class="relative overflow-hidden select-none" id="section-3"
              style="background: #ECE9E2; height: 680px; margin: 0; padding: 0;">
         <div class="absolute top-0 left-0 right-0 flex justify-center z-20 pointer-events-none" style="padding-top: 40px;">
-            <a href="{{ route('men.shoes') }}" style="pointer-events: all; text-decoration: none;">
-                <h1 style="font-family:'Courier New',monospace;font-size:20px;font-weight:700;letter-spacing:0.45em;text-transform:uppercase;color:#1a1a1a;margin:0;padding-bottom:3px;border-bottom:1px solid #1a1a1a;display:inline-block;">NEW ARRIVALS</h1>
+            <a href="{{ $s3Link }}" style="pointer-events: all; text-decoration: none;">
+                <h1 style="font-family:'Courier New',monospace;font-size:20px;font-weight:700;letter-spacing:0.45em;text-transform:uppercase;color:#1a1a1a;margin:0;padding-bottom:3px;border-bottom:1px solid #1a1a1a;display:inline-block;">{{ $s3Heading }}</h1>
             </a>
         </div>
         <div class="absolute left-0 right-0 bottom-0 flex items-center justify-center pointer-events-none z-0" style="height:65%;">
@@ -120,7 +153,11 @@
     (function () {
         const wrap=document.getElementById('s3-track-wrapper'),track=document.getElementById('s3-track'),cursor=document.getElementById('s3-cursor'),arrowEl=document.getElementById('s3-cursor-arrow');
         if(!wrap||!track||!cursor)return;
-        const images=['{{ asset("images/whitemain.webp") }}','{{ asset("images/gray1.webp") }}','{{ asset("images/red1.webp") }}','{{ asset("images/green1.png") }}','{{ asset("images/black1.webp") }}'];
+        const images=[
+            @foreach($s3Shoes as $shoe)
+            '{{ $shoe }}',
+            @endforeach
+        ];
         const SLIDE_VW=42;
         function slideW(){return window.innerWidth*SLIDE_VW/100;}
         function setW(){return slideW()*images.length;}
@@ -195,11 +232,11 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-    {{-- SECTION 5 — New Arrivals slider (static) --}}
+    {{-- SECTION 5 — New Arrivals slider (dynamic) --}}
     <section id="section-5" class="font-sans overflow-hidden"
      style="background:#ECE9E2;padding:40px 20px 16px 20px;">
         <div class="flex justify-between items-center mb-8">
-            <a href="{{ route('men.shoes') }}" class="text-sm font-bold tracking-[0.2em] uppercase border-b-2 border-black pb-1 hover:text-gray-600 transition-colors">New Arrivals</a>
+            <a href="{{ $s5Link }}" class="text-sm font-bold tracking-[0.2em] uppercase border-b-2 border-black pb-1 hover:text-gray-600 transition-colors">{{ $s5Heading }}</a>
             <div class="flex gap-3">
                 <button class="swiper-prev-btn w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center bg-white/50 hover:bg-white transition-all shadow-sm cursor-pointer">
                     <svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
@@ -211,21 +248,27 @@
         </div>
         <div class="swiper newArrivalsSwiper">
             <div class="swiper-wrapper">
-                @foreach(range(1,10) as $index)
+                @foreach($s5Slides as $slide)
                 <div class="swiper-slide">
-                    <a href="{{ route('men.shoes') }}" class="group block bg-white rounded-lg p-6 relative transition-shadow hover:shadow-md h-full">
+                    <a href="{{ $slide['link'] }}" class="group block bg-white rounded-lg p-6 relative transition-shadow hover:shadow-md h-full">
+                        @if($slide['new'])
                         <span class="absolute top-4 left-4 bg-[#e8e6e1] text-[10px] font-bold px-2 py-1 rounded uppercase tracking-tighter">New</span>
+                        @endif
                         <div class="flex items-center justify-center mb-6" style="height:280px;">
-                            <img src="{{ asset('images/' . $index . '.jpg') }}" alt="Shoe {{ $index }}" class="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500">
+                            <img src="{{ $slide['image'] }}" alt="{{ $slide['title'] }}" class="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="flex flex-col">
-                            <h3 class="text-[13px] font-bold uppercase tracking-tight">Product Title {{ $index }}</h3>
-                            <p class="text-[13px] text-gray-600">Limited Edition Color</p>
+                            <h3 class="text-[13px] font-bold uppercase tracking-tight">{{ $slide['title'] }}</h3>
+                            <p class="text-[13px] text-gray-600">{{ $slide['subtitle'] }}</p>
                             <div class="flex justify-between items-center mt-4">
-                                <div class="w-7 h-7 rounded-full border border-gray-400 p-0.5 flex items-center justify-center">
-                                    <div class="w-5 h-5 rounded-full bg-gray-800"></div>
+                                <div class="flex gap-2">
+                                    @foreach($slide['colors'] as $hex)
+                                    <div class="w-7 h-7 rounded-full border border-gray-400 p-0.5 flex items-center justify-center">
+                                        <div class="w-5 h-5 rounded-full" style="background:{{ $hex }};"></div>
+                                    </div>
+                                    @endforeach
                                 </div>
-                                <span class="font-bold text-[13px]">$125</span>
+                                <span class="font-bold text-[13px]">{{ $slide['price'] }}</span>
                             </div>
                         </div>
                     </a>

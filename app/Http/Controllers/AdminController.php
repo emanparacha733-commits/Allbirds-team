@@ -102,6 +102,18 @@ class AdminController extends Controller
             HomeSection::setValue($card, 'link',  $request->input("{$card}_link", ''));
         }
 
+        // ── SECTION 3 — scrolling shoes ──────────────────────────────
+        HomeSection::setValue('s3', 'heading', $request->input('s3_heading', 'NEW ARRIVALS'));
+        HomeSection::setValue('s3', 'link',    $request->input('s3_link', '/men/shoes'));
+
+        foreach (range(1, 5) as $i) {
+            $key = "s3_shoe_{$i}";
+            if ($request->hasFile("{$key}_image")) {
+                $path = $request->file("{$key}_image")->store('home', 'public');
+                HomeSection::setValue($key, 'image', 'storage/' . $path);
+            }
+        }
+
         // ── SECTION 4 — header + 3 cards ─────────────────────────────
         HomeSection::setValue('s4_header', 'name', $request->input('s4_header_name', ''));
         HomeSection::setValue('s4_header', 'sub',  $request->input('s4_header_sub', ''));
@@ -114,6 +126,24 @@ class AdminController extends Controller
             HomeSection::setValue($card, 'title',      $request->input("{$card}_title", ''));
             HomeSection::setValue($card, 'link_men',   $request->input("{$card}_link_men", '/men/shoes'));
             HomeSection::setValue($card, 'link_women', $request->input("{$card}_link_women", '/women/shoes'));
+        }
+
+        // ── SECTION 5 — new arrivals slider ──────────────────────────
+        HomeSection::setValue('s5', 'heading', $request->input('s5_heading', 'New Arrivals'));
+        HomeSection::setValue('s5', 'link',    $request->input('s5_link', '/men/shoes'));
+
+        foreach (range(1, 10) as $i) {
+            $key = "s5_slide_{$i}";
+            if ($request->hasFile("{$key}_image")) {
+                $path = $request->file("{$key}_image")->store('home', 'public');
+                HomeSection::setValue($key, 'image', 'storage/' . $path);
+            }
+            HomeSection::setValue($key, 'title',    $request->input("{$key}_title", ''));
+            HomeSection::setValue($key, 'subtitle', $request->input("{$key}_subtitle", ''));
+            HomeSection::setValue($key, 'price',    $request->input("{$key}_price", ''));
+            HomeSection::setValue($key, 'link',     $request->input("{$key}_link", '/men/shoes'));
+            HomeSection::setValue($key, 'colors',   $request->input("{$key}_colors", ''));
+            HomeSection::setValue($key, 'new',      $request->has("{$key}_new") ? 1 : 0);
         }
 
         // ── SECTION 6 — 3 info cards ─────────────────────────────────
