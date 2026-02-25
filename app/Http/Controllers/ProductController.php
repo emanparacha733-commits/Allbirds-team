@@ -224,8 +224,8 @@ class ProductController extends Controller
             'image_2'        => $product->image_2,
             'image_3'        => $product->image_3,
         ]);
-
-        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
+return redirect()->route('admin.dashboard')
+       ->with('success', 'Product updated successfully!');
     }
 
     public function destroy(Product $product)
