@@ -1,8 +1,8 @@
-<x-layouts>
+
   @extends('layouts.app')
 
 
-<section class="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl" style="background-image: url('/images/hero1.jpeg');">
+<section class="pt-60 relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center rounded-2xl" style="background-image: url('/images/hero1.jpeg');">
     <div class="relative z-10 max-w-7xl mx-auto h-full flex flex-col justify-between md:px-8 text-white">
         <div class="flex gap-6 text-sm font-light font-serif tracking-wide mt-12">
             <a href='/' class="hover:underline">Home/</a>
@@ -215,4 +215,3 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-</x-layouts>
